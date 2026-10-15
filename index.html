@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Anthracite Collieries of Pennsylvania</title>
+  <meta name="description" content="An interactive satellite map of former anthracite collieries in Pennsylvania's four coal fields.">
+  <link rel="icon" href="icons/headframe.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Anthracite Collieries of Pennsylvania, reset map">
+      <img src="icons/headframe.svg" alt="" width="28" height="28">
+      <span class="brand-text">
+        <span class="brand-title">Anthracite Collieries</span>
+        <span class="brand-sub">of Pennsylvania</span>
+      </span>
+    </a>
+
+    <nav class="topnav" aria-label="Pages">
+      <a href="sources.html">Sources</a>
+    </nav>
+
+    <div class="tools">
+      <div class="list-menu" id="list-menu">
+        <button type="button" id="list-toggle" class="list-toggle" aria-expanded="false" aria-controls="list-panel">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/>
+          </svg>
+          <span class="list-toggle-label">Collieries</span>
+          <span id="list-count" class="badge">0</span>
+          <svg class="chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div id="list-panel" class="list-panel" hidden>
+          <p id="list-head" class="list-head"></p>
+          <ul id="list-items" class="list-items"></ul>
+        </div>
+      </div>
+
+      <div class="search" role="search">
+        <label for="search-input" class="visually-hidden">Find a colliery by name</label>
+        <input id="search-input" type="search" placeholder="Find a colliery…" autocomplete="off"
+               role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list">
+        <ul id="search-results" class="search-results" role="listbox" hidden></ul>
+      </div>
+    </div>
+  </header>
+
+  <main class="stage">
+    <div id="map" aria-label="Map of anthracite collieries"></div>
+
+    <div id="status" class="status" role="status" hidden></div>
+
+    <aside id="panel" class="panel" aria-labelledby="panel-name" aria-hidden="true" tabindex="-1">
+      <div class="sheet-handle" aria-hidden="true"></div>
+      <button type="button" class="panel-close" aria-label="Close details">&times;</button>
+
+      <figure class="panel-photo">
+        <div class="photo-frame" id="photo-frame">
+          <img id="panel-img" alt="">
+          <button type="button" class="photo-nav prev" id="photo-prev" aria-label="Previous photo" hidden>&#8249;</button>
+          <button type="button" class="photo-nav next" id="photo-next" aria-label="Next photo" hidden>&#8250;</button>
+          <span id="photo-count" class="photo-count" aria-live="polite" hidden></span>
+        </div>
+        <figcaption>
+          <span id="panel-caption"></span>
+          <span id="panel-credit" class="credit"></span>
+        </figcaption>
+      </figure>
+
+      <div class="panel-body">
+        <p id="panel-sample" class="sample-flag" hidden>SAMPLE — replace with real data</p>
+        <p id="panel-field" class="field-tag"></p>
+        <h2 id="panel-name"></h2>
+        <dl id="panel-facts" class="facts"></dl>
+
+        <h3>History</h3>
+        <p id="panel-history" class="history"></p>
+
+        <div id="panel-confidence-wrap" class="confidence" hidden>
+          <h3>How sure is this?</h3>
+          <p id="panel-confidence"></p>
+        </div>
+
+        <div id="panel-related-wrap" hidden>
+          <h3>Related sites</h3>
+          <ul id="panel-related" class="related"></ul>
+        </div>
+
+        <h3>Sources</h3>
+        <ul id="panel-sources" class="sources"></ul>
+
+        <button type="button" id="copy-link" class="copy-link">Copy link to this site</button>
+        <p class="all-sources"><a href="sources.html">All sources and photo credits →</a></p>
+      </div>
+    </aside>
+  </main>
+
+  <noscript><p class="status">This map needs JavaScript to load.</p></noscript>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
