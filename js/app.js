@@ -9,7 +9,20 @@
   var FALLBACK_PHOTO = 'icons/no-photo.svg';
   var START_VIEW = { center: [40.85, -76.45], zoom: 9 }; // Shamokin / Mount Carmel, all four fields in view
   var FOCUS_ZOOM = 15;
-  var MOBILE_QUERY = window.matchMedia('(max-width: 720px)');
+  // Phone or computer layout, as chosen on first visit or in Settings (guessed until then).
+  function isPhone() {
+    return document.documentElement.getAttribute('data-layout') === 'phone';
+  }
+
+  // This visitor's choices from Menu → Settings (js/settings-store.js), or the defaults.
+  var STORE = window.CollierySettings || null;
+  var SETTINGS = STORE ? STORE.load() : {
+    baseLayer: 'satellite', placeLabels: true, startView: 'region', markerSize: 'normal',
+    clustering: true, mapLabels: true, listSort: 'name', textSize: 'normal', showConfidence: true, filterBox: 'closed',
+    theme: 'dark', motion: true, units: 'mi', autoLocate: false, playSpeed: 'normal', quizLength: 10
+  };
+  // Pins are a little bigger in the phone layout so they're easier to tap.
+  var MARKER_SCALE = ({ small: 0.8, normal: 1, large: 1.3 }[SETTINGS.markerSize] || 1) * (isPhone() ? 1.15 : 1);
 
   // Coal fields, in legend order. The pin color shows the field.
   var FIELDS = [
@@ -59,17 +72,41 @@
     'culm bank remains': 'Culm bank remains',
     'structures standing': 'Structures still standing',
     'mining continues': 'Mining or reprocessing continues',
-    'nothing remains': 'Nothing remains'
+    'nothing remains': 'Nothing remains',
+    'tourist mine': 'Tourist mine (open to visitors)'
   };
 
   // ---------- Map and base layers ----------
 
+  // "Go back to where I left off" reopens the last saved view; otherwise the whole region.
+  var savedView = SETTINGS.startView === 'last' && STORE ? STORE.loadView() : null;
+  var hasSavedView = savedView && isFinite(savedView.lat) && isFinite(savedView.lng) && isFinite(savedView.zoom);
+
   var map = L.map('map', {
-    center: START_VIEW.center,
-    zoom: START_VIEW.zoom,
+    center: hasSavedView ? [savedView.lat, savedView.lng] : START_VIEW.center,
+    zoom: hasSavedView ? savedView.zoom : START_VIEW.zoom,
     minZoom: 6,
-    zoomControl: true
+    zoomControl: true,
+    // "Smooth animations" off: zoom and pan jump instead of gliding.
+    zoomAnimation: SETTINGS.motion,
+    fadeAnimation: SETTINGS.motion,
+    markerZoomAnimation: SETTINGS.motion
   });
+
+  // Glide to a place, or jump there when animations are turned off.
+  function goTo(latlng, zoom, seconds) {
+    if (SETTINGS.motion) map.flyTo(latlng, zoom, { duration: seconds || 1.2 });
+    else map.setView(latlng, zoom, { animate: false });
+  }
+
+  map.on('zoomend', function () { updateMapLabels(); });
+
+  if (SETTINGS.startView === 'last' && STORE) {
+    map.on('moveend', function () {
+      var c = map.getCenter();
+      STORE.saveView({ lat: +c.lat.toFixed(5), lng: +c.lng.toFixed(5), zoom: map.getZoom() });
+    });
+  }
 
   var satellite = L.tileLayer(
     'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
@@ -101,8 +138,9 @@
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   });
 
-  satellite.addTo(map);
-  placeLabels.addTo(map);
+  var BASE_LAYERS = { satellite: satellite, oldtopo: oldTopo, topo: topo, streets: streets };
+  (BASE_LAYERS[SETTINGS.baseLayer] || satellite).addTo(map);
+  if (SETTINGS.placeLabels) placeLabels.addTo(map);
 
   L.control.layers(
     { 'Satellite': satellite, 'Old USGS topo maps': oldTopo, 'Topographic (modern)': topo, 'Street map': streets },
@@ -110,7 +148,8 @@
     { position: 'topright' }
   ).addTo(map);
 
-  var clusters = L.markerClusterGroup({
+  // With "Group nearby sites" turned off in Settings, markers go straight onto the map.
+  var clusters = SETTINGS.clustering ? L.markerClusterGroup({
     showCoverageOnHover: false,
     maxClusterRadius: 45,
     disableClusteringAtZoom: FOCUS_ZOOM,
@@ -121,7 +160,103 @@
         iconSize: [40, 40]
       });
     }
-  }).addTo(map);
+  }) : L.featureGroup();
+  clusters.addTo(map);
+
+  // ---------- "Show my location" button ----------
+  // Browsers only share location with https:// pages (like GitHub Pages) or http://localhost.
+
+  var locateBtn = null;
+  var locating = false;
+  var firstFix = false;
+  var youAreHere = null;
+  var lastLocation = null;   // latest position, also used to sort the list by distance
+  var accuracyCircle = null;
+
+  var LocateControl = L.Control.extend({
+    options: { position: 'topleft' },
+    onAdd: function () {
+      var bar = L.DomUtil.create('div', 'leaflet-bar locate-control');
+      locateBtn = L.DomUtil.create('a', '', bar);
+      locateBtn.href = '#';
+      locateBtn.setAttribute('role', 'button');
+      locateBtn.title = 'Show my location';
+      locateBtn.setAttribute('aria-label', 'Show my location');
+      locateBtn.innerHTML =
+        '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">' +
+          '<circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/>' +
+        '</svg>';
+      L.DomEvent.on(locateBtn, 'click', function (e) {
+        L.DomEvent.preventDefault(e);
+        L.DomEvent.stopPropagation(e);
+        if (locating) stopLocating(); else startLocating();
+      });
+      return bar;
+    }
+  });
+  new LocateControl().addTo(map);
+
+  function flash(message) {
+    var el = document.getElementById('status');
+    el.textContent = message;
+    el.hidden = false;
+    clearTimeout(flash.timer);
+    flash.timer = setTimeout(function () { el.hidden = true; }, 7000);
+  }
+
+  // flyToMe: false when the list asks for a location just to sort by distance.
+  function startLocating(flyToMe) {
+    if (!navigator.geolocation || !window.isSecureContext) {
+      flash('Your location only works on the published site (https://…) or on this computer, not over the home network.');
+      return;
+    }
+    locating = true;
+    firstFix = flyToMe !== false;
+    locateBtn.classList.add('is-on', 'is-waiting');
+    locateBtn.title = 'Stop showing my location';
+    map.locate({ watch: true, enableHighAccuracy: true, setView: false, maximumAge: 10000 });
+  }
+
+  function stopLocating() {
+    locating = false;
+    map.stopLocate();
+    locateBtn.classList.remove('is-on', 'is-waiting');
+    locateBtn.title = 'Show my location';
+    if (youAreHere) { map.removeLayer(youAreHere); youAreHere = null; }
+    if (accuracyCircle) { map.removeLayer(accuracyCircle); accuracyCircle = null; }
+  }
+
+  map.on('locationfound', function (e) {
+    if (!locating) return;
+    lastLocation = e.latlng;
+    if (listSort === 'nearest') renderList();
+    locateBtn.classList.remove('is-waiting');
+    if (!youAreHere) {
+      accuracyCircle = L.circle(e.latlng, {
+        radius: e.accuracy, color: '#4ea1ff', weight: 1, fillColor: '#4ea1ff', fillOpacity: 0.12, interactive: false
+      }).addTo(map);
+      youAreHere = L.circleMarker(e.latlng, {
+        radius: 8, color: '#ffffff', weight: 3, fillColor: '#2f80ff', fillOpacity: 1, interactive: false
+      }).addTo(map);
+    } else {
+      youAreHere.setLatLng(e.latlng);
+      accuracyCircle.setLatLng(e.latlng).setRadius(e.accuracy);
+    }
+    // Jump to you once; after that the dot follows you without moving the map.
+    if (firstFix) {
+      firstFix = false;
+      goTo(e.latlng, Math.max(map.getZoom(), 15), 1);
+    }
+  });
+
+  map.on('locationerror', function (e) {
+    if (!locating) return;
+    stopLocating();
+    flash(e.code === 1
+      ? 'Location is blocked. Allow location for this site in your browser settings, then try again.'
+      : 'Could not find your location. Try again outdoors or with Wi-Fi turned on.');
+    if (listSort === 'nearest') renderList();
+  });
 
   // ---------- State ----------
 
@@ -237,19 +372,29 @@
       '</svg>';
   }
 
-  var iconCache = {};
-  function iconFor(field, type) {
-    var key = field.key + '|' + type.key;
-    if (!iconCache[key]) {
-      iconCache[key] = L.divIcon({
-        className: 'colliery-marker',
-        html: markerSvg(field.color, type),
-        iconSize: [34, 42],
-        iconAnchor: [17, 41],
-        tooltipAnchor: [0, -38]
-      });
-    }
-    return iconCache[key];
+  // Short name for the label under a pin: "Henry Clay Colliery" -> "Henry Clay",
+  // "Saint Nicholas Colliery / St. Nicholas Breaker" -> "St. Nicholas Breaker".
+  function shortLabel(name) {
+    var parts = String(name || '').split(' / ');
+    return parts[parts.length - 1].replace(/\s*\([^)]*\)/g, '').replace(/\s+Colliery\b/, '').trim();
+  }
+
+  var LABEL_ZOOM = 13;
+  function updateMapLabels() {
+    map.getContainer().classList.toggle('show-labels', SETTINGS.mapLabels && map.getZoom() >= LABEL_ZOOM);
+  }
+
+  function iconFor(field, type, label) {
+    var w = Math.round(34 * MARKER_SCALE);
+    var h = Math.round(w * 42 / 34);
+    return L.divIcon({
+      className: 'colliery-marker',
+      html: markerSvg(field.color, type, w) +
+        (label ? '<span class="pin-label">' + escapeHtml(label) + '</span>' : ''),
+      iconSize: [w, h],
+      iconAnchor: [w / 2, h - 1],
+      tooltipAnchor: [0, -(h - 4)]
+    });
   }
 
   function showStatus(html) {
@@ -312,7 +457,7 @@
       };
 
       item.marker = L.marker(item.latlng, {
-        icon: iconFor(item.field, item.type),
+        icon: iconFor(item.field, item.type, shortLabel(props.name)),
         title: props.name || 'Unnamed site',
         alt: props.name || 'Unnamed site',
         keyboard: true,
@@ -337,7 +482,10 @@
 
     buildLegend();
     applyFilters();
+    updateMapLabels();
     handleRoute();
+    // "Show my location when the map opens": blue dot only, the map stays put.
+    if (SETTINGS.autoLocate) startLocating(false);
   }
 
   // "related" works both ways: listing B on A also shows A on B.
@@ -404,7 +552,7 @@
       options: { position: 'bottomleft' },
       onAdd: function () {
         var details = L.DomUtil.create('details', 'legend');
-        if (!MOBILE_QUERY.matches) details.open = true;
+        if (SETTINGS.filterBox === 'open' || (SETTINGS.filterBox === 'auto' && !isPhone())) details.open = true;
 
         details.innerHTML = '' +
           '<summary>Filter map <span class="summary-badge" hidden></span></summary>' +
@@ -424,6 +572,7 @@
             filters[row.dataset.group][t.value] = t.checked ? true : false;
             applyFilters();
           } else if (t.id === 'timeline-on') {
+            stopPlaying();
             filters.year = t.checked ? Number(details.querySelector('#timeline-range').value) : null;
             applyFilters();
           } else if (t.id === 'filter-operator') {
@@ -438,8 +587,12 @@
         var range = details.querySelector('#timeline-range');
         if (range) {
           range.addEventListener('input', function () {
+            stopPlaying();
             filters.year = Number(range.value);
             applyFilters();
+          });
+          details.querySelector('#timeline-play').addEventListener('click', function () {
+            if (playTimer) stopPlaying(); else startPlaying(Number(range.min), Number(range.max));
           });
         }
 
@@ -453,6 +606,69 @@
 
     legendControl = new Legend();
     legendControl.addTo(map);
+  }
+
+  // ---------- Timeline "play": step through the years like a time-lapse ----------
+
+  var PLAY_ICON = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg>';
+  var PAUSE_ICON = '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M6 4.5h4.5v15H6zM13.5 4.5H18v15h-4.5z"/></svg>';
+  var YEAR_STEP_MS = { slow: 300, normal: 140, fast: 60 }[SETTINGS.playSpeed] || 140;
+  var playTimer = null;
+  var yearOverlay = null;
+  var overlayTimer = null;
+
+  function showYearOverlay(year) {
+    clearTimeout(overlayTimer);
+    if (!yearOverlay) {
+      yearOverlay = document.createElement('div');
+      yearOverlay.className = 'year-overlay';
+      yearOverlay.setAttribute('aria-hidden', 'true');
+      document.querySelector('.stage').appendChild(yearOverlay);
+    }
+    // Count only sites known to be working: opening year known and reached, not yet closed.
+    var working = items.filter(function (it) {
+      return it.opened !== null && it.opened <= year && (it.closed === null || year <= it.closed) && fieldOk(it) && typeOk(it);
+    }).length;
+    yearOverlay.innerHTML = year + '<small>' + working + (working === 1 ? ' colliery' : ' collieries') + ' known working</small>';
+  }
+
+  function hideYearOverlay(delay) {
+    clearTimeout(overlayTimer);
+    overlayTimer = setTimeout(function () {
+      if (yearOverlay) { yearOverlay.remove(); yearOverlay = null; }
+    }, delay || 0);
+  }
+
+  function setPlayButton(playing) {
+    var btn = document.getElementById('timeline-play');
+    if (!btn) return;
+    btn.innerHTML = playing ? PAUSE_ICON : PLAY_ICON;
+    btn.classList.toggle('is-playing', playing);
+    btn.setAttribute('aria-label', playing ? 'Pause' : 'Play through the years');
+    btn.title = btn.getAttribute('aria-label');
+  }
+
+  function startPlaying(min, max) {
+    // Start from the beginning unless we're paused partway through.
+    var year = filters.year !== null && filters.year < max ? filters.year : min;
+    setPlayButton(true);
+    function tick() {
+      filters.year = year;
+      applyFilters();
+      showYearOverlay(year);
+      if (year >= max) { stopPlaying(); return; }
+      year++;
+    }
+    tick();
+    playTimer = setInterval(tick, YEAR_STEP_MS);
+  }
+
+  function stopPlaying() {
+    if (!playTimer) return;
+    clearInterval(playTimer);
+    playTimer = null;
+    setPlayButton(false);
+    hideYearOverlay(1500);
   }
 
   function timelineHtml() {
@@ -477,7 +693,10 @@
           '<span>Only show sites working in</span>' +
           '<output id="timeline-year" for="timeline-range">' + start + '</output>' +
         '</label>' +
-        '<input type="range" id="timeline-range" min="' + min + '" max="' + max + '" step="1" value="' + start + '" aria-label="Year">' +
+        '<div class="timeline-controls">' +
+          '<button type="button" class="play-btn" id="timeline-play" aria-label="Play through the years" title="Play through the years">' + PLAY_ICON + '</button>' +
+          '<input type="range" id="timeline-range" min="' + min + '" max="' + max + '" step="1" value="' + start + '" aria-label="Year">' +
+        '</div>' +
         '<div class="timeline-scale"><span>' + min + '</span><span>' + max + '</span></div>' +
         (undated
           ? '<p class="timeline-note">' + undated + (undated === 1 ? ' site has' : ' sites have') + ' no dates yet and always ' + (undated === 1 ? 'shows' : 'show') + '.</p>'
@@ -556,6 +775,7 @@
   }
 
   function resetFilters() {
+    stopPlaying();
     filters.fields = {};
     filters.types = {};
     filters.year = null;
@@ -569,15 +789,17 @@
     if (isVisible(item)) return;
     if (!fieldOk(item)) filters.fields[item.field.key] = true;
     if (!typeOk(item)) filters.types[item.type.key] = true;
-    if (!activeIn(item, filters.year)) filters.year = null;
+    if (!activeIn(item, filters.year)) { stopPlaying(); filters.year = null; }
     if (!operatorOk(item)) filters.operator = '';
     if (!statusOk(item)) filters.status = '';
     applyFilters();
   }
 
   function applyFilters() {
+    var visible = items.filter(isVisible).map(function (it) { return it.marker; });
     clusters.clearLayers();
-    clusters.addLayers(items.filter(isVisible).map(function (it) { return it.marker; }));
+    if (clusters.addLayers) clusters.addLayers(visible);
+    else visible.forEach(function (m) { clusters.addLayer(m); });
     syncLegend();
     renderList();
   }
@@ -630,7 +852,7 @@
       galleryIndex = (index + count) % count;
       var ph = gallery[galleryIndex];
       panelImg.dataset.fallback = '0';
-      panelImg.title = 'Open full size';
+      panelImg.title = 'View full screen';
       panelImg.src = ph.url;
       panelImg.alt = ph.caption || 'Photo of ' + galleryName;
       caption.textContent = ph.caption;
@@ -645,9 +867,187 @@
     counter.textContent = many ? (galleryIndex + 1) + ' / ' + count : '';
   }
 
-  // Click a photo to see it full size.
+  // Tap a photo to see it full screen.
   panelImg.addEventListener('click', function () {
-    if (panelImg.dataset.fallback !== '1') window.open(panelImg.src, '_blank', 'noopener');
+    if (panelImg.dataset.fallback !== '1' && gallery.length) openLightbox(galleryIndex);
+  });
+
+  // ---------- Full-screen photo viewer ----------
+  // Swipe or arrow keys to move between photos; pinch, double-tap or mouse wheel to zoom;
+  // drag to look around a zoomed photo; swipe down or Esc to close.
+
+  var lb = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lb-img');
+  var lbStage = document.getElementById('lb-stage');
+  var lbIndex = 0;
+  var zoom = { scale: 1, x: 0, y: 0 };
+  var lbReturnFocus = null;
+
+  function applyZoom(animate) {
+    lbImg.style.transition = animate ? 'transform 0.2s ease' : 'none';
+    lbImg.style.transform = 'translate(' + zoom.x + 'px,' + zoom.y + 'px) scale(' + zoom.scale + ')';
+    lb.classList.toggle('is-zoomed', zoom.scale > 1.01);
+  }
+
+  function resetZoom(animate) {
+    zoom.scale = 1; zoom.x = 0; zoom.y = 0;
+    applyZoom(animate);
+  }
+
+  // Zoom toward a point on screen, keeping that point under the finger or cursor.
+  function zoomAt(newScale, clientX, clientY, animate) {
+    newScale = Math.min(5, Math.max(1, newScale));
+    var rect = lbStage.getBoundingClientRect();
+    var cx = clientX - rect.left - rect.width / 2;
+    var cy = clientY - rect.top - rect.height / 2;
+    var ratio = newScale / zoom.scale;
+    zoom.x = cx - (cx - zoom.x) * ratio;
+    zoom.y = cy - (cy - zoom.y) * ratio;
+    zoom.scale = newScale;
+    if (newScale === 1) { zoom.x = 0; zoom.y = 0; }
+    applyZoom(animate);
+  }
+
+  function showLightboxPhoto(index) {
+    var count = gallery.length;
+    lbIndex = (index + count) % count;
+    var ph = gallery[lbIndex];
+    resetZoom(false);
+    lbImg.src = ph.url;
+    lbImg.alt = ph.caption || 'Photo of ' + galleryName;
+    document.getElementById('lb-caption').textContent = ph.caption || galleryName;
+    document.getElementById('lb-credit').textContent = ph.credit ? 'Credit: ' + ph.credit : '';
+    document.getElementById('lb-count').textContent = count > 1 ? (lbIndex + 1) + ' / ' + count : '';
+    document.getElementById('lb-original').href = ph.url;
+    document.getElementById('lb-prev').hidden = count < 2;
+    document.getElementById('lb-next').hidden = count < 2;
+    // Load the neighbors in the background so swiping feels instant.
+    if (count > 1) {
+      new Image().src = gallery[(lbIndex + 1) % count].url;
+      new Image().src = gallery[(lbIndex - 1 + count) % count].url;
+    }
+  }
+
+  function openLightbox(index) {
+    lbReturnFocus = document.activeElement;
+    lb.hidden = false;
+    document.body.classList.add('lightbox-open');
+    document.getElementById('lb-hint').textContent = isPhone()
+      ? 'Swipe for more · pinch or double-tap to zoom'
+      : '← → for more · scroll or double-click to zoom';
+    showLightboxPhoto(index);
+    document.getElementById('lb-close').focus();
+  }
+
+  function closeLightbox() {
+    if (lb.hidden) return;
+    lb.hidden = true;
+    document.body.classList.remove('lightbox-open');
+    showPhoto(lbIndex); // the panel follows along to the last photo viewed
+    if (lbReturnFocus && lbReturnFocus.focus) lbReturnFocus.focus();
+  }
+
+  function lightboxStep(delta) {
+    if (gallery.length > 1) showLightboxPhoto(lbIndex + delta);
+  }
+
+  document.getElementById('lb-close').addEventListener('click', closeLightbox);
+  document.getElementById('lb-prev').addEventListener('click', function () { lightboxStep(-1); });
+  document.getElementById('lb-next').addEventListener('click', function () { lightboxStep(1); });
+
+  // Clicking the dark background (not the photo) closes it.
+  lbStage.addEventListener('click', function (e) {
+    if (e.target === lbStage && zoom.scale === 1) closeLightbox();
+  });
+
+  lbImg.addEventListener('dblclick', function (e) {
+    zoomAt(zoom.scale > 1.01 ? 1 : 2.5, e.clientX, e.clientY, true);
+  });
+
+  lbStage.addEventListener('wheel', function (e) {
+    e.preventDefault();
+    zoomAt(zoom.scale * (e.deltaY < 0 ? 1.2 : 1 / 1.2), e.clientX, e.clientY, false);
+  }, { passive: false });
+
+  // Touch and mouse: one finger swipes (or pans when zoomed); two fingers pinch.
+  var pointers = {};
+  var gesture = null;
+  var lastTap = 0;
+
+  function pointerList() { return Object.keys(pointers).map(function (k) { return pointers[k]; }); }
+
+  lbStage.addEventListener('pointerdown', function (e) {
+    if (e.target.closest('.lb-btn')) return;
+    lbStage.setPointerCapture(e.pointerId);
+    pointers[e.pointerId] = { x: e.clientX, y: e.clientY };
+    var pts = pointerList();
+    if (pts.length === 2) {
+      gesture = {
+        type: 'pinch',
+        startDist: Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y),
+        startScale: zoom.scale
+      };
+    } else if (pts.length === 1) {
+      gesture = { type: 'drag', startX: e.clientX, startY: e.clientY, lastX: e.clientX, lastY: e.clientY, moved: false };
+    }
+  });
+
+  lbStage.addEventListener('pointermove', function (e) {
+    if (!pointers[e.pointerId] || !gesture) return;
+    pointers[e.pointerId] = { x: e.clientX, y: e.clientY };
+    var pts = pointerList();
+    if (gesture.type === 'pinch' && pts.length === 2) {
+      var dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+      zoomAt(gesture.startScale * dist / gesture.startDist, (pts[0].x + pts[1].x) / 2, (pts[0].y + pts[1].y) / 2, false);
+    } else if (gesture.type === 'drag') {
+      if (Math.abs(e.clientX - gesture.startX) > 6 || Math.abs(e.clientY - gesture.startY) > 6) gesture.moved = true;
+      if (zoom.scale > 1.01) {
+        zoom.x += e.clientX - gesture.lastX;
+        zoom.y += e.clientY - gesture.lastY;
+        applyZoom(false);
+      } else {
+        // Follow the finger a little so the swipe feels connected.
+        lbImg.style.transition = 'none';
+        lbImg.style.transform = 'translate(' + (e.clientX - gesture.startX) * 0.6 + 'px,' + Math.max(0, e.clientY - gesture.startY) * 0.6 + 'px)';
+      }
+      gesture.lastX = e.clientX;
+      gesture.lastY = e.clientY;
+    }
+  });
+
+  function endPointer(e) {
+    if (!pointers[e.pointerId]) return;
+    delete pointers[e.pointerId];
+    if (!gesture) return;
+    if (gesture.type === 'pinch') {
+      if (pointerList().length === 0) gesture = null;
+      if (zoom.scale < 1.05) resetZoom(true);
+      return;
+    }
+    var dx = e.clientX - gesture.startX;
+    var dy = e.clientY - gesture.startY;
+    var wasMoved = gesture.moved;
+    gesture = null;
+    if (zoom.scale > 1.01) return;
+    if (!wasMoved && e.pointerType === 'touch') {
+      // Double-tap to zoom on touch screens.
+      var now = Date.now();
+      if (now - lastTap < 300) { zoomAt(2.5, e.clientX, e.clientY, true); lastTap = 0; return; }
+      lastTap = now;
+    }
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) lightboxStep(dx < 0 ? 1 : -1);
+    else if (dy > 90 && Math.abs(dy) > Math.abs(dx)) closeLightbox();
+    else resetZoom(true); // snap back
+  }
+  lbStage.addEventListener('pointerup', endPointer);
+  lbStage.addEventListener('pointercancel', endPointer);
+
+  document.addEventListener('keydown', function (e) {
+    if (lb.hidden) return;
+    if (e.key === 'ArrowRight') { lightboxStep(1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft') { lightboxStep(-1); e.preventDefault(); }
+    else if (e.key === '+' || e.key === '=') zoomAt(zoom.scale * 1.4, innerWidth / 2, innerHeight / 2, true);
+    else if (e.key === '-') zoomAt(zoom.scale / 1.4, innerWidth / 2, innerHeight / 2, true);
   });
 
   document.getElementById('photo-prev').addEventListener('click', function () { showPhoto(galleryIndex - 1); });
@@ -688,6 +1088,7 @@
       ['Nearest town', p.nearest_town],
       ['Operator', p.operator],
       ['Years active', p.years_active],
+      ['Closing year', p.closed_estimated && item.closed !== null ? 'c. ' + item.closed + ' (estimated)' : null],
       ['Status', p.status],
       ['Coordinates', item.latlng.lat.toFixed(5) + ', ' + item.latlng.lng.toFixed(5)]
     ];
@@ -697,8 +1098,11 @@
       .join('');
 
     document.getElementById('panel-history').textContent = p.history || 'No history written yet.';
-    document.getElementById('panel-confidence-wrap').hidden = !p.confidence;
+    document.getElementById('panel-confidence-wrap').hidden = !p.confidence || !SETTINGS.showConfidence;
     document.getElementById('panel-confidence').textContent = p.confidence || '';
+    // Estimated dates are always explained, even with the confidence notes turned off.
+    document.getElementById('panel-estimate-wrap').hidden = !p.closed_estimated;
+    document.getElementById('panel-estimate').textContent = p.closed_estimate_note || 'No record gives this colliery\'s closing date; the year shown is an estimate.';
 
     var related = item.related.slice().sort(function (a, b) {
       return String(a.item.props.name).localeCompare(String(b.item.props.name));
@@ -749,13 +1153,14 @@
 
     var zoom = fly ? Math.max(map.getZoom(), FOCUS_ZOOM) : map.getZoom();
     var target = offsetForPanel(item.latlng, zoom);
-    if (fly) map.flyTo(target, zoom, { duration: 1.2 });
-    else map.panTo(target);
+    if (fly) goTo(target, zoom);
+    else map.panTo(target, { animate: SETTINGS.motion });
   }
 
   function closePanel() {
     if (!current) return;
     current = null;
+    setExpanded(false);
     panel.classList.remove('open');
     panel.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('panel-open');
@@ -768,7 +1173,7 @@
   // Shift the map center so the marker sits in the visible area next to the panel/sheet.
   function offsetForPanel(latlng, zoom) {
     var dx = 0, dy = 0;
-    if (MOBILE_QUERY.matches) dy = panel.offsetHeight / 2;
+    if (isPhone()) dy = panel.offsetHeight / 2;
     else dx = panel.offsetWidth / 2;
     var point = map.project(latlng, zoom).add([dx, dy]);
     return map.unproject(point, zoom);
@@ -782,8 +1187,40 @@
   }
 
   panel.querySelector('.panel-close').addEventListener('click', closePanel);
+
+  // ---------- Phone bottom sheet: tap or swipe for full screen ----------
+
+  var sheetHandle = panel.querySelector('.sheet-handle');
+
+  function setExpanded(on) {
+    panel.classList.toggle('expanded', on);
+    sheetHandle.setAttribute('aria-expanded', on ? 'true' : 'false');
+    sheetHandle.setAttribute('aria-label', on ? 'Show less' : 'Show more details');
+  }
+
+  sheetHandle.addEventListener('click', function () {
+    setExpanded(!panel.classList.contains('expanded'));
+  });
+
+  // Swipe up to fill the screen; swipe down to shrink it again, or to close when it's already small.
+  // Only when the sheet is scrolled to the top, so normal scrolling inside it still works.
+  var swipeY = null;
+  panel.addEventListener('touchstart', function (e) {
+    swipeY = isPhone() && panel.scrollTop <= 0 ? e.touches[0].clientY : null;
+  }, { passive: true });
+  panel.addEventListener('touchend', function (e) {
+    if (swipeY === null) return;
+    var dy = e.changedTouches[0].clientY - swipeY;
+    swipeY = null;
+    if (dy < -50 && !panel.classList.contains('expanded')) setExpanded(true);
+    else if (dy > 70) {
+      if (panel.classList.contains('expanded')) setExpanded(false);
+      else closePanel();
+    }
+  });
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
+    if (!lb.hidden) { closeLightbox(); return; }
     if (!listPanel.hidden) { closeList(true); return; }
     if (current && document.activeElement !== searchInput) closePanel();
   });
@@ -826,18 +1263,60 @@
   var listPanel = document.getElementById('list-panel');
   var listItems = document.getElementById('list-items');
 
+  // ---------- List order ----------
+
+  var listSort = SETTINGS.listSort;
+  var sortSelect = document.getElementById('list-sort');
+  sortSelect.value = listSort;
+
+  // Distance from you, in miles or kilometers (Settings → Map → Distances in).
+  var UNIT = SETTINGS.units === 'km' ? { label: 'km', meters: 1000 } : { label: 'mi', meters: 1609.34 };
+  function milesTo(it) {
+    return lastLocation ? map.distance(lastLocation, it.latlng) / UNIT.meters : null;
+  }
+
+  // Unknown years go to the end in every year-based order.
+  function byYear(key, newestFirst) {
+    return function (a, b) {
+      if (a[key] === null && b[key] === null) return 0;
+      if (a[key] === null) return 1;
+      if (b[key] === null) return -1;
+      return newestFirst ? b[key] - a[key] : a[key] - b[key];
+    };
+  }
+
+  function sortedForList(list) {
+    var byName = function (a, b) { return String(a.props.name).localeCompare(String(b.props.name)); };
+    var out = list.slice().sort(byName); // ties stay alphabetical
+    if (listSort === 'oldest') out.sort(byYear('opened', false));
+    else if (listSort === 'newest') out.sort(byYear('opened', true));
+    else if (listSort === 'closed') out.sort(byYear('closed', true));
+    else if (listSort === 'nearest' && lastLocation) out.sort(function (a, b) { return milesTo(a) - milesTo(b); });
+    return out;
+  }
+
+  sortSelect.addEventListener('change', function () {
+    listSort = sortSelect.value;
+    if (STORE) { var s = STORE.load(); s.listSort = listSort; STORE.save(s); }
+    if (listSort === 'nearest' && !lastLocation && !locating) startLocating(false);
+    renderList();
+  });
+
   function renderList() {
-    var visible = items.filter(isVisible);
+    var visible = sortedForList(items.filter(isVisible));
     document.getElementById('list-count').textContent = visible.length;
 
     var head = visible.length === items.length
-      ? 'All ' + items.length + ' sites, A–Z'
+      ? 'All ' + items.length + ' sites'
       : 'Showing ' + visible.length + ' of ' + items.length + ' (filters on)';
+    if (listSort === 'nearest' && !lastLocation) head = locating ? 'Finding your location…' : 'Turn on your location to sort by distance';
     document.getElementById('list-head').textContent = head;
 
     listItems.innerHTML = visible.length
       ? visible.map(function (it) {
+          var miles = listSort === 'nearest' ? milesTo(it) : null;
           var meta = [
+            miles !== null ? (miles < 10 ? miles.toFixed(1) : Math.round(miles)) + ' ' + UNIT.label : '',
             it.type === TYPES[0] ? '' : it.type.label,
             it.field === OTHER_FIELD ? '' : it.field.key,
             it.props.years_active
@@ -885,6 +1364,20 @@
     if (!listPanel.hidden && !listMenu.contains(e.target)) closeList();
   });
 
+  // ---------- "Surprise me": fly to a random colliery ----------
+
+  var surpriseBtn = document.getElementById('surprise');
+  surpriseBtn.addEventListener('click', function () {
+    var pool = items.filter(function (it) { return isVisible(it) && it !== current; });
+    if (!pool.length) pool = items.filter(function (it) { return it !== current; });
+    if (!pool.length) return;
+    surpriseBtn.classList.remove('rolling');
+    void surpriseBtn.offsetWidth; // restart the spin animation
+    surpriseBtn.classList.add('rolling');
+    closeList();
+    select(pool[Math.floor(Math.random() * pool.length)], true);
+  });
+
   // ---------- Search ----------
 
   var searchInput = document.getElementById('search-input');
@@ -892,14 +1385,52 @@
   var results = [];
   var activeIndex = -1;
 
-  function runSearch() {
-    var q = searchInput.value.trim().toLowerCase();
-    if (!q) { hideResults(); return; }
+  // Lowercase, accents and punctuation removed, so "St. Nicholas" and "st nicholas" match.
+  function plain(text) {
+    return String(text || '').toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9]+/g, ' ').trim();
+  }
 
-    var has = function (text) { return String(text || '').toLowerCase().indexOf(q) !== -1; };
-    results = items.filter(function (it) {
-      return has(it.props.name) || has(it.props.nearest_town) || listOf(it.props.other_names).some(has);
-    }).slice(0, 8);
+  // Fewest typing mistakes (letters added, missed, changed or swapped) between the query
+  // and any part of the text. 0 means the query appears exactly.
+  function typoDistance(query, text) {
+    var n = query.length, m = text.length;
+    var prev2 = null, prev = new Array(m + 1).fill(0), row;
+    for (var i = 1; i <= n; i++) {
+      row = new Array(m + 1);
+      row[0] = i;
+      for (var j = 1; j <= m; j++) {
+        var cost = query[i - 1] === text[j - 1] ? 0 : 1;
+        row[j] = Math.min(prev[j] + 1, row[j - 1] + 1, prev[j - 1] + cost);
+        if (prev2 && i > 1 && j > 1 && query[i - 1] === text[j - 2] && query[i - 2] === text[j - 1]) {
+          row[j] = Math.min(row[j], prev2[j - 2] + 1); // swapped letters
+        }
+      }
+      prev2 = prev;
+      prev = row;
+    }
+    return Math.min.apply(null, prev); // the match may start and end anywhere in the text
+  }
+
+  function runSearch() {
+    var q = plain(searchInput.value).replace(/\bcolliery\b/g, '').trim();
+    if (!q) { hideResults(); return; }
+    // About one mistake per four letters; very short searches must match exactly.
+    var allowed = q.length < 4 ? 0 : Math.max(1, Math.floor(q.length / 4));
+
+    results = items.map(function (it) {
+      var names = [it.props.name].concat(listOf(it.props.other_names));
+      var best = Infinity;
+      names.forEach(function (n) { best = Math.min(best, typoDistance(q, plain(n))); });
+      // Towns only match exactly, so "shamokin" lists Shamokin-area sites without fuzzy noise.
+      if (plain(it.props.nearest_town).indexOf(q) !== -1) best = Math.min(best, 0.5);
+      return { it: it, score: best };
+    }).filter(function (r) {
+      return r.score <= allowed;
+    }).sort(function (a, b) {
+      return a.score - b.score || String(a.it.props.name).localeCompare(String(b.it.props.name));
+    }).slice(0, 8).map(function (r) { return r.it; });
+
     activeIndex = results.length ? 0 : -1;
     renderResults();
   }
