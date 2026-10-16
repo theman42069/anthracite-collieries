@@ -9,16 +9,78 @@ Plain HTML, CSS and JavaScript with no build step, made to be hosted for free on
 ```
 index.html               the map page
 sources.html             every citation and photo credit, built automatically from the data
-css/style.css            all styling (desktop side panel, phone bottom sheet, sources page)
-js/app.js                map logic: layers, markers, filters, timeline, list, search, share links
+about.html               about the project, using the map, corrections, visiting sites safely
+settings.html            per-visitor settings (starting map, marker size, text size, ...)
+quiz.html                the Colliery Quiz (10 random questions per round)
+data/quiz-extra.json     hand-written quiz questions; edit or add your own (see below)
+css/style.css            all styling (map, side panel / phone bottom sheet, sources and about pages)
+js/app.js                map logic: layers, markers, filters, timeline, list, search, location, share links
 js/sources.js            builds the sources page
+js/menu.js               the Menu button (Map, Sources, About, Settings) on every page
+js/settings-store.js     saves/loads settings in the visitor's browser; used by every page
+js/settings-page.js      the settings form
+js/quiz.js               builds quiz questions from the data + quiz-extra.json
 data/collieries.geojson  ALL site data — the only file you edit to add sites
 icons/headframe.svg      site icon
+icons/social-card.jpg    preview image shown when the link is shared (Facebook, texts, etc.)
 icons/no-photo.svg       fallback image when a photo is missing or broken
 photos/                  your own photo files (referenced from the data as photos/name.webp)
 serve.ps1                optional local web server for Windows (no Python/Node/admin needed)
 serve-phone.bat          double-click to serve the site to your phone on the same Wi-Fi
+credits-report.bat       double-click to rebuild CREDITS-TODO.md, the photo-credits checklist
+CREDITS-TODO.md          which photos still need a credit or permission (for you; no need to upload)
 ```
+
+**Menu and Settings:** every page has a **Menu** button (top right) with Map, Sources, About and
+Settings. To add a page to the menu, add it to the `PAGES` list in `js/menu.js`. Settings are saved
+in each visitor's own browser (nothing is sent anywhere), so they don't affect anyone else.
+
+**Phone or computer:** on a visitor's first visit, a box asks "Phone or Computer?" (with the likely
+answer marked *Suggested*). The phone layout has bigger buttons and a details sheet that slides up
+from the bottom. Tap or swipe its handle up for full screen, or swipe down to shrink or close it.
+The choice is saved and can be changed under **Menu → Settings → Device**. Until someone chooses,
+the layout is guessed from screen width. To test the box again, clear the site's data in your browser.
+
+**Getting around:**
+- **Search** forgives typos ("henery clay", "burnsde") and also finds former names and towns.
+- **Names beside pins** appear when you zoom in close (switch off under Settings → Markers).
+- **The Collieries list** can be sorted A–Z, oldest or newest first, closed most recently, or nearest
+  to you. The order you pick is remembered.
+- **Tap any photo** for a full-screen viewer: swipe or ←/→ for the next photo, pinch, double-tap or
+  scroll to zoom, drag to look around, and swipe down or Esc to close.
+
+**Photo credits checklist:** double-click `credits-report.bat` to rebuild `CREDITS-TODO.md`. It sorts
+every photo into *needs permission* (watermarks, modern photos, artwork), *needs a source* and
+*ready*. It also flags photo files that are missing, unused, or used for two different sites. Run it
+before each upload.
+
+**Fun extras:**
+- **▶ on the timeline** (Filter map → Years) plays through the years. Collieries appear and vanish
+  as they open and close, with a big year and a count of collieries known to be working.
+- **The dice button** next to the Collieries list flies to a random colliery.
+- **Quiz** (Menu → Quiz): most questions are built automatically from the data (opening and closing
+  years, other names, operators, county, which is oldest), so adding collieries adds questions.
+  Questions skip approximate or disputed dates. The rest come from `data/quiz-extra.json`. To add
+  one, copy an entry there:
+  ```json
+  {
+    "question": "Your question?",
+    "answer": "The right answer",
+    "wrong": ["Wrong 1", "Wrong 2", "Wrong 3"],
+    "explain": "One or two sentences shown after answering.",
+    "colliery": "id-of-the-colliery-it-is-about"
+  }
+  ```
+
+**Your location:** the target button under the zoom buttons shows a blue dot where you are (tap
+again to turn it off). Browsers only allow this on `https://` pages, so it works on the published
+GitHub Pages site and on `http://localhost`, but not over the home-network address.
+
+**Sharing previews:** the `og:` tags at the top of `index.html`, `sources.html` and `about.html`
+give the link a title, description and `icons/social-card.jpg` image when it's posted. They contain
+the full site address (`https://theman42069.github.io/anthracite-collieries/`). If the address
+ever changes, update it there too. Facebook caches previews, so after a change paste the link into
+<https://developers.facebook.com/tools/debug/> and click "Scrape Again".
 
 **On the map:** pin color shows the coal field, and the symbol inside the pin shows the site type.
 The **Filter map** box has filters for coal field, site type (once there's more than one type),
@@ -230,7 +292,7 @@ public link.
 1. On the new repo's page, click the link **"uploading an existing file"**. Or go to
    **Add file → Upload files**.
 2. Open this project folder in File Explorer and select everything inside it: `index.html`,
-   `sources.html`, `README.md`, and the `css`, `js`, `data`, `icons` and `photos` folders. Drag them all into the browser
+   `sources.html`, `about.html`, `settings.html`, `quiz.html`, `README.md`, and the `css`, `js`, `data`, `icons` and `photos` folders. Drag them all into the browser
    window.
    - Drag the folder's **contents**, not the folder itself. `index.html` must sit at the top level
      of the repo, or Pages will show a 404.

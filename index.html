@@ -7,6 +7,18 @@
   <meta name="description" content="An interactive satellite map of former anthracite collieries in Pennsylvania's four coal fields.">
   <link rel="icon" href="icons/headframe.svg" type="image/svg+xml">
 
+  <!-- Preview card when the link is shared (Facebook, texts, Discord, etc.). Image URLs must be full addresses. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Anthracite Collieries of Pennsylvania">
+  <meta property="og:title" content="Anthracite Collieries of Pennsylvania">
+  <meta property="og:description" content="An interactive satellite map of former anthracite collieries, with photos, histories and sources for each site.">
+  <meta property="og:url" content="https://theman42069.github.io/anthracite-collieries/">
+  <meta property="og:image" content="https://theman42069.github.io/anthracite-collieries/icons/social-card.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Anthracite Collieries of Pennsylvania: an interactive map of former coal mines">
+  <meta name="twitter:card" content="summary_large_image">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap">
@@ -14,6 +26,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/settings-store.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -24,10 +37,6 @@
         <span class="brand-sub">of Pennsylvania</span>
       </span>
     </a>
-
-    <nav class="topnav" aria-label="Pages">
-      <a href="sources.html">Sources</a>
-    </nav>
 
     <div class="tools">
       <div class="list-menu" id="list-menu">
@@ -40,10 +49,31 @@
           <svg class="chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div id="list-panel" class="list-panel" hidden>
-          <p id="list-head" class="list-head"></p>
+          <div class="list-head">
+            <span id="list-head"></span>
+            <label class="list-sort">
+              <span class="visually-hidden">Sort the list</span>
+              <select id="list-sort">
+                <option value="name">A–Z</option>
+                <option value="oldest">Oldest first</option>
+                <option value="newest">Newest first</option>
+                <option value="closed">Closed most recently</option>
+                <option value="nearest">Nearest to me</option>
+              </select>
+            </label>
+          </div>
           <ul id="list-items" class="list-items"></ul>
         </div>
       </div>
+
+      <button type="button" class="surprise" id="surprise" title="Surprise me: show a random colliery" aria-label="Surprise me: show a random colliery">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3.5" y="3.5" width="17" height="17" rx="3.5"/>
+          <circle cx="8.5" cy="8.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="8.5" r="1.2" fill="currentColor" stroke="none"/>
+          <circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/>
+          <circle cx="8.5" cy="15.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor" stroke="none"/>
+        </svg>
+      </button>
 
       <div class="search" role="search">
         <label for="search-input" class="visually-hidden">Find a colliery by name</label>
@@ -52,6 +82,8 @@
         <ul id="search-results" class="search-results" role="listbox" hidden></ul>
       </div>
     </div>
+
+    <div class="site-menu" id="site-menu"></div>
   </header>
 
   <main class="stage">
@@ -60,7 +92,7 @@
     <div id="status" class="status" role="status" hidden></div>
 
     <aside id="panel" class="panel" aria-labelledby="panel-name" aria-hidden="true" tabindex="-1">
-      <div class="sheet-handle" aria-hidden="true"></div>
+      <button type="button" class="sheet-handle" aria-label="Show more details" aria-expanded="false"></button>
       <button type="button" class="panel-close" aria-label="Close details">&times;</button>
 
       <figure class="panel-photo">
@@ -85,6 +117,11 @@
         <h3>History</h3>
         <p id="panel-history" class="history"></p>
 
+        <div id="panel-estimate-wrap" class="confidence estimate" hidden>
+          <h3>Closing year is an estimate</h3>
+          <p id="panel-estimate"></p>
+        </div>
+
         <div id="panel-confidence-wrap" class="confidence" hidden>
           <h3>How sure is this?</h3>
           <p id="panel-confidence"></p>
@@ -104,10 +141,30 @@
     </aside>
   </main>
 
+  <!-- Full-screen photo viewer: opens when a photo in the panel is tapped -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+    <div class="lb-stage" id="lb-stage">
+      <img class="lb-img" id="lb-img" alt="" draggable="false">
+    </div>
+    <button type="button" class="lb-btn lb-close" id="lb-close" aria-label="Close photo viewer">&times;</button>
+    <button type="button" class="lb-btn lb-nav lb-prev" id="lb-prev" aria-label="Previous photo">&#8249;</button>
+    <button type="button" class="lb-btn lb-nav lb-next" id="lb-next" aria-label="Next photo">&#8250;</button>
+    <div class="lb-info">
+      <div class="lb-top-row">
+        <span class="lb-count" id="lb-count"></span>
+        <span class="lb-hint" id="lb-hint">Pinch or double-tap to zoom</span>
+        <a class="lb-original" id="lb-original" target="_blank" rel="noopener">Open original ↗</a>
+      </div>
+      <p class="lb-caption" id="lb-caption"></p>
+      <p class="lb-credit" id="lb-credit"></p>
+    </div>
+  </div>
+
   <noscript><p class="status">This map needs JavaScript to load.</p></noscript>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="js/menu.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>About · Anthracite Collieries of Pennsylvania</title>
+  <meta name="description" content="About the Anthracite Collieries of Pennsylvania map: what it covers, how the research works, how to send corrections, and visiting sites safely.">
+  <link rel="icon" href="icons/headframe.svg" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Anthracite Collieries of Pennsylvania">
+  <meta property="og:title" content="About · Anthracite Collieries of Pennsylvania">
+  <meta property="og:description" content="What the map covers, how the research works, and how to send corrections.">
+  <meta property="og:url" content="https://theman42069.github.io/anthracite-collieries/about.html">
+  <meta property="og:image" content="https://theman42069.github.io/anthracite-collieries/icons/social-card.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/settings-store.js"></script>
+</head>
+<body class="page">
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Back to the map">
+      <img src="icons/headframe.svg" alt="" width="28" height="28">
+      <span class="brand-text">
+        <span class="brand-title">Anthracite Collieries</span>
+        <span class="brand-sub">of Pennsylvania</span>
+      </span>
+    </a>
+    <div class="site-menu" id="site-menu"></div>
+  </header>
+
+  <main class="page-main prose">
+    <h1>About this map</h1>
+    <p class="page-intro">A map of the collieries that once worked Pennsylvania's anthracite fields: where they stood, who ran them, what happened to them, and what's left today.</p>
+
+    <div class="stat-row" id="stats" aria-live="polite">
+      <div class="stat"><b id="stat-sites">–</b><span>sites mapped</span></div>
+      <div class="stat"><b id="stat-photos">–</b><span>historical photos</span></div>
+      <div class="stat"><b id="stat-sources">–</b><span>sources cited</span></div>
+      <div class="stat"><b id="stat-years">–</b><span>years covered</span></div>
+    </div>
+
+    <h2>What it covers</h2>
+    <p>The map starts with the Western Middle Field around Shamokin, Kulpmont and Mount Carmel, and will grow as more collieries are researched. Each site has its location, coal field, operators, years of operation, present-day condition, a short history, photos where available, and the sources behind every fact.</p>
+
+    <h2>Using the map</h2>
+    <ul>
+      <li><strong>Tap a pin</strong> for a colliery's photos, facts, history and sources. Pin color shows the coal field.</li>
+      <li><strong>Filter map</strong> (bottom left) narrows the map by coal field, operator, present-day condition, or the year a site was working.</li>
+      <li><strong>Collieries</strong> (top) lists every site; the search box finds sites by name, including former names.</li>
+      <li><strong>The layers button</strong> (top right) switches between satellite, old USGS topo maps, and modern maps.</li>
+      <li><strong>The target button</strong> (top left, under the zoom buttons) shows where you are, handy in the field on a phone.</li>
+      <li><strong>Sharing:</strong> each colliery's panel has a "Copy link" button that opens the map straight to that site.</li>
+      <li><strong>Menu → Settings</strong> lets you change the starting map, marker size, text size and more. Settings are saved on your device.</li>
+    </ul>
+
+    <h2>About the research</h2>
+    <p>Entries are compiled from Pennsylvania mine inspector reports, county histories, period newspapers, archival collections and local-history writers. Every fact on a colliery's panel should trace back to a source listed under it, and the <a href="sources.html">Sources page</a> lists them all.</p>
+    <p>Each entry also has a <strong>"How sure is this?"</strong> note. When sources disagree, for example on when a mine closed, the entry says so rather than picking one. Dates marked "c." are approximate, and dates that rest on a single source are marked as such.</p>
+
+    <h2>Corrections, photos and new sites</h2>
+    <p>Spotted a mistake, know a date, or have a photo you own the rights to? Please <a href="https://github.com/theman42069/anthracite-collieries/issues" target="_blank" rel="noopener">open an issue on GitHub</a> with what you know and where it comes from. Sources such as a newspaper clipping, report page or book page help most.</p>
+
+    <h2>Visiting sites safely</h2>
+    <div class="callout">
+      <p><strong>Abandoned mine land is dangerous.</strong> Old shafts and slopes can be hidden under brush or thin ground, culm banks can collapse or be burning underneath, strip pits hold deep, cold water, and old buildings are unstable. Most of these sites are also private property, much of it still owned by coal companies.</p>
+      <p>Please view sites from public roads, and never enter mine openings, ruins or posted land. The U.S. Mine Safety and Health Administration's advice sums it up: <strong>Stay Out, Stay Alive.</strong></p>
+    </div>
+
+    <h2>Credits</h2>
+    <p>Researched and compiled by Tom. Map imagery from Esri, OpenTopoMap and OpenStreetMap contributors; see the <a href="sources.html">Sources page</a> for full map and photo credits. Built with <a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>.</p>
+  </main>
+
+  <script src="js/menu.js"></script>
+  <script>
+    // Live counts from the same data file the map uses.
+    fetch('data/collieries.geojson', { cache: 'no-cache' })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var sites = 0, photos = 0, sources = {}, years = [];
+        (data.features || []).forEach(function (f) {
+          var p = f.properties || {};
+          if (f.geometry && f.geometry.type === 'Point') sites++;
+          if (p.photo_url) photos++;
+          photos += (Array.isArray(p.photos) ? p.photos.length : 0);
+          (Array.isArray(p.sources) ? p.sources : []).forEach(function (s) {
+            var key = (s && typeof s === 'object') ? (s.url || s.title) : s;
+            if (key) sources[String(key).trim().toLowerCase()] = true;
+          });
+          [p.year_opened, p.year_closed].forEach(function (y) {
+            var n = parseInt(y, 10);
+            if (isFinite(n)) years.push(n);
+          });
+        });
+        document.getElementById('stat-sites').textContent = sites;
+        document.getElementById('stat-photos').textContent = photos;
+        document.getElementById('stat-sources').textContent = Object.keys(sources).length;
+        document.getElementById('stat-years').textContent = years.length
+          ? Math.min.apply(null, years) + '–' + Math.max.apply(null, years) : '–';
+      })
+      .catch(function () { document.getElementById('stats').hidden = true; });
+  </script>
+</body>
+</html>
