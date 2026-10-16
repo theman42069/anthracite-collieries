@@ -1,0 +1,1172 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.43807, 40.783474] },
+      "properties": {
+        "id": "alaska-colliery",
+        "name": "Alaska Colliery",
+        "type": "colliery",
+        "operators": ["Philadelphia and Reading Coal and Iron Company", "Reading Anthracite Company"],
+        "status_tags": ["demolished", "strip-mined"],
+        "related": [
+          { "id": "reliance-colliery", "note": "Neighboring Philadelphia and Reading colliery; the Reliance Pit's 1958 expansion destroyed the village of Alaska." }
+        ],
+        "field": "Western Middle",
+        "county": "Northumberland County",
+        "nearest_town": "Mount Carmel (village of Alaska / Mount Carmel Junction)",
+        "operator": "Philadelphia and Reading Coal and Iron Company (1874–1954); Reading Anthracite Company (strip mining, 1950s–1960s)",
+        "years_active": "1874–1954",
+        "year_opened": 1874,
+        "year_closed": 1954,
+        "status": "Colliery structures demolished; site strip-mined and village of Alaska cleared by the mid-1960s",
+        "confidence": "Good. Exact open (1874, first shipment) and close (April 30, 1954, confirmed by a contemporary newspaper) dates.",
+        "history": "Begun in 1873 about two miles southwest of Mount Carmel to work the Mammoth Vein, the Alaska shaft shipped 2,510 tons on its first day in 1874, the same year a fire destroyed its unfinished engine, boiler and shaft houses. By 1899 it was the Reading Company's largest operation in the region, employing nearly 1,000 men and boys, and in 1913 the company set out to make it the largest electrically operated mine in the anthracite fields. Breaker fires in 1886 and 1926 each destroyed the plant. Rising pumping costs and dwindling profitable reserves led P.&R. C.&I. to close the colliery on April 30, 1954. The Reading Anthracite Company then strip-mined the site, demolishing the colliery and the century-old village of Alaska.",
+        "photo_url": "https://en.wikipedia.org/wiki/Special:FilePath/Alaska-colliery.jpg",
+        "photo_caption": "",
+        "photo_credit": "Unknown photographer, via Wikipedia (File:Alaska-colliery.jpg; Wikipedia gives its source as a document on CDC Stacks, stacks.cdc.gov). Public domain in the United States (published before 1931).",
+        "photos": [
+          {
+            "url": "photos/alaska-colliery-center.webp",
+            "caption": "\"Reading Anthracite Colliery Center. A colliery operation near Mt. Carmel, Pa., electrically equipped, and with high speed automatic machinery for dumping coal cars into the cleaner plant at the left.\" (caption printed with the photo)",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/alaska-aerial-sepia.webp",
+            "caption": "Aerial view of the colliery.",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/alaska-shaft-and-cleaner.webp",
+            "caption": "Headframe and plant building in winter.",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/alaska-aerial-overhead.webp",
+            "caption": "Overhead aerial view of the site.",
+            "credit": "TODO — add source and license"
+          }
+        ],
+        "sources": [
+          { "title": "Wikipedia: Alaska Colliery", "url": "https://en.wikipedia.org/wiki/Alaska_Colliery" },
+          { "title": "\"Alaska Colliery to Be Abandoned on April 30,\" Shamokin News-Dispatch, April 24, 1954", "url": "https://www.newspapers.com/article/shamokin-news-dispatch-apr-24-1954-alask/207825243/" },
+          { "title": "\"Tiny Village Falls Prey To Coal Industry,\" The Daily Item, June 11, 1958", "url": "https://www.newspapers.com/article/the-daily-item-alaska-village-falls/206794072/" },
+          { "title": "Report of the Department of Mines of Pennsylvania, 1904, p. 412", "url": "https://archive.org/details/reportofdepartme190401penn/page/412/mode/2up" }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.47382, 40.789136] },
+      "properties": {
+        "id": "scott-colliery",
+        "name": "Scott Colliery",
+        "type": "colliery",
+        "operators": ["Susquehanna Coal Company", "Susquehanna Collieries Company", "M.A. Hanna Company"],
+        "status_tags": ["demolished", "redeveloped"],
+        "field": "Western Middle",
+        "county": "Northumberland County",
+        "nearest_town": "Kulpmont",
+        "photos": [
+          {
+            "url": "photos/scott-breaker.jpg",
+            "caption": "Scott Colliery breaker (photo labeled \"Scott – Kulpmont\").",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/scott-panorama.jpg",
+            "caption": "Panoramic view of the colliery with the town beyond.",
+            "credit": "TODO — add source and license"
+          }
+        ],
+        "operator": "Susquehanna Coal Company (1894–1917); Susquehanna Collieries Company (1917–1922); Susquehanna Collieries Co., M.A. Hanna subsidiary (1922–1928)",
+        "years_active": "1898–1928",
+        "year_opened": 1898,
+        "year_closed": 1928,
+        "status": "Colliery demolished; grounds now the Kulpmont Veterans Memorial Sports Complex; Scott Ridge Mine Tunnel still discharges acid mine drainage",
+        "history": "The Susquehanna Coal Company, a Pennsylvania Railroad subsidiary, reached the site in 1894 with the 2.95-mile Scott Branch of the Shamokin Valley and Pottsville Railroad. The main hoisting shaft was sunk in 1898 by African American workers whose families settled in company homes at the end of Poplar Street, the first residential community in what became Kulpmont. Immigrant families followed in a 1905 building boom, and Kulpmont incorporated as a borough in 1915. Ownership passed to the Susquehanna Collieries Company in 1917, which electrified its mines by 1922, the same year the M.A. Hanna Company bought it out. The colliery closed in 1928. Its culm bank, south of the borough, caught fire in the years after the closing, but in 1975 it was still standing, its fire almost entirely burned out. The flooded workings still drain through the Scott Ridge Mine Tunnel into Shamokin Creek.",
+        "photo_url": "",
+        "photo_caption": "",
+        "photo_credit": "",
+        "sources": [
+          { "title": "Wikipedia: Scott Colliery", "url": "https://en.wikipedia.org/wiki/Scott_Colliery" },
+          { "title": "Pennsylvania State Archives, MG-463 Susquehanna Coal Company Records", "url": "https://www.phmc.state.pa.us/bah/dam/mg/mg463.htm" },
+          { "title": "Borough of Kulpmont, Other Information", "url": "https://boroughofkulpmont.org/kulpmont-borough/other-info/" },
+          { "title": "USGS, Scott Ridge Mine Tunnel at Kulpmont, PA", "url": "https://waterdata.usgs.gov/monitoring-location/USGS-404739076291901/" },
+          { "title": "The News-Item (Shamokin), 1928 — clipping on the Scott Colliery closing", "url": "https://www.newspapers.com/article/the-news-item-1928-scott-colliery-close/208284727/" },
+          "\"Scott Colliery dominates\" (photo and caption), The News-Item (Shamokin, Pa.), June 27, 1975, p. 12"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.40203, 40.803517] },
+      "properties": {
+        "id": "sayre-colliery",
+        "name": "Sayre Colliery",
+        "type": "colliery",
+        "operators": ["Lehigh Valley Coal Company"],
+        "status_tags": ["redeveloped", "mining continues"],
+        "field": "Western Middle",
+        "county": "Northumberland County",
+        "nearest_town": "Mount Carmel (Mount Carmel Township)",
+        "operator": "Lehigh Valley Coal Company",
+        "years_active": "c. 1905–c. 1930 (deep mining)",
+        "year_opened": 1905,
+        "year_closed": 1930,
+        "status": "Partly redeveloped (Den-Mar Gardens, Route 61 commercial sites); surface mining continues as Mallard Contracting Sayre Mine",
+        "history": "Named for Lehigh Valley Railroad vice president and chief engineer Robert H. Sayre, the colliery was developed by the Lehigh Valley Coal Company to replace the neighboring Mount Carmel (Stuartville) Colliery, which was abandoned in 1905. A deep vertical shaft sunk north of the old workings opened new sections of the Mammoth Vein, and the Lehigh Valley Railroad carried its coal to eastern markets. Deep mining ended around 1930, when the company shut its Western Middle Field operations as Depression-era prices fell and pumping costs mounted. In the 1960s Robert Kerris Sr. and Ed Helfrick acquired the property for strip mining. Parts of the land later became the Den-Mar Gardens neighborhood and commercial sites along Route 61.",
+        "photo_url": "https://en.wikipedia.org/wiki/Special:FilePath/Sayre_colliery.jpg",
+        "photo_caption": "",
+        "photo_credit": "Unknown photographer, 1926, via Wikipedia (File:Sayre_colliery.jpg). Public domain in the United States (published before 1931).",
+        "sources": [
+          { "title": "Wikipedia: Sayre Colliery", "url": "https://en.wikipedia.org/wiki/Sayre_Colliery" },
+          { "title": "Lykens Valley History, Coal Castles: Mount Carmel (Stuartville) Colliery", "url": "https://www.lykensvalley.org/coal-castles-mount-carmel-stuartville-colliery/" },
+          { "title": "PA DEP, 2023 Active Anthracite Coal Mining Permits", "url": "https://files.dep.state.pa.us/Mining/BureauOfMiningPrograms/BMPPortalFiles/Annual_Reports/AnthraciteAnnualReports/2023/2023AnthraciteOperatorsAddressInformation.pdf" }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.41895, 40.788099] },
+      "properties": {
+        "id": "reliance-colliery",
+        "name": "Reliance Colliery",
+        "type": "colliery",
+        "operators": ["Thos. Baumgardner & Co.", "Philadelphia and Reading Coal and Iron Company", "Reading Anthracite Company"],
+        "status_tags": ["demolished", "strip-mined", "mining continues"],
+        "field": "Western Middle",
+        "county": "Northumberland County",
+        "nearest_town": "Mount Carmel (Mount Carmel Township, on Locust Mountain south of the borough)",
+        "operator": "Thos. Baumgardner & Co. (1867–c. 1890s); Philadelphia and Reading Coal and Iron Company (by 1902–1956); Reading Anthracite Company (Reliance Pit strip mining, 1956–1960s)",
+        "years_active": "1867–1955 (deep mining)",
+        "year_opened": 1867,
+        "year_closed": 1955,
+        "status": "Colliery demolished; site worked as the Reliance Pit and now reprocessed as \"Reliance Bank\" by Gilberton Coal Company (MSHA Mine ID 3608533)",
+        "history": "Thos. Baumgardner & Co. sank the Reliance shaft on Locust Mountain south of Mount Carmel and shipped its first coal on January 16, 1867. The Philadelphia and Reading Coal and Iron Company had taken control by 1902, when it brought in armed deputies to guard the colliery during the anthracite strike. In 1896 Reliance shipped 134,216 tons and employed 436 men. A gas explosion at the Beaverdale Shaft on September 2, 1926, injured eight miners, and three of them died. From 1930 a cleaner plant at Reliance sent raw coal to the company's new Locust Summit Central Breaker. The mines feeding Locust Summit were put on standby in January 1955. The Reading Anthracite Company then strip-mined the site as the Reliance Pit, and its expansion in 1958 destroyed the neighboring village of Alaska.",
+        "photo_url": "https://en.wikipedia.org/wiki/Special:FilePath/Reliance_Breaker.jpg",
+        "photo_caption": "",
+        "photo_credit": "Unknown photographer, c. 1900, via Wikipedia (File:Reliance_Breaker.jpg). Public domain in the United States (published before 1931).",
+        "sources": [
+          { "title": "Wikipedia: Reliance Colliery", "url": "https://en.wikipedia.org/wiki/Reliance_Colliery" },
+          { "title": "Historic American Engineering Record, Locust Summit Central Breaker, HAER No. PA-203", "url": "https://tile.loc.gov/storage-services/master/pnp/habshaer/pa/pa2200/pa2248/data/pa2248data.pdf" },
+          { "title": "\"New Colliery,\" Sunbury Gazette and Northumberland County Democrat, February 2, 1867", "url": "https://www.newspapers.com/article/the-sunbury-gazette-and-northumberland/208212050/" },
+          { "title": "\"Tiny Village Falls Prey To Coal Industry,\" The Daily Item, June 11, 1958", "url": "https://www.newspapers.com/article/the-daily-item-alaska-village-falls/206794072/" }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.5639, 40.7937] },
+      "properties": {
+        "id": "glen-burn-colliery",
+        "name": "Glen Burn Colliery",
+        "other_names": ["Cameron Colliery", "The Gap"],
+        "type": "colliery",
+        "operators": ["Mineral Railroad & Mining Company", "Susquehanna Coal Company", "Susquehanna Collieries Company", "Stevens Coal Company", "Kerris & Helfrick Inc."],
+        "status_tags": ["demolished", "culm bank remains"],
+        "related": [
+          { "id": "scott-colliery", "note": "Also a Susquehanna Coal Company and Susquehanna Collieries Company operation." },
+          { "id": "sayre-colliery", "note": "Robert Kerris Sr. and Ed Helfrick acquired both properties in the 1960s." }
+        ],
+        "field": "Western Middle",
+        "county": "Northumberland County",
+        "nearest_town": "Shamokin / Coal Township",
+        "photos": [
+          {
+            "url": "photos/glen-burn-cameron-postcard.jpg",
+            "caption": "\"S-26 Cameron Colliery, Shamokin, Pa.\" (postcard from when the colliery was named Cameron).",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/glen-burn-gap-engraving.jpg",
+            "caption": "\"Gap Colliery & Breaker\" (engraving). The Gap was the site's earliest name.",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/glen-burn-breaker-culm-bank.jpg",
+            "caption": "\"View of Breaker and Culm Bank, Shamokin\" (caption printed with the photo).",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/glen-burn-breaker-plane.jpg",
+            "caption": "The breaker, with an inclined plane running up the mountainside behind it.",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/glen-burn-breaker-close.jpg",
+            "caption": "Close view of the breaker buildings and conveyors.",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/glen-burn-breaker-town.jpg",
+            "caption": "The breaker below the refuse bank, with the town beyond.",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/glen-burn-miners-walking.jpg",
+            "caption": "Three miners walking past the breaker.",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/glen-burn-mine-car.jpg",
+            "caption": "Miners in a mine car at the mouth of the slope.",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/glen-burn-locomotive.jpg",
+            "caption": "Miners on an underground mine locomotive.",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/glen-burn-coal-face.jpg",
+            "caption": "Two miners at work at the coal face.",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/glen-burn-underground.jpg",
+            "caption": "Two miners working underground.",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/glen-burn-mine-tour.jpg",
+            "caption": "Visitors in hard hats on the public mine tour car, under a sign reading \"Glen Burn Mine: World's 1st Tour of a Working Anthracite Mine.\"",
+            "credit": "TODO — add source and license"
+          }
+        ],
+        "operator": "Mineral Railroad & Mining Co. (Pennsylvania Railroad / Northern Central), to 1917; Susquehanna Coal Co., to 1917; Susquehanna Collieries Co., 1917–1930s; Stevens Coal Co. (lessee), 1930s–1940; Susquehanna, 1940–1966; Kerris & Helfrick Inc., 1966–c.1970; independent operator (unconfirmed), late 1980s–c.1995",
+        "years_active": "c. 1836/37–1970 (deep mining); known as Cameron Colliery 1862/64–1940, Glen Burn from 1940",
+        "year_opened": 1836,
+        "year_closed": 1970,
+        "status": "Breaker razed (1986 per one source, 2000 per another — unresolved); large culm bank remains along PA Route 61, leased to Reading Anthracite Co. for reprocessing",
+        "history": "Worked from the late 1830s as small drift mines known as the Gap, the site passed to William Cameron in 1841 and was formally renamed the Cameron Colliery in the 1860s. The Pennsylvania Railroad's Mineral Railroad & Mining Company ran it through the turn of the century, building a 224-locker bathhouse in 1912. Ownership passed to the Susquehanna Coal Company and then, in 1917, to the Susquehanna Collieries Company. Leased to the Stevens Coal Company in the 1930s, which built a new breaker in 1937, the mine returned to Susquehanna control in March 1940 and was renamed Glen Burn. Production peaked in 1942 at 627,158 tons. Kerris & Helfrick Inc. bought the property in 1966 and ran a public mine tour from 1968 to 1977. Deep mining ended in 1970. A later small independent operation is reported to have worked the site from the late 1980s to about 1995, though this is unconfirmed. The colliery's large refuse bank, long a local landmark, still stands beside Route 61.",
+        "photo_url": "",
+        "photo_caption": "",
+        "photo_credit": "",
+        "sources": [
+          { "title": "Pennsylvania State Archives, MG-463 Susquehanna Coal Company Records", "url": "https://www.phmc.state.pa.us/bah/dam/mg/mg463.htm" },
+          { "title": "Underground Miners, Glen Burn (Cameron) Colliery", "url": "https://undergroundminers.com/glen-burn-cameron-colliery/" },
+          { "title": "The Daily Item, \"Hidden History: 46-year-old Glen Burn Colliery mining tour shuttle...\" (2023)", "url": "https://www.dailyitem.com/news/hidden-history-46-year-old-glen-burn-colliery-mining-tour-shuttle-being-restored-by-welding/article_520d38d0-83e2-11ee-a474-1f4e145b6efd.html" },
+          { "title": "Dalado Photography, Glen Burn Colliery", "url": "https://www.daladophotography.com/OldPhotographs/Old-Coal-Mining/GlenBurnColliery/i-FJXb5fZ" },
+          { "title": "Legacy.com, Robert Kerris obituary (The News-Item, 2018)", "url": "https://www.legacy.com/us/obituaries/newsitem/name/robert-kerris-obituary?id=13309835" }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.53840, 40.772283] },
+      "properties": {
+        "id": "big-mountain-colliery",
+        "name": "Big Mountain Colliery",
+        "type": "colliery",
+        "operators": ["Jacob Mowry", "Sheff & Black", "Bird, Douty & John", "J. Langdon & Co.", "Edward Patterson, Llewellyn & Co.", "Philadelphia and Reading Coal and Iron Company"],
+        "status_tags": [],
+        "related": [
+          { "id": "burnside-colliery", "note": "From July 1933 to January 1935, Burnside's drainage water was diverted to the Big Mountain shaft pump." }
+        ],
+        "field": "Western Middle",
+        "county": "Northumberland County",
+        "nearest_town": "Shamokin (Coal Township), about 1.5 miles south",
+        "photos": [
+          {
+            "url": "photos/big-mountain-colliery.webp",
+            "caption": "The colliery's wooden breaker and headframe, with an inclined plane running up the refuse bank.",
+            "credit": "TODO — add source and license"
+          }
+        ],
+        "operator": "Jacob Mowry (1837–1840); Sheff & Black (1845–1856); Bird, Douty & John (1856–1867); J. Langdon & Co. (1867–1873); Edward Patterson, Llewellyn & Co. (1873–1886); Philadelphia & Reading Coal and Iron Co. (1886–1934, operated as part of the Henry Clay Colliery)",
+        "years_active": "1837–1934",
+        "year_opened": 1837,
+        "year_closed": 1934,
+        "status": "Pumping suspended and colliery abandoned, January 1934; flooded",
+        "history": "Opened by Jacob Mowry in 1837 on the Mammoth Vein, the colliery passed through several lessees before Bird, Douty & John took it over around 1856 — independently confirmed by Bell's 1891 county history, which records John Blundin Douty leasing the \"Big Mountain colliery\" around October 1856. J. Langdon & Co. worked the Buck Ridge side from 1867 and opened the Mahanoy Drifts in 1869. The Philadelphia & Reading Coal and Iron Company took over in 1886 and ran it thereafter as a section of the Henry Clay Colliery, sinking a new slope in 1903 and driving a tunnel to the Lykens Valley vein in 1919. Reading suspended pumping and abandoned the mine in January 1934, letting it flood. Total shipments reached 2,442,806 tons by 1886; later output was counted together with the Henry Clay Colliery and not reported separately. Its shaft pump was still in service as of 1933–1935, handling drainage water diverted from the nearby, by-then-closed Burnside Colliery.",
+        "confidence": "Medium. Operational dates and production rest mainly on one secondary source (the Blase/Pottsville Republican series). Independently corroborated only for the mid-1850s lease to Bird, Douty & John, via Bell 1891. Later dates (1886 takeover, 1934 closure) are single-sourced.",
+        "photo_url": "",
+        "photo_caption": "",
+        "photo_credit": "",
+        "sources": [
+          { "title": "Lykens Valley: History & Genealogy, Big Mountain Colliery (citing Frank Blase, Reading Anthracite Co. Historical Library, Pottsville Republican & Herald, June 14, 1997)", "url": "https://www.lykensvalley.org/?p=54949" },
+          { "title": "Genealogy Trails, Bell's History of Northumberland County (1891), p. 882", "url": "https://genealogytrails.com/penn/northumberland/d3_bio.html" },
+          "Genealogical and Biographical Annals of Northumberland County (1911), p. 96"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.53128, 40.778308] },
+      "properties": {
+        "id": "greenback-colliery",
+        "name": "Greenback Colliery",
+        "type": "colliery",
+        "operators": ["Philadelphia and Reading Coal and Iron Company"],
+        "status_tags": ["nothing remains"],
+        "related": [
+          { "id": "buck-ridge-colliery", "note": "The two collieries' underground workings connected; the 1884 Buck Ridge fire led to the disaster that killed eight men at Greenback." }
+        ],
+        "field": "Western Middle",
+        "county": "Northumberland County",
+        "nearest_town": "Shamokin (Greenback Patch)",
+        "operator": "Unnamed early operator (early 1870s–c. 1884); Philadelphia & Reading Coal and Iron Company (purchased shortly before August 1884, abandoned c. 1889)",
+        "years_active": "Early 1870s – c. 1889",
+        "year_opened": 1871,
+        "year_closed": 1889,
+        "status": "Abandoned by Philadelphia & Reading shortly after a May 31, 1889 gas explosion; site later used as a smallpox isolation center around the turn of the century; the Greenback Patch community has entirely disappeared",
+        "history": "Greenback Colliery and its \"mine patch\" were built in the early 1870s, two and a half miles east of Shamokin, and named after the Greenback Party, then a rising political movement — confirming the colliery's existence by 1871, when it also appears (as \"Greenbaok,\" an OCR misreading) in the index of the Pennsylvania mine inspector's Third (Shamokin) District annual report. In size it compared with the Benjamin Franklin, Buck Ridge, and Garfield collieries. It was considered hazardous from the start because of free gas, with frequent gas explosions caused by open-flame lighting. Early settlers were German Catholics who later resettled in Shamokin; in the late 1880s some of the area's first Ukrainian immigrants settled there instead. At its height the patch held about 10 two-family wooden-frame homes and a public school (no churches; union religious services were held in the schoolhouse), and two passenger trains stopped there daily besides the local miners' trains. The Philadelphia & Reading Coal and Iron Company had purchased the colliery shortly before August 21, 1884, when a gas explosion/asphyxiation disaster killed eight men while crews worked to flood the adjoining, burning Buck Ridge mine — the two collieries' underground workings connected. On May 31, 1889, the day of the Johnstown Flood, a second gas explosion in the Greenback Slope injured 22 men; Philadelphia & Reading abandoned the Greenback mine shortly afterward, around 1889. The same account states Buck Ridge Colliery was abandoned at the same time, for the same reason — see the note on Buck Ridge's entry, since this conflicts with another source's claim of a c. 1900 Buck Ridge abandonment. The miners who lost work slowly moved elsewhere, and the patch was later used as an isolation center during a smallpox epidemic around the turn of the century. Nothing of Greenback remains today.",
+        "confidence": "Medium. The 1884 disaster is well-documented (contemporary NYT report + state annual report). The 1871 existence is a bare index listing. The rest — founding date, naming, demographics, the 1889 explosion and abandonment, and the smallpox-isolation use — comes from a single reader-submitted reminiscence published decades after the fact in a local-history newspaper column. It's detailed and specific (a dated event, a named contributor), which is worth more than an anonymous claim, but it is still one uncorroborated secondary account, not a contemporary record. Treat the 1889 closure as credible but not certain.",
+        "photo_url": "",
+        "photo_caption": "",
+        "photo_credit": "",
+        "sources": [
+          { "title": "United States Mine Rescue Association, Greenback/Buckridge Colliery Fire (1884), citing The New York Times, \"Eight Lives Lost at the Buckridge Colliery,\" August 22, 1884, and the 1884 Pennsylvania Mine Inspector's Annual Report", "url": "https://usminedisasters.miningquiz.com/saxsewell/greenback.htm" },
+          "Pennsylvania Mine Inspector, Third (Shamokin) Anthracite District, Annual Report, 1871 (index listing)",
+          { "title": "Shamokin News-Dispatch, local-history column, recollection submitted by Louis Poliniak of 1017 North Washington Street", "url": "https://www.newspapers.com/article/shamokin-news-dispatch-greenback/198206400/" }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.56254, 40.768646] },
+      "properties": {
+        "id": "burnside-colliery",
+        "name": "Burnside Colliery",
+        "type": "colliery",
+        "operators": ["Stephen Bittenbender Son & Co.", "Isaac May & Co.", "Philadelphia and Reading Coal and Iron Company"],
+        "status_tags": [],
+        "field": "Western Middle",
+        "county": "Northumberland County",
+        "nearest_town": "Shamokin (Coal Township), about 2.5 miles south, on the Big Mountain Improvement Company tract",
+        "photos": [
+          {
+            "url": "photos/burnside-breaker-yard.jpg",
+            "caption": "The breaker and yard, with loaded railroad cars, a headframe at right and automobiles on the road.",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/burnside-breaker.jpg",
+            "caption": "The breaker and surrounding buildings below the refuse bank.",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/burnside-lawn-sign.jpg",
+            "caption": "\"Burnside Colliery\" spelled out on the hillside lawn, with railroad boxcars and mules in the foreground.",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/burnside-headframe.jpg",
+            "caption": "Headframe with mine cars, railroad boxcars and steam pipes in the foreground.",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/burnside-buildings.jpg",
+            "caption": "Colliery buildings and steam pipes along the wooded hillside.",
+            "credit": "TODO — add source and license"
+          }
+        ],
+        "operator": "Stephen Bittenbender Son & Co. (1863–1871); Isaac May & Co. (1871–1878); Philadelphia & Reading Coal and Iron Co. (1878–1933)",
+        "years_active": "1863–1933",
+        "year_opened": 1863,
+        "year_closed": 1933,
+        "status": "Abandoned; pumping suspended March 26, 1933, drainage diverted to the Big Mountain Colliery shaft pump 1933–1935",
+        "history": "Opened in 1863 by Stephen Bittenbender Son & Co. with a drift on the Topsput Mammoth Vein, first shipping 20,257 tons in 1864. Isaac May & Co. took over in 1871 and sank slopes on the Holmes and South Dip Top Split Mammoth veins. The Philadelphia & Reading Coal and Iron Company took possession in 1878 and developed it for large-scale production, sinking the main shaft on the Skidmore Vein in 1897 to a third level at 724 feet. Total shipments reached 12,965,738 tons by 1928. Pumping was suspended March 26, 1933, and the colliery abandoned; a drainage tunnel kept its water from reaching the adjoining Sterling Colliery, and from July 1933 to January 1935 that water was diverted to the Big Mountain Colliery's shaft pump before a brick dam sealed the tunnel.",
+        "confidence": "Medium. All operational detail traces to one secondary source (confirmed consistent across two separate postings of the same article), not independently cross-checked against a primary report. The exact closure date (March 26, 1933) is plausible and specific but single-sourced.",
+        "photo_url": "",
+        "photo_caption": "",
+        "photo_credit": "",
+        "sources": [
+          { "title": "Lykens Valley: History & Genealogy, Coal Castles: Burnside Colliery (citing Frank Blase, Reading Anthracite Co. Historical Library, Pottsville Republican & Herald, Feb. 1–2, 1997)", "url": "https://www.lykensvalley.org/coal-castles-burnside-colliery/" }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.5919, 40.769638] },
+      "properties": {
+        "id": "bear-valley-colliery",
+        "name": "Bear Valley Colliery",
+        "type": "colliery",
+        "operators": ["Shamokin and Bear Valley Coal Company", "Booth, Loeb & Foltz", "Heim, Goodwill & Co.", "Philadelphia and Reading Coal and Iron Company", "Bear Valley Coal Company"],
+        "status_tags": ["strip-mined"],
+        "field": "Western Middle",
+        "county": "Northumberland County",
+        "nearest_town": "Shamokin (Coal Township), about 3.5 miles southwest",
+        "photos": [
+          {
+            "url": "photos/bear-valley-colliery-view.jpg",
+            "caption": "The colliery's breaker and yard beside the railroad tracks.",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/bear-valley-breaker-boys.webp",
+            "caption": "Workers posed with a sign reading \"Bear Valley Breaker Boys, 100% Goggles.\"",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/bear-valley-lumber-yard.jpg",
+            "caption": "Mine timber stacked in the yard below the breaker, with a Pennsylvania Railroad car in the foreground.",
+            "credit": "TODO — add source and license"
+          }
+        ],
+        "operator": "Shamokin and Bear Valley Coal Co. (1863–1870, lessees Booth, Loeb & Foltz then Heim/Goodwill & Co.); Philadelphia & Reading Coal and Iron Co. (1873/1878–1938); Bear Valley Coal Co. (1938–1939)",
+        "years_active": "1863–1939 (deep mining); surface stripping resumed during WWII",
+        "year_opened": 1863,
+        "year_closed": 1939,
+        "status": "Idled June 19, 1939; later surface-stripped for culm during WWII; site is now the Bear Valley Strip Mine, a geological landmark owned by Reading Anthracite Co.",
+        "history": "Developed from 1863 by the Shamokin and Bear Valley Coal Company, with a water-level tunnel reaching the Mammoth Vein and first shipment of 6,352 tons in 1864. Early lessees Booth, Loeb & Foltz failed quickly; Heim, Goodwill and Company leased the property from 1870. The Philadelphia and Reading Coal & Iron Company bought the Bear Valley lands in 1873 and became sole operator by 1878, sinking the No. 1 shaft to 319 feet under chief engineer Gen. Henry Pleasants and later a No. 2 shaft to 1,002 feet (1906–07). The colliery survived underground fires in 1883, 1884, and 1910. Total shipments reached 10,318,980 tons by 1928. Reading sold the colliery to the Bear Valley Coal Company in 1938, which idled it on June 19, 1939. During World War II the Coal & Iron Company began stripping and reprocessing the culm banks, exposing the folded rock formation now known as the \"Whaleback\"; the site, the Bear Valley Strip Mine, is today a recognized geology field-trip location.",
+        "confidence": "Good. Two independent sources agree exactly on the June 1939 closure and the Reading Anthracite / Philadelphia & Reading ownership chain. The strip-mine/geology material is separately and reliably sourced via Wikipedia and a peer-reviewed field guide.",
+        "photo_url": "",
+        "photo_caption": "",
+        "photo_credit": "",
+        "sources": [
+          { "title": "Lykens Valley: History & Genealogy, Coal Castles: Bear Valley Colliery (citing Frank Blase, Reading Anthracite Co. Historical Library, Pottsville Republican & Herald, Oct. 18–19, 1997)", "url": "https://www.lykensvalley.org/coal-castles-bear-valley-colliery/" },
+          { "title": "Wikipedia, Bear Valley Strip Mine", "url": "https://en.wikipedia.org/wiki/Bear_Valley_Strip_Mine" },
+          "Nickelsen, R.P., \"Sequence of structural stages of the Alleghany orogeny at the Bear Valley Strip Mine,\" GSA Centennial Field Guide, Northeastern Section, 1987"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.52385, 40.787184] },
+      "properties": {
+        "id": "buck-ridge-colliery",
+        "name": "Buck Ridge Colliery",
+        "other_names": ["Buckridge Colliery", "Buck Ridge No. 1 & 2"],
+        "type": "colliery",
+        "operators": ["Philadelphia and Reading Coal and Iron Company", "Buck Ridge Coal Mining Company", "Puritan Coal Mining Company", "Junior Coal Company"],
+        "status_tags": ["structures standing"],
+        "field": "Western Middle",
+        "county": "Northumberland County",
+        "nearest_town": "Ranshaw",
+        "photos": [
+          {
+            "url": "photos/buck-ridge-breaker.webp",
+            "caption": "The breaker, with a mine locomotive on the trestle and a Pennsylvania Railroad hopper car in the foreground.",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/buck-ridge-yard.webp",
+            "caption": "Colliery yard with buildings, rail cars and equipment below the hillside.",
+            "credit": "TODO — add source and license"
+          }
+        ],
+        "operator": "Operator before 1884 not established; Philadelphia & Reading Coal and Iron Co. owned it through at least 1884, abandoned it either c. 1889 (per one source) or c. 1900 (per another, conflicting source); Buck Ridge Coal Mining Co. (1903–mid-1920s, incorporated 1911, bought the property 1923); later Puritan Coal Mining Co.; Junior Coal Co. (1931–32)",
+        "years_active": "By 1871 – 1931/32, with a gap of uncertain length before the 1903 reopening (one source says the gap began c. 1889, another says c. 1900)",
+        "year_opened": null,
+        "year_closed": 1932,
+        "status": "Wound down by Junior Coal Co. in 1931–32; deteriorating breaker and mine ruins remain at the edge of Ranshaw",
+        "history": "Confirmed operating by February 1871, when the Pennsylvania mine inspector's Third (Shamokin) District report records a fatality there (a worker \"killed by drift wagons\" on February 17, 1871) and lists the colliery in its district index. It was a Philadelphia & Reading property by August 1884, when a fire at Buck Ridge (spelled \"Buckridge\" in period reporting) threatened the adjoining Greenback colliery and contributed to a disaster that killed eight men there — the two mines' underground workings connected. Two sources disagree on when Reading abandoned Buck Ridge: a reminiscence published in the Shamokin News-Dispatch states that Buck Ridge was abandoned together with Greenback, shortly after a gas explosion on May 31, 1889, throwing miners at both collieries out of work; a separate, uncited website (Coalcampusa) instead gives a c. 1900 abandonment. Both agree the Buck Ridge Coal Mining Company leased and reopened the property in 1903 as Buck Ridge No. 1 & 2, incorporating in 1911 and buying it outright in 1923, running into legal trouble by the mid-1920s, then passing to the Puritan Coal Mining Company before the Junior Coal Company wound operations down in 1931–32. Parts of the surviving breaker may date to the 19th century, with a lower section added in the 20th century.",
+        "confidence": "Medium for 1871–1884 (two independent primary/near-primary sources). Mixed for the abandonment date: two secondary sources give two different years (1889 vs. 1900) for the same event, and neither can be checked against a primary record yet — don't treat either as settled. Reasonably solid for 1903–1932 (consistent across the sources that cover it).",
+        "photo_url": "",
+        "photo_caption": "",
+        "photo_credit": "",
+        "sources": [
+          { "title": "Coalcampusa.com, Western Middle Anthracite Coalfield, Misc.", "url": "https://coalcampusa.com/eastern-pennsylvania-anthracite/western-middle-anthracite-coalfield/western-middle-misc/western-middle-misc.htm" },
+          { "title": "United States Mine Rescue Association, Greenback/Buckridge Colliery Fire (1884), citing The New York Times, August 22, 1884", "url": "https://usminedisasters.miningquiz.com/saxsewell/greenback.htm" },
+          "Pennsylvania Mine Inspector, Third (Shamokin) Anthracite District, Annual Report, 1871 (death table and index listing)",
+          { "title": "Shamokin News-Dispatch, local-history column, recollection submitted by Louis Poliniak of 1017 North Washington Street", "url": "https://www.newspapers.com/article/shamokin-news-dispatch-greenback/198206400/" }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.53863, 40.790090] },
+      "properties": {
+        "id": "luke-fidler-colliery",
+        "name": "Luke Fidler Colliery",
+        "type": "colliery",
+        "operators": ["Susquehanna Coal Company", "Susquehanna Collieries Company"],
+        "status_tags": [],
+        "related": [
+          { "id": "scott-colliery", "note": "Another of the Susquehanna Coal Company's Northumberland County mines." },
+          { "id": "glen-burn-colliery", "note": "Another of the Susquehanna Coal Company's Northumberland County mines (then the Cameron Colliery)." }
+        ],
+        "field": "Western Middle",
+        "county": "Northumberland County",
+        "nearest_town": "Shamokin / Coal Run",
+        "photos": [
+          {
+            "url": "photos/luke-fidler-breaker-shamokin.jpg",
+            "caption": "\"Luke Fidler Breaker, Shamokin\" (caption printed with the photo).",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/luke-fidler-postcard.jpg",
+            "caption": "\"Luke Fidler Colliery, Shamokin, Pa.\" (hand-colored postcard).",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/luke-fidler-overview.jpg",
+            "caption": "The colliery from across the railroad tracks, with the breaker at right.",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/luke-fidler-trestle.jpg",
+            "caption": "Trestles, a water tank and colliery buildings beside the tracks.",
+            "credit": "TODO — add source and license"
+          }
+        ],
+        "operator": "Susquehanna Coal Company (one of seven mines it ran in the county, through 1917); Susquehanna Collieries Company (1917–December 1928)",
+        "years_active": "By 1871 – December 1928",
+        "year_opened": null,
+        "year_closed": 1928,
+        "status": "Abandoned December 1928 by the Susquehanna Collieries Company, along with the connected Hickory Swamp Slope near Coal Run",
+        "history": "Confirmed operating by 1871 via the Pennsylvania mine inspector's Third (Shamokin) District annual report index. Run by the Susquehanna Coal Company as one of seven Northumberland County mines (alongside the Cameron, Hickory Ridge, Hickory Swamp, Pennsylvania, Richards, and Scott collieries). A gas explosion in October 1894, caused by a carpenter carrying a lamp into the mine, killed five people and forced Luke Fidler and the connected Hickory Ridge Colliery to close for several months. A second gas explosion in November 1902 killed four more workers; the colliery employed about 1,000 men at that time. In 1917 ownership passed to the newly formed Susquehanna Collieries Company. In 1909 a concrete rescue station with four oxygen helmets and four Draeger electric rescue sets was built at the colliery, confirmed in that year's state mine inspector report. The Susquehanna Collieries Company abandoned Luke Fidler Colliery, along with the attached Hickory Swamp Slope near Coal Run, in December 1928. The slope was reopened independently around 1935 under an agreement with local miners, with its coal shipped by rail to the Pennsylvania Colliery west of Green Ridge for preparation — but Luke Fidler itself was not reopened.",
+        "confidence": "Good for the closure date: a contemporary newspaper article states plainly that \"the slope along with Luke Fidler Colliery was abandoned in December of 1928,\" naming the Susquehanna Collieries Company. Good for the 1871 origin and the 1894/1902 explosion dates and death tolls (archival/primary sources). The full operating history in between (1871–1894, 1902–1917) is not filled in by any source found.",
+        "photo_url": "",
+        "photo_caption": "",
+        "photo_credit": "",
+        "sources": [
+          { "title": "Pennsylvania State Archives, MG-463: Susquehanna Coal Company Records", "url": "https://www.phmc.state.pa.us/bah/dam/mg/mg463.htm" },
+          "Pennsylvania Mine Inspector, Third (Shamokin) Anthracite District, Annual Report, 1871 (index listing) and 1909 (rescue station)",
+          { "title": "Mount Carmel Item, \"Swamp Slope Is Reopened,\" Aug. 14, 1928 (Newspapers.com)", "url": "https://www.newspapers.com/article/mount-carmel-item-aug-14-1928-luke-filde/208289990/" }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.54822, 40.778113] },
+      "properties": {
+        "id": "henry-clay-colliery",
+        "name": "Henry Clay Colliery",
+        "type": "colliery",
+        "operators": ["John Douty & Son", "Bird Douty & Company", "Douty & Baumgartner", "Fulton Coal Company", "Robert Ammerman & Company", "Robertson, Gutterman & Company", "J. Langdon, Fulton & Company", "Philadelphia and Reading Coal and Iron Company"],
+        "status_tags": ["demolished"],
+        "related": [
+          { "id": "big-mountain-colliery", "note": "Run by Philadelphia & Reading as a section of the Henry Clay Colliery; its coal went to the Henry Clay breaker." },
+          { "id": "sterling-colliery", "note": "One of the mines whose coal was processed through the rebuilt Henry Clay breaker from 1886." }
+        ],
+        "field": "Western Middle",
+        "county": "Northumberland County",
+        "nearest_town": "Shamokin (Coal Township), just south of Shamokin",
+        "photos": [
+          {
+            "url": "photos/henry-clay-postcard.jpg",
+            "caption": "\"Henry Clay Colliery, Shamokin, Pa.\" The breaker, with a headframe on the hill at left (hand-colored postcard).",
+            "credit": "TODO — add source and license (early postcard; likely public domain if published before 1931)"
+          },
+          {
+            "url": "photos/henry-clay-breaker-tracks-color.jpg",
+            "caption": "The breaker beside the railroad curve, with two men sitting by the tracks (colorized).",
+            "credit": "TODO — add source and license; also credit the colorizer. Confirm it shows Henry Clay."
+          },
+          {
+            "url": "photos/henry-clay-snow-town.jpg",
+            "caption": "Colliery buildings in winter, with the town spread across the valley behind (colorized).",
+            "credit": "TODO — add source and license; also credit the colorizer. Confirm it shows Henry Clay."
+          }
+        ],
+        "operator": "John Douty & Son (1849–1852); Bird Douty & Company (1852–1855, failed); Douty & Baumgartner (leased 1856, breaker built 1859); Fulton Coal Company / Hass & Bower (1860–1862); Robert Ammerman & Company (1862–1868, J.B. Douty as agent); Robertson, Gutterman & Company (1868–1873); J. Langdon, Fulton & Company (1873–1885); Philadelphia & Reading Coal and Iron Company (1885–1933)",
+        "years_active": "1849–1939 (breaker dismantled); breaker operated 1886–1932, mine pumping stopped November 1933",
+        "year_opened": 1849,
+        "year_closed": 1933,
+        "status": "Rebuilt breaker ran Nov 22, 1886 – 1932; mine pumping stopped and colliery abandoned November 1933; breaker dismantled 1939",
+        "history": "Opened in 1849 by John Douty & Son with a drift on the North Dip Bottom Split Mammoth Vein south of Shamokin, the colliery changed hands repeatedly over its first decades: Bird Douty & Company failed in 1855, Douty & Baumgartner leased the property in 1856 and built a breaker in 1859, and it passed in turn to the Fulton Coal Company (Hass & Bower, 1860–62), Robert Ammerman & Company (1862–68, with J.B. Douty as agent), and Robertson, Gutterman & Company (1868–73) before J. Langdon, Fulton & Company took over in 1873. The main shaft was sunk to 345 feet in 1876 and later extended to 865 feet (1897). The Philadelphia & Reading Coal and Iron Company took control in 1885, and on November 22, 1886 started operations at a newly rebuilt, massive Henry Clay breaker that processed coal from the Big Mountain, Peerless, and Sterling mines, with a capacity of about 1,500 wagons (300 carloads) per day; coal from the Big Mountain mine was hauled in by small locomotives pulling 20-wagon trains, making 20–25 trips daily. The breaker operated until 1932. Mine pumping was stopped and the colliery abandoned in November 1933, and the breaker itself was dismantled in 1939.",
+        "confidence": "Good for dates. Open (1849) and pumping-stop/abandonment (November 1933) from the Lykens Valley source; breaker rebuild/startup (Nov 22, 1886), breaker closure (1932), and dismantling (1939) from Tom's research, not yet cross-checked against a second independent source. Note the two different end dates refer to different things: the breaker stopped processing coal in 1932, while the mine itself kept pumping until November 1933. Coordinates supplied by Tom.",
+        "photo_url": "",
+        "photo_caption": "",
+        "photo_credit": "",
+        "sources": [
+          { "title": "Lykens Valley: History & Genealogy, Coal Castles: Henry Clay Colliery", "url": "https://www.lykensvalley.org/?p=47758" },
+          "Tom (research notes): Nov. 22, 1886 breaker startup, capacity, locomotive haulage, 1932 breaker shutdown, 1939 dismantling"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.5681, 40.777263] },
+      "properties": {
+        "id": "sterling-colliery",
+        "name": "Sterling Colliery",
+        "other_names": ["Stirling Colliery"],
+        "type": "colliery",
+        "operators": ["Fulton & Kendricks", "Philadelphia and Reading Coal and Iron Company"],
+        "status_tags": [],
+        "related": [
+          { "id": "burnside-colliery", "note": "Adjoining workings; in 1933 a drainage tunnel kept Burnside's water out of Sterling." }
+        ],
+        "field": "Western Middle",
+        "county": "Northumberland County",
+        "nearest_town": "Shamokin (Coal Township), adjoining the Henry Clay and Burnside collieries",
+        "operator": "Philadelphia & Reading Coal and Iron Company (by 1886, as one of the mines feeding the rebuilt Henry Clay breaker)",
+        "years_active": "By 1886 – c. 1933 (closing year estimated)",
+        "year_opened": null,
+        "year_closed": 1933,
+        "closed_estimated": true,
+        "closed_estimate_note": "Estimated 1933. Sterling's coal went through the Henry Clay breaker from 1887, and its workings were reached through the Henry Clay mine. Philadelphia & Reading stopped pumping and abandoned the Henry Clay operation in November 1933. Sterling's workings were still being protected from Burnside's water earlier that year, so it most likely closed with Henry Clay. No record names Sterling's own closing date.",
+        "status": "Adjoined the Burnside Colliery workings; in 1933 a drainage tunnel was driven to keep Burnside's water from flowing into Sterling's workings",
+        "history": "Sterling was one of three mines (with Big Mountain and Peerless) whose coal was processed through the newly rebuilt Henry Clay breaker starting November 22, 1886. It adjoined the Burnside Colliery's workings: when Burnside's pumping was suspended on March 26, 1933, Philadelphia & Reading drove a drainage tunnel to keep Burnside's water from flooding into the adjoining Sterling Colliery. No source found yet gives Sterling's own opening date, closing date, or independent operating history — it may have been worked and reported as part of the Henry Clay group rather than as a separately tracked colliery.",
+        "confidence": "Low-medium. Existence and adjacency to Henry Clay/Burnside are confirmed by two independent mentions, but no exact open or close date has been found — only that it was active by 1886 and still had workings worth protecting in 1933. Coordinates supplied by Tom, consistent with the nearby USGS-named monitoring point.",
+        "photo_url": "",
+        "photo_caption": "",
+        "photo_credit": "",
+        "photos": [
+          {
+            "url": "photos/sterling-engraving-fulton-kendricks.jpg",
+            "caption": "\"Stirling Colliery, Fulton & Kendricks, Proprietors. Coal Tp., North'd Co., Pa.\" (19th-century engraving)",
+            "credit": "TODO — add source (19th-century engraving, probably from a county atlas; public domain by age)"
+          },
+          {
+            "url": "photos/sterling-slope-portal-1934.jpg",
+            "caption": "Workers at the concrete slope portal dated \"Nov 1934\", the entrance to the Henry Clay and Sterling mines.",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/sterling-slope-portal-water.jpg",
+            "caption": "The same \"Nov 1934\" portal with mine water pouring out.",
+            "credit": "TODO — add source and license"
+          }
+        ],
+        "sources": [
+          { "title": "Lykens Valley: History & Genealogy, Coal Castles: Henry Clay Colliery", "url": "https://www.lykensvalley.org/?p=47758" },
+          { "title": "Lykens Valley: History & Genealogy, Coal Castles: Burnside Colliery", "url": "https://lykensvalley.org/?p=47748" },
+          "Engraving: \"Stirling Colliery, Fulton & Kendricks, Proprietors, Coal Tp., North'd Co., Pa.\" (19th century) — supplied by Tom",
+          { "title": "USGS, \"Henry Clay Sterling Mine\" monitoring site, Shamokin, PA (USGS-404637076340701)", "url": "https://waterdata.usgs.gov/monitoring-location/USGS-404637076340701" },
+          { "title": "Coalcampusa.com, Western Middle Anthracite Coalfield, Misc. (Henry Clay and Sterling slope portal)", "url": "https://coalcampusa.com/eastern-pennsylvania-anthracite/western-middle-anthracite-coalfield/western-middle-misc/western-middle-misc.htm" }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.43554, 40.800956] },
+      "properties": {
+        "id": "sioux-colliery",
+        "name": "Sioux Colliery",
+        "other_names": ["Girard Colliery", "Sioux Mine"],
+        "type": "colliery",
+        "operators": ["Lehigh Valley Coal Company", "Black Diamond Mining Inc."],
+        "status_tags": ["strip-mined"],
+        "related": [
+          { "id": "glen-burn-colliery", "note": "Coal from the 1930s Sioux stripping was to be prepared at the new Cameron (later Glen Burn) breaker." },
+          { "id": "sayre-colliery", "note": "Also a Lehigh Valley Coal Company colliery." }
+        ],
+        "field": "Western Middle",
+        "county": "Northumberland County",
+        "nearest_town": "Mount Carmel area (Saylor Estate tract, near Atlas)",
+        "operator": "Unknown original operator (as \"Girard Colliery\"); Lehigh Valley Coal Company (took over and renamed it Sioux, date unknown); Black Diamond Mining Inc. (modern reclamation/strip operation, active as of 2009)",
+        "years_active": "Opening date as Girard Colliery unknown; renamed Sioux Colliery under Lehigh Valley Coal Co. by 1901; deep mining ended c. 1930 (estimated). Already \"old\" (idle) by c. 1936-37, when the Stevens Coal Co. stripped it along with the adjoining Black Diamond Colliery for the new Cameron breaker. A \"Sioux Mine\" was still being worked/reclaimed as of 2009 (PA DEP records).",
+        "year_opened": null,
+        "year_closed": 1930,
+        "closed_estimated": true,
+        "closed_estimate_note": "Estimated c. 1930 for the end of deep mining. The Lehigh Valley Coal Company closed its deep mining operations across the Western Middle Field around 1930, as Depression-era coal prices fell (the same shutdown ended deep mining at its Sayre Colliery). Sioux was a Lehigh Valley colliery and is described as \"old\" and idle by the mid-1930s stripping. No record names Sioux's own closing date. Later strip and reclamation work is not counted here.",
+        "status": "Deep mine idle by the mid-1930s; portions strip-mined c. 1936-37 by the Stevens Coal Co. (coal prepared at the new Cameron breaker and the Trout Run washery); reworked again in modern times as a surface/reclamation operation",
+        "history": "Originally operated as the Girard Colliery, working the No. 8 and No. 9 veins on the Saylor Estate tract near Atlas/Mount Carmel. By 1901 the Lehigh Valley Coal Company had taken over the property and renamed it the Sioux Colliery; contemporary 1901 newspaper coverage describes Lehigh Valley making extensive improvements after taking hold of it — new monkey rollers, a steam line, and a water line installed in one report, and a new hoisting rope placed in the South slope in another, which also states plainly that \"the Sioux\" colliery \"is what was formerly the Girard colliery.\" By the mid-1930s Sioux was idle (\"old\"): a Shamokin News-Dispatch article, \"Huge Stripping To Start Monday,\" describes the Stevens Coal Company clearing culm banks near Exchange (coal prepared at the Trout Run Washery in Tharptown) ahead of large-scale stripping meant to reopen portions of the old Black Diamond and Sioux Collieries, with coal to be prepared at the new Cameron breaker and the Trout Run operation; Superintendent George Jones expected a peak workforce of 800. Since Glen Burn/Cameron's \"new\" breaker is independently dated to 1937 (built by the Stevens Coal Co. lessee), this stripping article is most likely from 1936 or 1937, though the clipping itself carries no date. No source found yet gives an exact opening date (as Girard) or a final closing date. A \"Sioux Mine\" operated by Black Diamond Mining Inc. (PA DEP permit 49990201) appears in 2009 Northumberland County anthracite refuse records — 124.8 surface acres, 55,058 tons produced that year, 4 employees — and its operator name closely echoes the 1930s-era \"Black Diamond Colliery\" worked alongside Sioux, suggesting continuity of the ground being reworked into the 21st century, though this isn't confirmed.",
+        "confidence": "Medium. The Girard-to-Sioux renaming and Lehigh Valley operation (1901), and the mid-1930s stripping tied to the Cameron breaker, are directly stated in primary newspaper clippings — good contemporary evidence, though no corroborating published source (Wikipedia, Lykens Valley, coalcampusa, USGS) was found, so this colliery appears to be undocumented outside what Tom has found directly. Opening (as Girard) and final closing dates still not established; the 1936-37 date for the stripping article is inferred, not stated outright. Coordinates supplied by Tom; the identically-named \"Girard Colliery\" findable online is a different, unrelated site near Girardville in Schuylkill County and should not be confused with this one.",
+        "photo_url": "",
+        "photo_caption": "",
+        "photo_credit": "",
+        "sources": [
+          "Historic mine map, label: \"Sioux Mine (Girard Mine Nos. 8 & 9 Veins)\", Saylor Estate tract — supplied by Tom",
+          "Newspaper clipping, \"Improvements at the Sioux Colliery,\" 1901 — supplied by Tom",
+          "Newspaper clipping, \"A New Rope,\" 1901 — \"...the Sioux colliery. The Sioux...is what was formerly the Girard colliery.\" — supplied by Tom",
+          { "title": "Shamokin News-Dispatch, \"Huge Stripping To Start Monday\" (undated, likely 1936-37), supplied by Tom", "url": "https://www.newspapers.com/article/shamokin-news-dispatch/24475568/" },
+          "PA DEP, 2009 Anthracite Coal Refuse — Listed by County (Black Diamond Mining Inc., Sioux Mine, permit 49990201)",
+          { "title": "Wikipedia: Sayre Colliery (Lehigh Valley Coal Company closed its Western Middle Field deep mines around 1930)", "url": "https://en.wikipedia.org/wiki/Sayre_Colliery" }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.44609, 40.797069] },
+      "properties": {
+        "id": "pennsylvania-colliery",
+        "name": "Pennsylvania Colliery",
+        "type": "colliery",
+        "operators": ["Susquehanna Coal Company", "Susquehanna Collieries Company"],
+        "status_tags": [],
+        "related": [
+          { "id": "luke-fidler-colliery", "note": "From about 1935, coal from the reopened Hickory Swamp Slope (abandoned with Luke Fidler in 1928) was prepared here." }
+        ],
+        "field": "Western Middle",
+        "county": "Northumberland County",
+        "nearest_town": "West of Green Ridge, near Mount Carmel / Atlas",
+        "operator": "Susquehanna Coal Company / Susquehanna Collieries Company (one of its Northumberland County mines, alongside Cameron, Hickory Ridge, Hickory Swamp, Luke Fidler, Richards, and Scott)",
+        "years_active": "Opening date unknown; working by 1902 and still preparing coal c. 1935; closed c. 1950 (rough estimate)",
+        "year_opened": null,
+        "year_closed": 1950,
+        "closed_estimated": true,
+        "closed_estimate_note": "Rough estimate: c. 1950. No closing record has been found. The latest known activity is c. 1935, when it prepared coal from the reopened Hickory Swamp Slope. Its owner, the Susquehanna Collieries Company, kept mining in the area until Glen Burn was sold in 1966, and anthracite production fell steeply after World War II. So the real date could be anywhere from the late 1930s to the 1960s. Treat 1950 as a placeholder until a record turns up.",
+        "status": "Closed (date not recorded; estimated c. 1950); last known working c. 1935 as the preparation plant for coal from the Hickory Swamp Slope near Coal Run",
+        "history": "Named in passing as one of seven Northumberland County mines run by the Susquehanna Coal Company (with the Cameron, Hickory Ridge, Hickory Swamp, Luke Fidler, Richards, and Scott collieries), and later as the preparation plant to which the independently reopened Hickory Swamp Slope near Coal Run shipped its coal by rail starting around 1935, after the Susquehanna Collieries Company had abandoned Luke Fidler Colliery and the Hickory Swamp Slope together in December 1928. During the 1902 anthracite strike, labor unrest affected the Richards and Pennsylvania collieries: in September 1902 strikers attacked a train carrying non-union workers to the two collieries, and Governor William A. Stone sent troops of the Fourth Regiment to the area. No independent opening or closing date has been found yet for Pennsylvania Colliery itself. A \"Susquehanna Coal PA Colliery\" refuse-reprocessing permit in Mount Carmel Township appears in recent PA DEP permit lists (2016–2024), possibly the same ground, though this isn't confirmed.",
+        "confidence": "Low. Only mentioned in passing in sources for other collieries (Luke Fidler). No dedicated source found yet with its own opening/closing dates or operating history. Coordinates supplied by Tom.",
+        "photo_url": "",
+        "photo_caption": "",
+        "photo_credit": "",
+        "sources": [
+          { "title": "Pennsylvania State Archives, MG-463: Susquehanna Coal Company Records", "url": "https://www.phmc.state.pa.us/bah/dam/mg/mg463.htm" },
+          { "title": "Mount Carmel Item, \"Swamp Slope Is Reopened,\" Aug. 14, 1928 (Newspapers.com)", "url": "https://www.newspapers.com/article/mount-carmel-item-aug-14-1928-luke-filde/208289990/" },
+          { "title": "PA DEP, Active Anthracite Coal Mining Permits, August 2024 (Susquehanna Coal PA Colliery, Mount Carmel Twp.)", "url": "https://files.dep.state.pa.us/mining/BureauOfMiningPrograms/BMPPortalFiles/Annual_Reports/AnthraciteAnnualReports/2024/2024AnthraciteOperatorsAddressInformation.pdf" }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.36034, 40.82124] },
+      "properties": {
+        "id": "midvalley-colliery",
+        "name": "Midvalley Colliery",
+        "other_names": ["Mid Valley Colliery", "Wilburton No. 1"],
+        "type": "colliery",
+        "operators": ["Righter, Leisenring & Co.", "Mid Valley Coal Company", "Hazle Brook Coal Company"],
+        "status_tags": [],
+        "field": "Western Middle",
+        "county": "Columbia County (southern, near the Northumberland County line)",
+        "nearest_town": "Mount Carmel area, on the North Branch of Shamokin Creek, near Aristes/Numidia",
+        "photos": [
+          {
+            "url": "photos/midvalley-breaker-color.jpg",
+            "caption": "The breaker, with the coal incline running up its left side (hand-colored).",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/midvalley-miners-mine-car.jpg",
+            "caption": "Miners with cap lamps beside a loaded mine car underground.",
+            "credit": "TODO — add source and license"
+          }
+        ],
+        "operator": "Righter, Leisenring & Co. (by 1890); Mid Valley Coal Company (Leisenring and Wentz family interests); Hazle Brook Coal Company (from 1923)",
+        "years_active": "1889 (work begun) – April 1964 (Wilburton Nos. 1 & 2 Fine Coal Plant closed, ending 73 years of mining)",
+        "year_opened": 1889,
+        "year_closed": 1964,
+        "status": "Also known as Wilburton No. 1; mining in the Wilburton Nos. 1 & 2 group ended with the Fine Coal Plant closure in April 1964",
+        "history": "Work began in 1889 on the North Branch of Shamokin Creek in southern Columbia County, reached by a Lehigh Valley Railroad spur built out from Mount Carmel; the breaker opened in January or February 1891. The 1890 state mine inspector's report listed Righter, Leisenring & Co. as operator, and the colliery (sometimes spelled \"Mid Valley,\" sometimes \"Midvalley\") was part of the Leisenring and Wentz family group of companies, later becoming the Mid Valley Coal Company. The breaker burned in June 1893 and a replacement was in operation by that November. Shortly after 1900 the mine flooded and work stopped until a new pump house was built and the mine reopened. The Hazle Brook Coal Company took over as operator in 1923. Production declined through the 1940s, and by 1946 the remaining coal was being shipped to Gilberton for cleaning and loading rather than processed on site. The colliery later became known as Wilburton No. 1, paired with a Wilburton No. 2 operation; a \"Midvalley Colliery No. 2\" is the landmark cited for the crash site of United Air Lines Flight 624, which went down nearby on June 17, 1948. Mining across the Wilburton Nos. 1 & 2 group ended in April 1964, when the Fine Coal Plant closed, bringing 73 years of anthracite mining on the site to an end.",
+        "confidence": "Medium-good. Opening (1889/1891), the 1893 breaker fire, post-1900 flooding, 1923 operator change, and the 1964 closure of the Wilburton Nos. 1 & 2 group all come from one detailed secondary source (coalcampusa), not yet independently cross-checked. The \"Midvalley Colliery No. 2\" reference and its location are corroborated by two independent sources (Wikipedia's Mount Carmel and Flight 624 articles). Coordinates supplied by Tom.",
+        "photo_url": "",
+        "photo_caption": "",
+        "photo_credit": "",
+        "sources": [
+          { "title": "Coalcampusa.com, Western Middle Anthracite Coalfield, Wilburton Nos. 1 & 2", "url": "https://coalcampusa.com/eastern-pennsylvania-anthracite/western-middle-anthracite-coalfield/wilburton-coal-mines/wilburton-coal-mines.htm" },
+          { "title": "Wikipedia, Mount Carmel, Pennsylvania (Midvalley Colliery No. 2 cited as the Flight 624 crash-site landmark)", "url": "https://en.wikipedia.org/wiki/Mount_Carmel,_Pennsylvania" },
+          { "title": "Wikipedia, United Air Lines Flight 624", "url": "https://en.wikipedia.org/wiki/United_Air_Lines_Flight_624" }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.44341, 40.765998] },
+      "properties": {
+        "id": "locust-spring-colliery",
+        "name": "Locust Spring Colliery",
+        "type": "colliery",
+        "operators": ["Parvin and Heaton", "Connor & Patterson", "Graber, Kembel & Company", "Bartholomew & Company", "Carter & Gorman"],
+        "status_tags": [],
+        "related": [
+          { "id": "reliance-colliery", "note": "Both sent coal to the Locust Summit Central Breaker in their later years." }
+        ],
+        "field": "Western Middle",
+        "county": "Northumberland County",
+        "nearest_town": "Locust Gap",
+        "photos": [
+          {
+            "url": "photos/locust-spring-breaker.jpg",
+            "caption": "Original Locust Spring Breaker.",
+            "credit": "\"Photo courtesy of Reading Anthracite Co. Historical…\" (credit printed with the photo). TODO: confirm source and license."
+          },
+          {
+            "url": "photos/locust-spring-headframe.jpg",
+            "caption": "Shaft headframe, with loaded mine cars on the incline beside the building.",
+            "credit": "TODO — add source and license"
+          }
+        ],
+        "operator": "Parvin and Heaton (1862); Connor & Patterson (lessees); Graber, Kembel & Company (from 1867); Bartholomew & Company; Carter & Gorman (to 1873)",
+        "years_active": "1862 – mid-1950s; own breaker replaced in 1890 by the New Locust Gap Breaker, later worked as a mine feeding the Locust Summit Breaker (closing year estimated)",
+        "year_opened": 1862,
+        "year_closed": 1955,
+        "closed_estimated": true,
+        "closed_estimate_note": "Estimated c. 1955. The entry says the Locust Spring mine, including its Summit Slope, sat at the Locust Summit Breaker site, which closed in the mid-1950s. The mines feeding Locust Summit were put on standby in January 1955 (HAER report on the Locust Summit Central Breaker, also cited for Reliance). No record names Locust Spring's own final closing date.",
+        "status": "Original breaker replaced in 1890 by the New Locust Gap Breaker; the later Locust Spring mine closed with the Locust Summit Breaker group in the mid-1950s",
+        "history": "One of a cluster of \"Locust\" collieries in the Locust Gap, the Locust Spring Colliery opened in 1862 on the Mammoth Vein. That year Parvin and Heaton sank a slope on the North Dip Mammoth Vein. Connor & Patterson then leased it and sank a 490-foot South Dip Mammoth slope. Graber, Kembel & Company took over in 1867, followed by Bartholomew & Company and then Carter & Gorman, who worked the slope gangways to 1873. In 1890 a larger breaker at New Locust Gap replaced the Locust Spring, Locust Gap and Monitor breakers. Later, a Locust Spring mine, including its Summit Slope, sat at the Locust Summit Breaker site, which closed in the mid-1950s. Shipments are given as about 10.2 million tons through 1922 (unverified).",
+        "confidence": "Needs verification: the Connor & Patterson lease dates (the source has typos); the 10.2 million tons figure, which matches the Potts Colliery figure and may be a mix-up; and the exact pin location within the Locust Gap.",
+        "photo_url": "",
+        "photo_caption": "",
+        "photo_credit": "",
+        "sources": [
+          "Lykens Valley: History & Genealogy, 'Coal Castles' series (from the 1997 Pottsville Republican and Herald)",
+          "coalcampusa.com, Locustdale, PA",
+          { "title": "Historic American Engineering Record, Locust Summit Central Breaker, HAER No. PA-203", "url": "https://tile.loc.gov/storage-services/master/pnp/habshaer/pa/pa2200/pa2248/data/pa2248data.pdf" }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.40990, 40.774692] },
+      "properties": {
+        "id": "locust-summit-central-breaker",
+        "name": "Locust Summit Central Breaker",
+        "other_names": ["Locust Summit Breaker"],
+        "type": "breaker",
+        "operators": ["Philadelphia and Reading Coal and Iron Company"],
+        "status_tags": ["demolished"],
+        "related": [
+          { "id": "reliance-colliery", "note": "Reliance's raw coal was sent by rail to Locust Summit for preparation from 1930." },
+          { "id": "alaska-colliery", "note": "Alaska was one of the collieries whose coal came to Locust Summit by rail." },
+          { "id": "locust-spring-colliery", "note": "A Locust Spring mine, including its Summit Slope, sat at the Locust Summit Breaker site." }
+        ],
+        "field": "Western Middle",
+        "county": "Northumberland County",
+        "nearest_town": "Near Locustdale and Mount Carmel, Mount Carmel Township",
+        "operator": "Philadelphia & Reading Coal and Iron Company (1930–1955; renamed Reading Anthracite Company the year after the breaker closed)",
+        "years_active": "1930–1955 (start-up year given as 1929, 1930 or 1931 by different sources); demolished 2002",
+        "year_opened": 1930,
+        "year_closed": 1955,
+        "status": "Closed 1955, laying off about 1,700 men; the breaker and rotary dump house were demolished in the fall and winter of 2002",
+        "history": "In the late 1920s the Philadelphia & Reading Coal and Iron Company decided to merge the breakers of its 35 collieries into two giant central plants, St. Nicholas and Locust Summit. Locust Summit went into operation in 1930 on the site of the old Miriam Colliery slopes, reportedly at a cost of about $4 million, and billed itself as the largest breaker in the world. Coal arrived by rail from the Potts, Reliance, Locust Gap and Alaska collieries and was tipped by a pair of rotary dumps; daily capacity is given as anywhere from 12,000 to 15,000 tons, depending on the source. The breaker closed in 1955, laying off about 1,700 men, and the company became the Reading Anthracite Company the next year. The closed complex was photographed for the Library of Congress's Historic American Engineering Record (about 39 photographs, c. 1968), and the breaker and rotary dump house were demolished in the fall and winter of 2002.",
+        "confidence": "Needs verification: the start-up year (1929, 1930 or 1931 depending on source); daily capacity (12,000, 12,500 or 15,000 tons); the \"largest in the world\" claim; and the exact pin location on the site.",
+        "photo_url": "",
+        "photo_caption": "",
+        "photo_credit": "",
+        "photos": [
+          {
+            "url": "photos/locust-summit-haer-4-color.jpg",
+            "caption": "Southwest side of the breaker, looking northeast (HAER photo PA-203-4, colorized).",
+            "credit": "Original: Historic American Engineering Record (HAER PA-203-4), Library of Congress, no known restrictions (U.S. Government photograph). Colorized version: TODO, credit the colorizer (possibly the Lykens Valley colorized series)."
+          },
+          {
+            "url": "https://tile.loc.gov/storage-services/service/pnp/habshaer/pa/pa2200/pa2248/photos/200413pv.jpg",
+            "caption": "Locust Summit Central Breaker, northeast side, looking southwest.",
+            "credit": "Historic American Engineering Record (HAER PA-203), Library of Congress. No known restrictions (U.S. Government photograph)."
+          },
+          {
+            "url": "https://tile.loc.gov/storage-services/service/pnp/habshaer/pa/pa2200/pa2248/photos/200414pv.jpg",
+            "caption": "Southeast side, looking northwest.",
+            "credit": "Historic American Engineering Record (HAER PA-203), Library of Congress. No known restrictions (U.S. Government photograph)."
+          },
+          {
+            "url": "https://tile.loc.gov/storage-services/service/pnp/habshaer/pa/pa2200/pa2248/photos/200437pv.jpg",
+            "caption": "The rotary car dumpers that tipped railroad cars of raw coal into the breaker.",
+            "credit": "Historic American Engineering Record (HAER PA-203), Library of Congress. No known restrictions (U.S. Government photograph)."
+          },
+          {
+            "url": "https://tile.loc.gov/storage-services/service/pnp/habshaer/pa/pa2200/pa2248/photos/200430pv.jpg",
+            "caption": "The breaker's control room, first floor.",
+            "credit": "Historic American Engineering Record (HAER PA-203), Library of Congress. No known restrictions (U.S. Government photograph)."
+          },
+          {
+            "url": "photos/locust-summit-haer-8-color.jpg",
+            "caption": "Coal-crushing rolls on the sixth floor (HAER photo PA-203-8, colorized).",
+            "credit": "Original: Historic American Engineering Record (HAER PA-203-8), Library of Congress, no known restrictions (U.S. Government photograph). Colorized version: TODO, credit the colorizer (possibly the Lykens Valley colorized series)."
+          }
+        ],
+        "sources": [
+          { "title": "Underground Miners, Locust Summit Breaker", "url": "https://undergroundminers.com/locust-summit-breaker/" },
+          "Lykens Valley: History & Genealogy, Miriam Colliery article by Frank Blase (Pottsville Republican & Herald, March 15, 1997)",
+          "coalcampusa.com, Locustdale, PA",
+          { "title": "Library of Congress, Historic American Engineering Record: Locust Summit Central Breaker (HAER PA-203), photographs", "url": "https://www.loc.gov/item/pa2248/" },
+          { "title": "Historic American Engineering Record, Locust Summit Central Breaker, HAER No. PA-203 (written report)", "url": "https://tile.loc.gov/storage-services/master/pnp/habshaer/pa/pa2200/pa2248/data/pa2248data.pdf" }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.37526, 40.781014] },
+      "properties": {
+        "id": "locustdale-potts-colliery",
+        "name": "Locustdale (Potts) Colliery",
+        "other_names": ["Potts Colliery", "Locust Dale Colliery"],
+        "type": "colliery",
+        "operators": ["George M. Potts and Company", "Locust Dale Coal Company", "Laurel Run Improvement Company", "Philadelphia and Reading Coal and Iron Company"],
+        "status_tags": [],
+        "related": [
+          { "id": "locust-summit-central-breaker", "note": "Potts was one of the collieries whose coal went by rail to the Locust Summit Central Breaker." }
+        ],
+        "field": "Western Middle",
+        "county": "At the Schuylkill / Northumberland / Columbia County line",
+        "nearest_town": "Locustdale, on Big Run Creek",
+        "photos": [
+          {
+            "url": "photos/potts-postcard-color.jpg",
+            "caption": "\"Ashland, Pa. Potts Colliery.\" (hand-colored postcard)",
+            "credit": "TODO — add source and license (early postcard; likely public domain if published before 1931)"
+          },
+          {
+            "url": "photos/potts-breaker-postcard.jpg",
+            "caption": "The breaker and its tall chimneys, with the coal incline at right (postcard).",
+            "credit": "TODO — add source and license (postcard carries a partly legible copyright line, apparently from the early 1900s)"
+          },
+          {
+            "url": "photos/potts-aerial.webp",
+            "caption": "Aerial view of the colliery and its rail yard.",
+            "credit": "TODO — add source and license"
+          }
+        ],
+        "operator": "George M. Potts and Company (1857-1862); Locust Dale Coal Company (George H. Potts, president); Laurel Run Improvement Company (bought 1871 by F.B. Gowan of the Philadelphia and Reading Railroad, run by agent Stephen Harris); Philadelphia and Reading Coal and Iron Company (took over 1873, renamed it Potts Colliery)",
+        "years_active": "1857–1955",
+        "year_opened": 1857,
+        "year_closed": 1955,
+        "status": "Closed January 6, 1955; total shipments through 1928 about 10.2 million tons",
+        "history": "Opened in 1857 by George M. Potts with two drifts on the South Dip Mammoth Vein. A steam ventilation fan, invented by superintendent Louden Beadle, went into use in 1858 — the colliery's first shipment that year was 26,401 tons, rising to 60,000 tons in 1859. A 1862 mine fire forced abandonment of the east water level. Ownership passed through the Locust Dale Coal Company and the Laurel Run Improvement Company before the Philadelphia and Reading Coal and Iron Company took over in 1873 and renamed it Potts Colliery. A second-level gangway connected to the old Wadleigh Slope in 1880, giving a second outlet. Fires in 1884 and 1893 each flooded the mine; the 1884 flooding wasn't fully pumped out until 1889, the 1893 flooding by October of that year. A strike suspended work from May 12 to October 23, 1902. A tender slope on the Diamond Vein reached the fifth level in 1913. The colliery worked the Mammoth, Primrose, and Diamond veins, among others \"from the Buck Mountain to the Tracy,\" and closed January 6, 1955.",
+        "confidence": "Good. Opening (1857) and closing (January 6, 1955) dates agree across two independent sources. Operational detail is more fully sourced to one (Lykens Valley/Blase), which the page itself flags as having some internal inconsistencies (an 1854 date that predates the stated 1857 opening).",
+        "photo_url": "",
+        "photo_caption": "",
+        "photo_credit": "",
+        "sources": [
+          { "title": "Lykens Valley: History & Genealogy, Coal Castles: Locustdale (Potts) Colliery, citing Frank Blase, Pottsville Republican & Herald, Feb. 22, 1997", "url": "https://www.lykensvalley.org/?p=54560" },
+          { "title": "Coalcampusa.com, Western Middle Anthracite Coalfield, Locustdale PA", "url": "https://coalcampusa.com/eastern-pennsylvania-anthracite/western-middle-anthracite-coalfield/locustdale-pa/locustdale-pa.htm" }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.33971, 40.778977] },
+      "properties": {
+        "id": "bancroft-pioneer-colliery",
+        "name": "Bancroft Colliery (Pioneer Colliery)",
+        "other_names": ["Pioneer Colliery", "Pioneer Tunnel"],
+        "type": "colliery",
+        "operators": ["Bancroft, Lewis and Company", "Philadelphia and Reading Coal and Iron Company"],
+        "status_tags": ["tourist mine"],
+        "field": "Western Middle",
+        "county": "Schuylkill County",
+        "nearest_town": "Ashland",
+        "photos": [
+          {
+            "url": "photos/pioneer-engraving-bancroft-lewis.webp",
+            "caption": "\"Pioneer Colliery at Ashland, Bancroft Lewis & Co.\" (19th-century engraving)",
+            "credit": "TODO — add source (19th-century engraving; public domain by age)"
+          },
+          {
+            "url": "photos/pioneer-engraving.jpg",
+            "caption": "Engraving of the colliery, with the breaker in the foreground and the plane climbing the mountain.",
+            "credit": "TODO — add source (19th-century engraving; public domain by age)"
+          }
+        ],
+        "operator": "Bancroft, Lewis and Company (built it, 1853); later came under the Philadelphia and Reading Coal and Iron Company",
+        "years_active": "1853–c. 1929/1931",
+        "year_opened": 1853,
+        "year_closed": 1931,
+        "status": "Closed c. 1929 (per Coal Castles of Schuylkill County index) or 1931 (per other sources); coal banks removed in the 1940s; the Pioneer Tunnel portion reopened as a tourist show mine in 1962 and still operates",
+        "history": "Construction began in 1853 by Bancroft, Lewis and Company (the site/company name \"Bancroft\" is this colliery's alternate name); it earned the name \"Pioneer\" in September 1854 when it shipped its first load of anthracite by rail. By the Civil War it employed 400-500 men, and a Scientific American correspondent described its engineering in 1863. It was connected underground, more than 600 feet down, to the neighboring Tunnel Colliery, with a pump on the Pioneer side draining both. An 1867 firedamp explosion in the Pioneer Tunnel killed 11 men, the colliery's deadliest disaster. Operations later came under the Philadelphia and Reading Coal and Iron Company (documented operating it in 1911). The Coal Castles of Schuylkill County newspaper-article index lists its operating span as 1854-1929; other sources describe it closing in 1931 and its coal banks being removed in the 1940s, among many Ashland-area collieries that didn't survive the 20th century. The Pioneer Tunnel drainage adit was reopened as a public show mine in 1962 and remains a tourist attraction today, run separately from the historic mining operation.",
+        "confidence": "Medium-good. Opening (1853 construction, named 1854) is corroborated by two independent sources. Closing date conflicts between sources (1929 vs. 1931) by only two years, which is a minor discrepancy rather than a real dispute — noted rather than resolved. Coordinates supplied by Tom.",
+        "photo_url": "",
+        "photo_caption": "",
+        "photo_credit": "",
+        "sources": [
+          { "title": "Coal Castles of Schuylkill County (newspaper-article index), \"The Pioneer Colliery (Bancroft),\" Coal Castle #22, Pottsville Republican, June 21-22, 1997", "url": "https://www.schuylkill.pagenweb.org/castles.html" },
+          { "title": "Wynning History, \"Pioneer Colliery in Ashland, PA\"", "url": "https://wynninghistory.com/2019/01/05/the-pioneer1/" },
+          { "title": "Showcaves.com, Pioneer Coal Mine Tunnel", "url": "https://www.showcaves.com/english/usa/mines/Pioneer.html" }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.32234, 40.793713] },
+      "properties": {
+        "id": "bast-colliery",
+        "name": "Bast Colliery",
+        "other_names": ["Union Colliery"],
+        "type": "colliery",
+        "operators": ["Gideon Bast, Pearson & Davis", "Emanuel Bast", "Emanuel Bast and Steinhilbert", "Philadelphia and Reading Coal and Iron Company"],
+        "status_tags": [],
+        "related": [
+          { "id": "big-mine-run-west-colliery", "note": "Both began as one operation in 1853; Emanuel Bast split off the east-side drifts in 1858." }
+        ],
+        "field": "Western Middle",
+        "county": "Schuylkill County",
+        "nearest_town": "Butler Township, north of Ashland, east side of Big Mine Run Creek",
+        "photos": [
+          {
+            "url": "photos/bast-postcard-color.jpg",
+            "caption": "\"Bast Colliery, Ashland, Pa.\" The breaker on its trestle, with the coal incline climbing to the right (hand-colored postcard).",
+            "credit": "TODO — add source and license (early postcard; likely public domain if published before 1931)"
+          },
+          {
+            "url": "photos/bast-breaker-shaft.jpg",
+            "caption": "The breaker on the hillside, with a headframe on the ridge behind and railroad cars below.",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/bast-breaker-closeup.jpg",
+            "caption": "Closer view of the breaker buildings.",
+            "credit": "TODO — add source and license"
+          }
+        ],
+        "operator": "Gideon Bast, Pearson & Davis (opened 1853, as the east-side drifts of the original Big Mine Colliery); Emanuel Bast, Gideon's son (bought the east drift workings, 1858); Emanuel Bast and Mr. Steinhilbert (partnership from 1860, operating as Union Colliery); Philadelphia & Reading Coal & Iron Company (purchased 1872)",
+        "years_active": "1853–September 29, 1934",
+        "year_opened": 1853,
+        "year_closed": 1934,
+        "status": "Closed September 29, 1934; total shipments through 1928 were 9,504,288 tons",
+        "history": "Originally the east-side drifts of the Big Mine Colliery, opened in 1853 by Gideon Bast, Pearson & Davis on the South Dip Mammoth Vein (first shipment, 5,245 tons, in 1859). In 1858 Gideon's son Emanuel Bast bought the east drift workings and split them off as a separate operation; from 1860 Emanuel partnered with Mr. Steinhilbert, renaming it Union Colliery. The Philadelphia & Reading Coal & Iron Company bought the colliery in 1872 and extended the slope to the second level; a pump slope reached the third level (800 feet deep) in 1874. Further development included a South Dip Mountain Slope sunk 1,044 feet in 1884, extension of the Mammoth Slope to 1,186 feet by 1889, a four-compartment coal shaft begun January 9, 1912 and completed to 1,159 feet by 1914, a rock slope to the Skidmore Vein in 1912, and electric lighting installed inside and outside the colliery in 1917. It worked the South Dip Mammoth, Skidmore, and Buck Mountain veins. The colliery closed September 29, 1934.",
+        "confidence": "Good. Opening year (1853) and closing date (September 29, 1934) are corroborated across two independent sources (Lykens Valley/Blase and the Coal Castles of Schuylkill County index), and the 1858 split from the companion Big Mine Run Colliery is independently cross-referenced in that colliery's own article.",
+        "photo_url": "",
+        "photo_caption": "",
+        "photo_credit": "",
+        "sources": [
+          { "title": "Lykens Valley: History & Genealogy, Coal Castles: Bast Colliery, citing Frank Blase, Pottsville Republican & Herald, June 7-8, 1997", "url": "https://www.lykensvalley.org/?p=54944" },
+          { "title": "Coal Castles of Schuylkill County (newspaper-article index), \"The Bast Colliery,\" Coal Castle #20", "url": "https://www.schuylkill.pagenweb.org/castles.html" },
+          { "title": "Lykens Valley: History & Genealogy, Coal Castles: Big Mine Run Colliery (cross-referencing the 1858 Bast family split)", "url": "https://www.lykensvalley.org/?p=55597" }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.319752097438, 40.7858240328296] },
+      "properties": {
+        "id": "big-mine-run-west-colliery",
+        "name": "Big Mine Run Colliery (West)",
+        "other_names": ["Big Mine Colliery"],
+        "type": "colliery",
+        "operators": ["Gideon Bast and Pearson & Company", "Jeremiah Taylor, Lindsey & Company", "Reilly, Lilley & Lentz", "Lehigh Valley Coal Company"],
+        "status_tags": [],
+        "related": [
+          { "id": "centralia-colliery", "note": "From 1899 the Lehigh Valley Coal Company reported Big Mine Run's output together with Centralia Colliery's." }
+        ],
+        "field": "Western Middle",
+        "county": "Schuylkill County",
+        "nearest_town": "North of Ashland, west side of Big Mine Run Creek",
+        "photos": [
+          {
+            "url": "photos/big-mine-run-engraving.webp",
+            "caption": "Engraving of a colliery and its great culm bank above a mining village (19th century).",
+            "credit": "TODO — add source (19th-century engraving; public domain by age). Confirm it shows Big Mine Run."
+          }
+        ],
+        "operator": "Gideon Bast and Pearson & Company (1853-1868); Jeremiah Taylor, Lindsey & Company (1868-1890s, after Bast's retirement); Reilly, Lilley & Lentz (leased 1894-1896); Lehigh Valley Coal Company (from 1896, run together with Centralia Colliery)",
+        "years_active": "1853–1899 (operated as a distinct colliery; shipments reported jointly with Centralia Colliery after 1899)",
+        "year_opened": 1853,
+        "year_closed": 1899,
+        "status": "Ceased separate reporting in 1899 after Lehigh Valley Coal Co. combined its output with Centralia Colliery's; total shipments through 1899 were 3,319,989 tons",
+        "history": "Opened in 1853 by Gideon Bast and Pearson & Company with two drifts on the South Dip Mammoth Vein (first shipment, 819 tons, in 1854); this was the west-side counterpart to what became the separate Bast Colliery, split off from the same original operation in 1858 when Gideon's son Emanuel Bast took the east-side drifts. The west-side operation later worked the Buck Mountain Vein as well, and drove extensive workings including a 4,800-foot water-level drift and a fourth-level plane gangway that reached the neighboring Hazeldale Colliery's workings by around 1875. Jeremiah Taylor, Lindsey & Company took over operating a slope and four water-level drifts from 1868, after Bast's retirement; Taylor died in 1890 and his estate ran the colliery briefly before all mining was suspended in 1891. Reilly, Lilley & Lentz leased it in 1894 and ran it until 1896, when the Lehigh Valley Coal Company took over and began reporting its output together with the neighboring Centralia Colliery's after 1899 rather than separately.",
+        "confidence": "Good. Opening (1853) and the 1899 merger with Centralia Colliery's reporting are corroborated across two independent sources, with the 1858 split from the companion Bast Colliery cross-referenced in that colliery's own article. Coordinates supplied by Tom.",
+        "photo_url": "",
+        "photo_caption": "",
+        "photo_credit": "",
+        "sources": [
+          { "title": "Coal Castles of Schuylkill County (newspaper-article index), \"Big Mine Run (West) Colliery,\" Coal Castle #58, Pottsville Republican, Feb. 28 - Mar. 3, 1998", "url": "https://www.schuylkill.pagenweb.org/castles.html" },
+          { "title": "Lykens Valley: History & Genealogy, Coal Castles: Big Mine Run Colliery, citing Frank Blase, Pottsville Republican & Herald, 1998 series", "url": "https://www.lykensvalley.org/?p=55597" },
+          { "title": "History of Columbia and Montour Counties, Pennsylvania, Chapter XXII (1882 production table listing this colliery at \"Big Mine Run\")", "url": "https://www.pa-roots.com/columbia/history/chapter22.html" }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.17851, 40.808353] },
+      "properties": {
+        "id": "st-nicholas-breaker",
+        "name": "Saint Nicholas Colliery / St. Nicholas Breaker",
+        "other_names": ["St. Nicholas Breaker", "Cake's Colliery"],
+        "type": "breaker",
+        "operators": ["Henry Cake and Guise", "Philadelphia and Reading Coal and Iron Company", "Reading Anthracite Company"],
+        "status_tags": ["demolished"],
+        "related": [
+          { "id": "locust-summit-central-breaker", "note": "St. Nicholas and Locust Summit were the two giant central breakers Philadelphia & Reading built to replace the breakers of its 35 collieries." }
+        ],
+        "field": "Western Middle",
+        "county": "Schuylkill County",
+        "nearest_town": "Between Mahanoy City and Shenandoah (village of Cake's Patch / St. Nicholas; absorbed the former villages of Boston Run, Wiggans, Suffolk, and Cake's)",
+        "photos": [
+          {
+            "url": "photos/st-nicholas-original-breaker.jpg",
+            "caption": "\"Reading's Original St. Nicholas Breaker near Mahanoy City, Pa. Erected in 1858\" (caption printed with the photo). The wooden breaker torn down in 1928.",
+            "credit": "TODO — add source and license (old photograph; likely public domain by age)"
+          },
+          {
+            "url": "photos/st-nicholas-loading-reading-cars.webp",
+            "caption": "Workers trimming coal as conveyors load Reading Company railroad cars.",
+            "credit": "TODO — add source and license. Confirm it was taken at St. Nicholas."
+          }
+        ],
+        "operator": "Colonel Henry Cake and Mr. Guise (original colliery, from 1861, as \"Cake's Colliery\"); Philadelphia and Reading Coal and Iron Company / successor Reading Anthracite Company (second, central breaker, from 1931; Reading Anthracite still owned the site as of 2013)",
+        "years_active": "First colliery: 1861–1928 (breaker torn down). Second, central breaker: March 11, 1931–1965 (demolished in stages, final controlled demolition March 15, 2018)",
+        "year_opened": 1861,
+        "year_closed": 1965,
+        "status": "Original colliery closed and breaker demolished 1928; the much larger central breaker that replaced it operated 1931-1965, then stood derelict until it was demolished by controlled explosion on March 15, 2018",
+        "history": "Originally opened in 1861 by Colonel Henry Cake and his partner Mr. Guise as Cake's Colliery, about 700 yards east of the Suffolk Colliery; the surrounding village was known as Cake's Patch or St. Nicholas. That first breaker was torn down in 1928. It was replaced by a much larger central breaker, built with 3,800 tons of steel and 10,000 cubic yards of concrete (construction required relocating half the village of Suffolk), which first operated March 11, 1931. At its peak it was the largest breaker of its kind, roughly the size of a city block, capable of processing 12,500 tons of coal per day in two independently operable sections, each batch taking about 12 minutes. The breaker stopped operating in 1965. Early-2000s proposals to preserve it as a historic site were judged too costly (tens of millions of dollars); it was partially demolished in 2013, dismantled piece by piece through 2017, and brought down in a controlled explosion on March 15, 2018.",
+        "confidence": "Good. Both the original 1861 opening/1928 demolition and the second breaker's 1931 opening/1965 closing/2018 final demolition are independently corroborated. Coordinates supplied by Tom, likely marking the better-documented central-breaker site rather than the original 1861 Cake's Colliery location specifically.",
+        "photo_url": "",
+        "photo_caption": "",
+        "photo_credit": "",
+        "sources": [
+          { "title": "Wikipedia, St. Nicholas Breaker", "url": "https://en.wikipedia.org/wiki/St._Nicholas_Breaker" },
+          { "title": "Mahanoy History, \"Part 5: Collieries Around Mahanoy City\" (Augusta Thomas Reminiscences)", "url": "https://www.mahanoyhistory.org/Augusta%20Thomas%20-%20Reminiscences/Part%205-%20Collieries%20Around%20Mahanoy%20City.pdf" }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.17435, 40.813455] },
+      "properties": {
+        "id": "maple-hill-colliery",
+        "name": "Maple Hill Colliery",
+        "type": "colliery",
+        "operators": ["Philadelphia and Reading Coal and Iron Company"],
+        "status_tags": [],
+        "field": "Western Middle",
+        "county": "Schuylkill County",
+        "nearest_town": "Mahanoy Township, about half a mile north of St. Nicholas, along Waste House Run Creek",
+        "photos": [
+          {
+            "url": "photos/maple-hill-postcard.jpg",
+            "caption": "\"Maple Hill Colliery, Shenandoah, Pa.\" The breaker beside the railroad, with mine timber stacked by the track (hand-colored postcard).",
+            "credit": "TODO — add source and license (early postcard; likely public domain if published before 1931)"
+          },
+          {
+            "url": "photos/maple-hill-headframe.jpg",
+            "caption": "A steel shaft headframe with mine cars on the tracks below, the breaker and culm bank behind.",
+            "credit": "TODO — add source and license. Confirm it shows Maple Hill."
+          },
+          {
+            "url": "photos/maple-hill-sheave-wheel.webp",
+            "caption": "Looking out through the spokes of a headframe's sheave wheel over the mining landscape.",
+            "credit": "TODO — add source and license. Confirm it shows Maple Hill."
+          }
+        ],
+        "operator": "Philadelphia & Reading Coal & Iron Company",
+        "years_active": "1888/1890–June 25, 1955",
+        "year_opened": 1888,
+        "year_closed": 1955,
+        "status": "Mining ceased June 25, 1955",
+        "history": "The No. 1 shaft was sunk 1888-1890 to a depth of 754 feet, developed on both the north and south dips of the Maple Hill Basin; the colliery worked 17 veins ranging from the 12-foot Buck Mountain to the 43-foot Mammoth. First shipment, 113,887 tons, came in 1892, rising to 307,246 tons in 1893. Three air locomotives replaced mule haulage in 1901 (82 mules had handled all output before then). The No. 2 shaft, with six compartments (four for coal, two for water), was sunk to 1,050 feet in 1903, and an underground slope reached the same depth on the Buck Mountain vein by 1906. Wooden headframes were replaced with steel in 1911. Cumulative shipments reached 16,091,438 tons by 1928. By 1938 haulage included 19 air locomotives and 27 mules, with electrification of the haulage system beginning that year; the last eight mules were retired in September 1948. Cumulative shipments totaled 27,676,556 tons by January 1, 1949. Mining ceased June 25, 1955.",
+        "confidence": "Good for dates (precise opening development 1888-1890 and exact closing date June 25, 1955), though sourced to a single detailed secondary source not yet independently cross-checked. Coordinates supplied by Tom.",
+        "photo_url": "",
+        "photo_caption": "",
+        "photo_credit": "",
+        "sources": [
+          { "title": "Lykens Valley: History & Genealogy, Coal Castles: Maple Hill Colliery, citing Frank Blase, Pottsville Republican & Herald, 1997 series", "url": "https://www.lykensvalley.org/coal-castles-maple-hill-colliery/" }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-76.33085679220605, 40.80316554259743] },
+      "properties": {
+        "id": "centralia-colliery",
+        "name": "Centralia Colliery",
+        "type": "colliery",
+        "operators": ["Joseph M. Freck", "G.M. Provost", "Lewis A. Reilly & Co.", "Reilly, Lilley & Lentz", "Lehigh Valley Coal Company", "Centralia Collieries Company", "Mahanoy Coal Mining Company", "Centralia Mining Company", "C.Q. & W. Coal Company", "Coates Coal Company"],
+        "status_tags": [],
+        "field": "Western Middle",
+        "county": "Columbia County",
+        "nearest_town": "Centralia, eastern edge of town",
+        "photos": [
+          {
+            "url": "photos/centralia-bretz-1880s.jpg",
+            "caption": "\"An anthracite colliery in Centralia, probably in the 1880s.\" Two locomotives stand below the breaker. (The original caption doesn't name which Centralia-area colliery.)",
+            "credit": "George Bretz Collection, Albin O. Kuhn Library, University of Maryland, Baltimore County (credit printed with the photo). TODO: note the book or page it was copied from."
+          },
+          {
+            "url": "photos/centralia-breaker.jpg",
+            "caption": "The breaker and colliery buildings.",
+            "credit": "TODO — add source and license"
+          },
+          {
+            "url": "photos/centralia-drift-mouth.jpg",
+            "caption": "Miners at the timbered mouth of a drift.",
+            "credit": "TODO — add source and license"
+          }
+        ],
+        "operator": "Joseph M. Freck (early operator, to early 1870s); Dr. G.M. Provost (pumped out flooded mine, resumed by 1878); Lewis A. Reilly & Co. (1880-mid-1890s, with an 1881 partnership as Reilly, Lilley & Lentz); Lehigh Valley Coal Co. (underground and stripping, into the early 1930s); Centralia Collieries Co. (revived the mine 1935); Mahanoy Coal Mining Co. (during WWII); Centralia Mining Co. (deep- and strip-mined and remined culm banks postwar); C.Q. & W. Coal Co. (1949); Coates Coal Co. (leased 1955, ended operations 1962)",
+        "years_active": "c. 1857/1862–1962",
+        "year_opened": 1857,
+        "year_closed": 1962,
+        "status": "Closed 1962 when Coates Coal Co. ended operations; a small amount of coal was remined from the culm dump by George Racho in 1960 and processed at the Diamond Breaker. This colliery is unrelated to the Centralia mine fire, which began in 1962 at the borough's landfill/strip-mine pit, not at this colliery.",
+        "history": "Sources differ on the exact opening date, placing it between 1857 and 1862. Early operator Joseph M. Freck ran it until the early 1870s, when the mine flooded; Dr. G.M. Provost pumped it out and resumed mining by 1878. The breaker burned in 1870 and was rebuilt. Lewis A. Reilly & Co. operated it from 1880 to the mid-1890s (an 1881 partnership is recorded as Reilly, Lilley & Lentz), after which the Lehigh Valley Coal Co. mined it both underground and by stripping into the early 1930s. The Centralia Collieries Co. revived the mine in 1935, followed by the Mahanoy Coal Mining Co. during World War II and the Centralia Mining Co. afterward, which deep-mined, strip-mined, and remined culm banks. The C.Q. & W. Coal Co. mined there in 1949, and the Coates Coal Co. leased the property in 1955, ending operations in 1962. In 1960 George Racho remined a small amount of coal from the culm dump, processed at the Diamond Breaker.",
+        "confidence": "Medium-good for the operator chain and 1962 closing date, from one detailed secondary source not yet independently cross-checked; opening date is explicitly uncertain even within that source (1857-1862 range). Coordinates supplied by Tom. Note: this historic colliery is a separate thing from the famous Centralia mine fire (which started in 1962 at a landfill/strip-mine pit, not here) — worth keeping distinct on the map to avoid confusing the two.",
+        "photo_url": "",
+        "photo_caption": "",
+        "photo_credit": "",
+        "sources": [
+          { "title": "Coalcampusa.com, Western Middle Anthracite Coalfield, Centralia Area Mines", "url": "https://coalcampusa.com/eastern-pennsylvania-anthracite/western-middle-anthracite-coalfield/centralia-pa/centralia-pa.htm" }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+[
+  {
+    "question": "Which colliery ran a public mine tour from 1968 to 1977?",
+    "answer": "Glen Burn Colliery",
+    "wrong": ["Alaska Colliery", "Henry Clay Colliery", "Bear Valley Colliery"],
+    "explain": "Kerris & Helfrick Inc. bought Glen Burn in 1966 and ran a public mine tour there from 1968 to 1977, billed as the \"World's 1st Tour of a Working Anthracite Mine.\"",
+    "colliery": "glen-burn-colliery"
+  },
+  {
+    "question": "The Reliance Pit's expansion in 1958 destroyed which neighboring village?",
+    "answer": "Alaska",
+    "wrong": ["Ranshaw", "Atlas", "Kulpmont"],
+    "explain": "After Reliance's deep mines stopped in 1955, the Reading Anthracite Company strip-mined the site as the Reliance Pit, and its 1958 expansion destroyed the century-old village of Alaska.",
+    "colliery": "reliance-colliery"
+  },
+  {
+    "question": "Greenback Colliery and its mine patch were named after what?",
+    "answer": "A political party",
+    "wrong": ["A local mine owner", "The color of the hillside", "A railroad company"],
+    "explain": "Greenback was built in the early 1870s and named after the Greenback Party, then a rising political movement.",
+    "colliery": "greenback-colliery"
+  },
+  {
+    "question": "A gas explosion injured 22 men at Greenback Colliery on May 31, 1889. What else happened in Pennsylvania that day?",
+    "answer": "The Johnstown Flood",
+    "wrong": ["The Brooklyn Bridge opened", "The Statue of Liberty was dedicated", "The first Labor Day parade"],
+    "explain": "The Greenback Slope explosion happened on the day of the Johnstown Flood. Philadelphia & Reading abandoned the mine shortly afterward.",
+    "colliery": "greenback-colliery"
+  },
+  {
+    "question": "Why was Greenback Colliery considered dangerous from the start?",
+    "answer": "Free gas, with frequent explosions from open-flame lamps",
+    "wrong": ["Frequent flooding", "Weak roof rock", "Its breaker kept catching fire"],
+    "explain": "Greenback was hazardous from the start because of free gas, and open-flame lighting set off frequent gas explosions.",
+    "colliery": "greenback-colliery"
+  },
+  {
+    "question": "Henry Clay's rebuilt breaker, started on November 22, 1886, processed coal from which mines?",
+    "answer": "Big Mountain, Peerless and Sterling",
+    "wrong": ["Burnside, Bear Valley and Greenback", "Alaska, Reliance and Sayre", "Scott, Luke Fidler and Cameron"],
+    "explain": "The massive rebuilt Henry Clay breaker handled coal from the Big Mountain, Peerless and Sterling mines, about 1,500 wagons (300 carloads) a day.",
+    "colliery": "henry-clay-colliery"
+  },
+  {
+    "question": "The Bear Valley Strip Mine exposed a folded rock formation nicknamed what?",
+    "answer": "The Whaleback",
+    "wrong": ["The Camelback", "The Turtle Shell", "The Saddle"],
+    "explain": "Stripping the culm banks at Bear Valley during World War II exposed the \"Whaleback,\" and the strip mine is now a well-known geology field-trip site.",
+    "colliery": "bear-valley-colliery"
+  },
+  {
+    "question": "Families of the workers who sank Scott Colliery's main shaft in 1898 settled on which street, Kulpmont's first residential community?",
+    "answer": "Poplar Street",
+    "wrong": ["Chestnut Street", "Spruce Street", "Walnut Street"],
+    "explain": "The main hoisting shaft was sunk in 1898 by African American workers whose families settled in company homes at the end of Poplar Street, the first residential community in what became Kulpmont.",
+    "colliery": "scott-colliery"
+  },
+  {
+    "question": "Midvalley Colliery No. 2 is the landmark used for the crash site of which 1948 airliner?",
+    "answer": "United Air Lines Flight 624",
+    "wrong": ["TWA Flight 3", "Pan Am Flight 7", "Eastern Air Lines Flight 537"],
+    "explain": "United Air Lines Flight 624 went down near Midvalley Colliery No. 2 on June 17, 1948.",
+    "colliery": "midvalley-colliery"
+  },
+  {
+    "question": "What was built at Luke Fidler Colliery in 1909?",
+    "answer": "A concrete mine rescue station",
+    "wrong": ["A miners' bathhouse", "A new breaker", "A company store"],
+    "explain": "In 1909 a concrete rescue station with four oxygen helmets and four Draeger electric rescue sets was built at Luke Fidler, confirmed in that year's state mine inspector report.",
+    "colliery": "luke-fidler-colliery"
+  },
+  {
+    "question": "What happened to Alaska Colliery's breaker in both 1886 and 1926?",
+    "answer": "It was destroyed by fire",
+    "wrong": ["It was moved to a new site", "It was doubled in size", "It was damaged by a flood"],
+    "explain": "Breaker fires in 1886 and 1926 each destroyed the plant at Alaska.",
+    "colliery": "alaska-colliery"
+  },
+  {
+    "question": "Which colliery built a 224-locker bathhouse in 1912?",
+    "answer": "Glen Burn Colliery (then Cameron)",
+    "wrong": ["Luke Fidler Colliery", "Burnside Colliery", "Big Mountain Colliery"],
+    "explain": "The Pennsylvania Railroad's Mineral Railroad & Mining Company built a 224-locker bathhouse at the Cameron Colliery, later renamed Glen Burn, in 1912.",
+    "colliery": "glen-burn-colliery"
+  },
+  {
+    "question": "About how many men and boys worked at Alaska Colliery in 1899, when it was the Reading Company's largest operation in the region?",
+    "answer": "Nearly 1,000",
+    "wrong": ["About 250", "About 500", "Over 3,000"],
+    "explain": "By 1899 Alaska was the Reading Company's largest operation in the region, employing nearly 1,000 men and boys.",
+    "colliery": "alaska-colliery"
+  },
+  {
+    "question": "From 1933 to 1935, Burnside Colliery's drainage water was pumped out through which colliery's shaft?",
+    "answer": "Big Mountain Colliery",
+    "wrong": ["Henry Clay Colliery", "Sterling Colliery", "Bear Valley Colliery"],
+    "explain": "After Burnside's pumps stopped in March 1933, its water was diverted to the Big Mountain Colliery's shaft pump from July 1933 to January 1935, before a brick dam sealed the tunnel.",
+    "colliery": "burnside-colliery"
+  }
+]

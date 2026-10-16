@@ -1,0 +1,384 @@
+/* Colliery Quiz.
+   Questions come from two places:
+   1. Built automatically from data/collieries.geojson (years, other names, operators, ...),
+      so new sites add new questions with no extra work.
+   2. Hand-written ones in data/quiz-extra.json, drawn from the colliery histories.
+   Each round picks 10 at random. */
+(function () {
+  'use strict';
+
+  // Questions per round, from Menu → Settings → Quiz.
+  var ROUND = window.CollierySettings ? window.CollierySettings.load().quizLength : 10;
+  var BEST_KEY = 'collieries:quizBest';
+  var box = document.getElementById('quiz');
+
+  // ---------- Helpers ----------
+
+  function escapeHtml(value) {
+    return String(value == null ? '' : value)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  function slugify(text) {
+    return String(text || '').toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+
+  function shuffle(list) {
+    var a = list.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function pick(list) { return list[Math.floor(Math.random() * list.length)]; }
+
+  function toYear(v) { var n = parseInt(v, 10); return isFinite(n) ? n : null; }
+
+  function readBest() {
+    try { return parseInt(localStorage.getItem(BEST_KEY), 10) || 0; } catch (e) { return 0; }
+  }
+  function saveBest(n) {
+    try { localStorage.setItem(BEST_KEY, String(n)); } catch (e) { /* storage blocked */ }
+  }
+
+  // Year questions are skipped when the dates are approximate or disputed.
+  function yearsAreSolid(site) {
+    var text = String(site.p.years_active || '');
+    var conf = String(site.p.confidence || '');
+    if (site.p.closed_estimated) return false;
+    return !/\bc\.|\bby\b|early|unknown|\d\/\d/i.test(text) && !/^low|mixed|not certain|unverified/i.test(conf.trim());
+  }
+
+  function firstPhoto(p) {
+    if (p.photo_url) return p.photo_url;
+    var list = Array.isArray(p.photos) ? p.photos : [];
+    var first = list[0];
+    return first ? (typeof first === 'string' ? first : first.url) : '';
+  }
+
+  // ---------- Question builders ----------
+
+  // Each returns { text, answer, wrong:[3], explain, site } or null.
+
+  function openedQuestions(sites) {
+    var dated = sites.filter(function (s) { return s.opened !== null && yearsAreSolid(s); });
+    return dated.map(function (s) {
+      var sameYear = sites.filter(function (o) { return o.opened === s.opened; });
+      if (sameYear.length > 1) return null; // answer must be unique
+      // Wrong answers only from sites whose opening year is known; an undated site might be right.
+      var others = shuffle(sites.filter(function (o) { return o !== s && o.opened !== null; })).slice(0, 3);
+      if (others.length < 3) return null;
+      return {
+        kind: 'opened',
+        text: 'Which colliery opened in ' + s.opened + '?',
+        answer: s.name,
+        wrong: others.map(function (o) { return o.name; }),
+        explain: s.name + ' opened in ' + s.opened + '. Years active: ' + s.p.years_active + '.',
+        site: s
+      };
+    });
+  }
+
+  function closedQuestions(sites) {
+    var allYears = sites.map(function (s) { return s.closed; }).filter(function (y) { return y !== null; });
+    return sites.filter(function (s) { return s.closed !== null && yearsAreSolid(s); }).map(function (s) {
+      // Leave out any year that also appears in this site's own dates, so no wrong answer is half-right.
+      var ownText = String(s.p.years_active || '') + ' ' + String(s.p.status || '');
+      var pool = allYears.concat([s.closed - 7, s.closed + 6, s.closed - 15, s.closed + 13, s.closed - 25])
+        .filter(function (y, i, arr) { return y !== s.closed && arr.indexOf(y) === i && ownText.indexOf(String(y)) === -1; });
+      var wrong = shuffle(pool).slice(0, 3);
+      if (wrong.length < 3) return null;
+      return {
+        kind: 'closed',
+        text: 'In what year did ' + s.name + ' stop working?',
+        answer: String(s.closed),
+        wrong: wrong.map(String),
+        explain: s.name + ': ' + s.p.status + '.',
+        site: s
+      };
+    });
+  }
+
+  function otherNameQuestions(sites) {
+    var out = [];
+    sites.forEach(function (s) {
+      (Array.isArray(s.p.other_names) ? s.p.other_names : []).forEach(function (alias) {
+        // Skip names that give the answer away ("Sioux Mine" for Sioux Colliery).
+        var a = String(alias).toLowerCase().replace(/[^a-z]/g, '');
+        var n = s.name.toLowerCase().replace(/[^a-z]/g, '');
+        var firstWord = s.name.toLowerCase().split(' ')[0];
+        if (a.indexOf(n.replace('colliery', '')) === 0 || String(alias).toLowerCase().indexOf(firstWord) !== -1) return;
+        var others = shuffle(sites.filter(function (o) { return o !== s; })).slice(0, 3);
+        if (others.length < 3) return;
+        out.push({
+          kind: 'alias',
+          text: 'Which colliery was also known as “' + alias + '”?',
+          answer: s.name,
+          wrong: others.map(function (o) { return o.name; }),
+          explain: s.name + ' was also known as ' + s.p.other_names.join(', ') + '.',
+          site: s
+        });
+      });
+    });
+    return out;
+  }
+
+  function operatorQuestions(sites) {
+    var everyOperator = [];
+    sites.forEach(function (s) {
+      s.operators.forEach(function (o) { if (everyOperator.indexOf(o) === -1) everyOperator.push(o); });
+    });
+    return sites.filter(function (s) { return s.operators.length; }).map(function (s) {
+      var answer = pick(s.operators);
+      var wrong = shuffle(everyOperator.filter(function (o) { return s.operators.indexOf(o) === -1; })).slice(0, 3);
+      if (wrong.length < 3) return null;
+      return {
+        kind: 'operator',
+        text: 'Which company ran ' + s.name + '?',
+        answer: answer,
+        wrong: wrong,
+        explain: s.name + ' was run by ' + s.operators.join('; ') + '.',
+        site: s
+      };
+    });
+  }
+
+  function oldestQuestions(sites) {
+    var dated = sites.filter(function (s) { return s.opened !== null && yearsAreSolid(s); });
+    var out = [];
+    for (var round = 0; round < 4 && dated.length >= 4; round++) {
+      var four = shuffle(dated).slice(0, 4);
+      var years = four.map(function (s) { return s.opened; });
+      var min = Math.min.apply(null, years);
+      if (years.filter(function (y) { return y === min; }).length > 1) continue;
+      var oldest = four.filter(function (s) { return s.opened === min; })[0];
+      out.push({
+        kind: 'oldest',
+        text: 'Which of these collieries opened first?',
+        answer: oldest.name,
+        wrong: four.filter(function (s) { return s !== oldest; }).map(function (s) { return s.name; }),
+        explain: four.slice().sort(function (a, b) { return a.opened - b.opened; })
+          .map(function (s) { return s.name + ' (' + s.opened + ')'; }).join(', ') + '.',
+        site: oldest
+      });
+    }
+    return out;
+  }
+
+  function countyQuestions(sites) {
+    var countyOf = function (s) { return String(s.p.county || '').split(' (')[0].trim(); };
+    return sites.map(function (s) {
+      var county = countyOf(s);
+      if (!county) return null;
+      if (sites.filter(function (o) { return countyOf(o) === county; }).length !== 1) return null;
+      var others = shuffle(sites.filter(function (o) { return o !== s; })).slice(0, 3);
+      return {
+        kind: 'county',
+        text: 'Which colliery was in ' + county + '?',
+        answer: s.name,
+        wrong: others.map(function (o) { return o.name; }),
+        explain: s.name + ' was in ' + s.p.county + '. The others on the map are in ' + countyOf(others[0]) + '.',
+        site: s
+      };
+    });
+  }
+
+  function curatedQuestions(extra, bySlug) {
+    return (Array.isArray(extra) ? extra : []).map(function (q) {
+      if (!q || !q.question || !q.answer || !Array.isArray(q.wrong) || q.wrong.length < 3) return null;
+      return {
+        kind: 'history',
+        text: q.question,
+        answer: q.answer,
+        wrong: q.wrong.slice(0, 3),
+        explain: q.explain || '',
+        site: bySlug[q.colliery] || null
+      };
+    });
+  }
+
+  // ---------- Build a round ----------
+
+  function buildRound(sites, extra) {
+    var bySlug = {};
+    sites.forEach(function (s) { bySlug[s.slug] = s; });
+
+    var groups = [
+      curatedQuestions(extra, bySlug),
+      openedQuestions(sites),
+      closedQuestions(sites),
+      otherNameQuestions(sites),
+      operatorQuestions(sites),
+      oldestQuestions(sites),
+      countyQuestions(sites)
+    ].map(function (g) { return shuffle(g.filter(Boolean)); });
+
+    // Take questions from each kind in turn, so a round is a good mix.
+    var round = [];
+    var usedText = {};
+    var i = 0;
+    while (round.length < ROUND && groups.some(function (g) { return g.length; })) {
+      var g = groups[i % groups.length];
+      var q = g.shift();
+      if (q && !usedText[q.text]) {
+        usedText[q.text] = true;
+        q.options = shuffle([q.answer].concat(q.wrong));
+        round.push(q);
+      }
+      i++;
+    }
+    return shuffle(round);
+  }
+
+  // ---------- Screens ----------
+
+  var sitesCache = null;
+  var extraCache = null;
+  var state = null;
+
+  function start() {
+    state = { questions: buildRound(sitesCache, extraCache), index: 0, score: 0, answers: [] };
+    if (!state.questions.length) {
+      box.innerHTML = '<div class="quiz-card"><p>Not enough colliery data yet to make a quiz.</p></div>';
+      return;
+    }
+    showQuestion();
+  }
+
+  function showQuestion() {
+    var q = state.questions[state.index];
+    var total = state.questions.length;
+    box.innerHTML = '' +
+      '<div class="quiz-card">' +
+        '<div class="quiz-progress"><span>Question ' + (state.index + 1) + ' of ' + total + '</span><span>Score: ' + state.score + '</span></div>' +
+        '<div class="quiz-bar"><span style="width:' + (state.index / total * 100) + '%"></span></div>' +
+        '<p class="quiz-question">' + escapeHtml(q.text) + '</p>' +
+        '<div class="quiz-options">' +
+          q.options.map(function (opt, i) {
+            return '<button type="button" class="quiz-option" data-i="' + i + '">' +
+              '<span class="letter">' + 'ABCD'.charAt(i) + '</span><span>' + escapeHtml(opt) + '</span></button>';
+          }).join('') +
+        '</div>' +
+        '<div id="quiz-after"></div>' +
+      '</div>';
+    var first = box.querySelector('.quiz-option');
+    if (first) first.focus();
+  }
+
+  function answer(i) {
+    var q = state.questions[state.index];
+    var chosen = q.options[i];
+    var right = chosen === q.answer;
+    if (right) state.score++;
+    state.answers.push({ q: q, chosen: chosen, right: right });
+
+    Array.prototype.forEach.call(box.querySelectorAll('.quiz-option'), function (btn, j) {
+      btn.disabled = true;
+      if (q.options[j] === q.answer) btn.classList.add('correct');
+      else if (j === i) btn.classList.add('wrong');
+    });
+
+    var photo = q.site ? firstPhoto(q.site.p) : '';
+    var last = state.index === state.questions.length - 1;
+    document.getElementById('quiz-after').innerHTML = '' +
+      '<div class="quiz-feedback">' +
+        '<strong>' + (right ? '✓ Correct!' : '✗ Not quite. The answer is ' + escapeHtml(q.answer) + '.') + '</strong>' +
+        '<p>' + escapeHtml(q.explain) + '</p>' +
+        (photo ? '<img src="' + escapeHtml(photo) + '" alt="" loading="lazy" onerror="this.remove()">' : '') +
+      '</div>' +
+      '<div class="quiz-actions">' +
+        '<button type="button" class="button primary" id="quiz-next">' + (last ? 'See my score' : 'Next question →') + '</button>' +
+        (q.site ? '<a class="button" href="index.html#' + escapeHtml(q.site.slug) + '" target="_blank" rel="noopener">See it on the map</a>' : '') +
+      '</div>';
+    document.getElementById('quiz-next').focus();
+  }
+
+  function next() {
+    state.index++;
+    if (state.index < state.questions.length) showQuestion();
+    else showScore();
+  }
+
+  function showScore() {
+    var total = state.questions.length;
+    var best = readBest();
+    var newBest = state.score > best;
+    if (newBest) saveBest(state.score);
+    var ratio = state.score / total;
+    var rank = ratio === 1 ? 'Mine superintendent! A perfect score.'
+      : ratio >= 0.8 ? 'Fire boss. You know these mines well.'
+      : ratio >= 0.5 ? 'Miner. A solid shift.'
+      : ratio >= 0.3 ? 'Laborer. Keep digging.'
+      : 'Breaker boy. Everyone starts somewhere.';
+
+    box.innerHTML = '' +
+      '<div class="quiz-card quiz-score">' +
+        '<div class="big">' + state.score + ' / ' + total + '</div>' +
+        '<p><strong>' + rank + '</strong></p>' +
+        '<p class="section-intro">' + (newBest ? 'New best score!' : 'Your best: ' + Math.max(best, state.score) + ' / ' + total) + '</p>' +
+        '<div class="quiz-actions" style="justify-content:center">' +
+          '<button type="button" class="button primary" id="quiz-again">Play again (new questions)</button>' +
+          '<a class="button" href="index.html">Explore the map</a>' +
+        '</div>' +
+        '<ul class="quiz-review">' +
+          state.answers.map(function (a) {
+            return '<li><span class="mark ' + (a.right ? 'ok">✓' : 'no">✗') + '</span>' + escapeHtml(a.q.text) +
+              '<br><span class="section-intro">Answer: ' + escapeHtml(a.q.answer) +
+              (a.right ? '' : ' (you said ' + escapeHtml(a.chosen) + ')') + '</span></li>';
+          }).join('') +
+        '</ul>' +
+      '</div>';
+  }
+
+  box.addEventListener('click', function (e) {
+    var opt = e.target.closest('.quiz-option');
+    if (opt && !opt.disabled) { answer(Number(opt.dataset.i)); return; }
+    if (e.target.id === 'quiz-next') next();
+    if (e.target.id === 'quiz-again') start();
+  });
+
+  // Keys 1–4 or A–D answer; Enter goes on.
+  document.addEventListener('keydown', function (e) {
+    if (!state || e.target.tagName === 'INPUT') return;
+    var k = e.key.toLowerCase();
+    var idx = '1234'.indexOf(k) !== -1 ? '1234'.indexOf(k) : 'abcd'.indexOf(k);
+    var opts = box.querySelectorAll('.quiz-option:not(:disabled)');
+    if (idx !== -1 && opts.length && opts[idx]) answer(idx);
+  });
+
+  // ---------- Load data ----------
+
+  Promise.all([
+    fetch('data/collieries.geojson', { cache: 'no-cache' }).then(function (r) { return r.json(); }),
+    fetch('data/quiz-extra.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : []; }).catch(function () { return []; })
+  ]).then(function (results) {
+    sitesCache = (results[0].features || [])
+      .filter(function (f) { return f.geometry && f.geometry.type === 'Point'; })
+      .map(function (f) {
+        var p = f.properties || {};
+        var ops = Array.isArray(p.operators) && p.operators.length ? p.operators
+          : String(p.operator || '').split(';').map(function (s) { return s.replace(/\([^)]*\)/g, '').replace(/[,\s]+$/, '').trim(); }).filter(Boolean);
+        return {
+          p: p,
+          name: p.name || 'Unnamed colliery',
+          slug: slugify(p.id) || slugify(p.name),
+          opened: toYear(p.year_opened),
+          closed: toYear(p.year_closed),
+          operators: ops
+        };
+      });
+    extraCache = results[1];
+    start();
+  }).catch(function (err) {
+    console.error(err);
+    var el = document.getElementById('status');
+    el.innerHTML = '<strong>The quiz could not load.</strong> Open this page through a web server (see README.md), not directly from disk.';
+    el.hidden = false;
+    el.style.position = 'static';
+    el.style.transform = 'none';
+  });
+})();

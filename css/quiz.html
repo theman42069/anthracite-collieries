@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Colliery Quiz · Anthracite Collieries of Pennsylvania</title>
+  <meta name="description" content="How well do you know Pennsylvania's anthracite collieries? Ten questions about the mines around Shamokin and Mount Carmel.">
+  <link rel="icon" href="icons/headframe.svg" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Anthracite Collieries of Pennsylvania">
+  <meta property="og:title" content="Colliery Quiz · Anthracite Collieries of Pennsylvania">
+  <meta property="og:description" content="How well do you know Pennsylvania's anthracite collieries? Take the ten-question quiz.">
+  <meta property="og:url" content="https://theman42069.github.io/anthracite-collieries/quiz.html">
+  <meta property="og:image" content="https://theman42069.github.io/anthracite-collieries/icons/social-card.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/settings-store.js"></script>
+</head>
+<body class="page">
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Back to the map">
+      <img src="icons/headframe.svg" alt="" width="28" height="28">
+      <span class="brand-text">
+        <span class="brand-title">Anthracite Collieries</span>
+        <span class="brand-sub">of Pennsylvania</span>
+      </span>
+    </a>
+    <div class="site-menu" id="site-menu"></div>
+  </header>
+
+  <main class="page-main">
+    <h1>Colliery Quiz</h1>
+    <p class="page-intro">Questions about the collieries on the map. New questions appear as more sites are added. (Change how many per round in Menu → Settings.)</p>
+
+    <div id="status" class="status" role="status" hidden></div>
+    <div id="quiz" aria-live="polite"></div>
+  </main>
+
+  <script src="js/menu.js"></script>
+  <script src="js/quiz.js"></script>
+</body>
+</html>
