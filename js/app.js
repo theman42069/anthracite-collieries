@@ -93,6 +93,8 @@
     markerZoomAnimation: SETTINGS.motion
   });
 
+  window.CollieryMap = map; // for js/secrets.js
+
   // Glide to a place, or jump there when animations are turned off.
   function goTo(latlng, zoom, seconds) {
     if (SETTINGS.motion) map.flyTo(latlng, zoom, { duration: seconds || 1.2 });
@@ -1064,6 +1066,26 @@
     if (Math.abs(dx) > 40) showPhoto(galleryIndex + (dx < 0 ? 1 : -1));
   });
 
+  // How many people data/memorial.json names at each colliery (loaded once, in the background).
+  var memorialCounts = {};
+  var panelId = null;
+
+  function showMemorialLink() {
+    var n = memorialCounts[panelId] || 0;
+    document.getElementById('panel-memorial-wrap').hidden = !n;
+    var a = document.getElementById('panel-memorial');
+    a.href = 'memorial.html#' + encodeURIComponent(panelId || '');
+    a.textContent = 'The records found so far name ' + n + (n === 1 ? ' person' : ' people') + ' who died here. See their names →';
+  }
+
+  fetch('data/memorial.json', { cache: 'no-cache' })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      (d.people || []).forEach(function (r) { memorialCounts[r[4]] = (memorialCounts[r[4]] || 0) + 1; });
+      if (panelId) showMemorialLink();
+    })
+    .catch(function () { /* the panel just won't show the link */ });
+
   function renderPanel(item) {
     var p = item.props;
     var name = p.name || 'Unnamed site';
@@ -1117,6 +1139,9 @@
         '</span>' +
       '</a></li>';
     }).join('');
+
+    panelId = p.id;
+    showMemorialLink();
 
     var sources = listOf(p.sources);
     document.getElementById('panel-sources').innerHTML = sources.length

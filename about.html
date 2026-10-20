@@ -75,9 +75,15 @@
 
     <h2>Credits</h2>
     <p>Researched and compiled by Tom. Map imagery from Esri, OpenTopoMap and OpenStreetMap contributors; see the <a href="sources.html">Sources page</a> for full map and photo credits. Built with <a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>.</p>
+    <p class="page-end">
+      <button type="button" class="hidden-canary" aria-label="A small yellow bird">
+        <svg viewBox="0 0 64 48" width="22" height="17" aria-hidden="true"><ellipse cx="30" cy="28" rx="18" ry="13" fill="#ffd23f"/><circle cx="46" cy="18" r="10" fill="#ffd23f"/><path d="M55 17 L63 20 L55 22 Z" fill="#f28c28"/><circle cx="48" cy="16" r="2" fill="#222"/><path d="M12 28 L2 22 L6 32 Z" fill="#ffd23f"/></svg>
+      </button>
+    </p>
   </main>
 
   <script src="js/menu.js"></script>
+  <script src="js/secrets.js"></script>
   <script>
     // Live counts from the same data file the map uses.
     fetch('data/collieries.geojson', { cache: 'no-cache' })

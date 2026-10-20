@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>In Memoriam · Anthracite Collieries of Pennsylvania</title>
+  <meta name="description" content="The names of the men and boys killed at the collieries on the Anthracite Collieries of Pennsylvania map, from the state mine inspectors' reports and newspapers.">
+  <link rel="icon" href="icons/headframe.svg" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Anthracite Collieries of Pennsylvania">
+  <meta property="og:title" content="In Memoriam · Anthracite Collieries of Pennsylvania">
+  <meta property="og:description" content="The men and boys killed at the collieries on the map, named from the state mine inspectors' reports.">
+  <meta property="og:url" content="https://theman42069.github.io/anthracite-collieries/memorial.html">
+  <meta property="og:image" content="https://theman42069.github.io/anthracite-collieries/icons/social-card.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/settings-store.js"></script>
+</head>
+<body class="page">
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Back to the map">
+      <img src="icons/headframe.svg" alt="" width="28" height="28">
+      <span class="brand-text">
+        <span class="brand-title">Anthracite Collieries</span>
+        <span class="brand-sub">of Pennsylvania</span>
+      </span>
+    </a>
+    <div class="site-menu" id="site-menu"></div>
+  </header>
+
+  <main class="page-main">
+    <div class="memorial-head">
+      <span class="memorial-candle" aria-hidden="true"></span>
+      <h1>In Memoriam</h1>
+      <p class="page-intro">The men and boys who were killed working at the collieries on this map, as named in the state mine inspectors' yearly reports and in newspapers of the time. Names are spelled the way the records spelled them.</p>
+      <p class="memorial-count" id="memorial-count"></p>
+    </div>
+
+    <div id="status" class="status" role="status" hidden></div>
+
+    <div class="memorial-tools">
+      <label class="visually-hidden" for="mem-search">Find a name</label>
+      <input id="mem-search" class="cite-filter" type="search" placeholder="Find a name, job or cause…" autocomplete="off">
+      <label class="visually-hidden" for="mem-colliery">Colliery</label>
+      <select id="mem-colliery"><option value="">All collieries</option></select>
+      <label class="visually-hidden" for="mem-group">Group by</label>
+      <select id="mem-group">
+        <option value="colliery">By colliery</option>
+        <option value="year">By year</option>
+        <option value="age">By age (youngest first)</option>
+      </select>
+    </div>
+
+    <div id="memorial-list"></div>
+
+    <h2>Not complete yet</h2>
+    <div class="callout">
+      <p><strong>This list is not everyone.</strong> Thousands of people died in these mines, and only some years' records have been put online so far. <span id="memorial-years"></span></p>
+      <ul id="memorial-unnamed"></ul>
+      <p>Know a name that's missing, or a better spelling? Please <a href="https://github.com/theman42069/anthracite-collieries/issues" target="_blank" rel="noopener">open an issue on GitHub</a> with where it comes from.</p>
+    </div>
+
+    <h2>Where the names come from</h2>
+    <ul class="cite-list" id="memorial-sources"></ul>
+  </main>
+
+  <script src="js/menu.js"></script>
+  <script src="js/memorial.js"></script>
+</body>
+</html>

@@ -87,6 +87,19 @@ The **Filter map** box has filters for coal field, site type (once there's more 
 year, operator and present-day condition. **Show everything** clears them all. The
 **Collieries** button lists every site that's currently visible.
 
+**In Memoriam:** `memorial.html` lists the people killed at the collieries on the map, from
+`data/memorial.json`. Each row is `[date, name, age, job, colliery id, what happened, source key,
+note]`; the source keys are explained at the top of the file. Each colliery's panel links to its
+names. The list only covers the years whose inspector reports are online so far (listed in the
+file's `years_searched`). Add names the same way, always with a source.
+
+**Secrets:** the site hides five easter eggs. All the code is in `js/secrets.js` (spoilers at the
+top of the file), and a perfect quiz score is handled in `js/quiz.js`. Found secrets are listed on
+`secret.html` ("The Canary's Nest"), which isn't in the menu. The St. Barbara's Day
+remembrance turns on by itself December 1–7; on other days, search "St. Barbara", type BARBARA
+on the map, or add `?stbarbara` to the map's address. Bonus quiz questions
+in `data/quiz-extra.json` have `"hard": true` and only appear in the bonus round.
+
 ---
 
 ## Run it locally

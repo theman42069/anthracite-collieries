@@ -187,9 +187,11 @@
     });
   }
 
-  function curatedQuestions(extra, bySlug) {
+  // hard: true → only the bonus round's hard questions; false → only the normal ones.
+  function curatedQuestions(extra, bySlug, hard) {
     return (Array.isArray(extra) ? extra : []).map(function (q) {
-      if (!q || !q.question || !q.answer || !Array.isArray(q.wrong) || q.wrong.length < 3) return null;
+      if (!q || !!q.hard !== !!hard) return null;
+      if (!q.question || !q.answer || !Array.isArray(q.wrong) || q.wrong.length < 3) return null;
       return {
         kind: 'history',
         text: q.question,
@@ -208,7 +210,7 @@
     sites.forEach(function (s) { bySlug[s.slug] = s; });
 
     var groups = [
-      curatedQuestions(extra, bySlug),
+      curatedQuestions(extra, bySlug, false),
       openedQuestions(sites),
       closedQuestions(sites),
       otherNameQuestions(sites),
@@ -240,8 +242,20 @@
   var extraCache = null;
   var state = null;
 
-  function start() {
-    state = { questions: buildRound(sitesCache, extraCache), index: 0, score: 0, answers: [] };
+  function buildBonus(sites, extra) {
+    var bySlug = {};
+    sites.forEach(function (s) { bySlug[s.slug] = s; });
+    return shuffle(curatedQuestions(extra, bySlug, true).filter(Boolean)).map(function (q) {
+      q.options = shuffle([q.answer].concat(q.wrong));
+      return q;
+    });
+  }
+
+  function start(bonus) {
+    state = {
+      questions: bonus ? buildBonus(sitesCache, extraCache) : buildRound(sitesCache, extraCache),
+      index: 0, score: 0, answers: [], bonus: !!bonus
+    };
     if (!state.questions.length) {
       box.innerHTML = '<div class="quiz-card"><p>Not enough colliery data yet to make a quiz.</p></div>';
       return;
@@ -254,6 +268,7 @@
     var total = state.questions.length;
     box.innerHTML = '' +
       '<div class="quiz-card">' +
+        (state.bonus ? '<p class="bonus-tag">⭐ Superintendent\'s bonus round: the hard ones</p>' : '') +
         '<div class="quiz-progress"><span>Question ' + (state.index + 1) + ' of ' + total + '</span><span>Score: ' + state.score + '</span></div>' +
         '<div class="quiz-bar"><span style="width:' + (state.index / total * 100) + '%"></span></div>' +
         '<p class="quiz-question">' + escapeHtml(q.text) + '</p>' +
@@ -305,23 +320,48 @@
 
   function showScore() {
     var total = state.questions.length;
-    var best = readBest();
-    var newBest = state.score > best;
-    if (newBest) saveBest(state.score);
     var ratio = state.score / total;
-    var rank = ratio === 1 ? 'Mine superintendent! A perfect score.'
-      : ratio >= 0.8 ? 'Fire boss. You know these mines well.'
-      : ratio >= 0.5 ? 'Miner. A solid shift.'
-      : ratio >= 0.3 ? 'Laborer. Keep digging.'
-      : 'Breaker boy. Everyone starts somewhere.';
+    var perfect = ratio === 1;
+    var rank, scoreNote, extra = '';
+
+    if (state.bonus) {
+      rank = perfect ? 'Every hard one right. The whole valley answers to you.'
+        : ratio >= 0.5 ? 'Not bad at all. These are the deep-shaft questions.'
+        : 'Tough round. These are the deep-shaft questions.';
+      scoreNote = 'Bonus round';
+    } else {
+      var best = readBest();
+      var newBest = state.score > best;
+      if (newBest) saveBest(state.score);
+      rank = perfect ? 'Mine superintendent! A perfect score.'
+        : ratio >= 0.8 ? 'Fire boss. You know these mines well.'
+        : ratio >= 0.5 ? 'Miner. A solid shift.'
+        : ratio >= 0.3 ? 'Laborer. Keep digging.'
+        : 'Breaker boy. Everyone starts somewhere.';
+      scoreNote = newBest ? 'New best score!' : 'Your best: ' + Math.max(best, state.score) + ' / ' + total;
+      if (perfect) {
+        extra =
+          '<div class="certificate-box">' +
+            '<p><strong>🎖️ You\'ve earned a certificate.</strong> Put your name on it:</p>' +
+            '<div class="cert-row">' +
+              '<label class="visually-hidden" for="cert-name">Your name</label>' +
+              '<input id="cert-name" type="text" maxlength="40" placeholder="Your name" autocomplete="name">' +
+              '<button type="button" class="button" id="cert-save">Save certificate</button>' +
+            '</div>' +
+            '<canvas id="cert-canvas" width="1200" height="850" aria-label="Mine Superintendent certificate"></canvas>' +
+          '</div>';
+      }
+    }
 
     box.innerHTML = '' +
       '<div class="quiz-card quiz-score">' +
         '<div class="big">' + state.score + ' / ' + total + '</div>' +
         '<p><strong>' + rank + '</strong></p>' +
-        '<p class="section-intro">' + (newBest ? 'New best score!' : 'Your best: ' + Math.max(best, state.score) + ' / ' + total) + '</p>' +
+        '<p class="section-intro">' + scoreNote + '</p>' +
+        extra +
         '<div class="quiz-actions" style="justify-content:center">' +
-          '<button type="button" class="button primary" id="quiz-again">Play again (new questions)</button>' +
+          (perfect && !state.bonus ? '<button type="button" class="button primary" id="quiz-bonus">⭐ Bonus round: the hard ones</button>' : '') +
+          '<button type="button" class="button' + (perfect && !state.bonus ? '' : ' primary') + '" id="quiz-again">Play again (new questions)</button>' +
           '<a class="button" href="index.html">Explore the map</a>' +
         '</div>' +
         '<ul class="quiz-review">' +
@@ -332,13 +372,95 @@
           }).join('') +
         '</ul>' +
       '</div>';
+
+    if (perfect && !state.bonus) {
+      if (window.CollierySecrets) CollierySecrets.markFound('superintendent');
+      var input = document.getElementById('cert-name');
+      try { input.value = localStorage.getItem('collieries:certName') || ''; } catch (e) { /* storage blocked */ }
+      drawCertificate(input.value, total);
+      input.addEventListener('input', function () {
+        try { localStorage.setItem('collieries:certName', input.value); } catch (e) { /* storage blocked */ }
+        drawCertificate(input.value, total);
+      });
+    }
+  }
+
+  // ---------- Superintendent certificate ----------
+
+  function drawCertificate(name, total) {
+    var c = document.getElementById('cert-canvas');
+    if (!c) return;
+    var g = c.getContext('2d');
+    var W = c.width, H = c.height;
+    var serif = '"Libre Baskerville", Georgia, serif';
+
+    g.fillStyle = '#f5ecd7';
+    g.fillRect(0, 0, W, H);
+    g.strokeStyle = '#3b2f1e';
+    g.lineWidth = 10; g.strokeRect(30, 30, W - 60, H - 60);
+    g.lineWidth = 2;  g.strokeRect(52, 52, W - 104, H - 104);
+
+    // A little headframe at the top
+    g.save();
+    g.translate(W / 2, 140);
+    g.strokeStyle = '#3b2f1e'; g.lineWidth = 5; g.lineCap = 'round';
+    g.beginPath();
+    g.moveTo(-40, 50); g.lineTo(-12, -50); g.lineTo(12, -50); g.lineTo(40, 50);
+    g.moveTo(-30, 15); g.lineTo(30, 15);
+    g.moveTo(-12, -50); g.lineTo(12, 15); g.moveTo(12, -50); g.lineTo(-12, 15);
+    g.stroke();
+    g.beginPath(); g.arc(0, -56, 12, 0, Math.PI * 2); g.stroke();
+    g.restore();
+
+    g.fillStyle = '#3b2f1e';
+    g.textAlign = 'center';
+    g.font = '24px ' + serif;
+    g.fillText('ANTHRACITE COLLIERIES OF PENNSYLVANIA', W / 2, 250);
+    g.font = 'bold 64px ' + serif;
+    g.fillText('Mine Superintendent', W / 2, 340);
+    g.font = 'italic 26px ' + serif;
+    g.fillText('This certifies that', W / 2, 410);
+
+    g.font = 'bold 52px ' + serif;
+    g.fillStyle = '#7a3e12';
+    g.fillText(String(name || '').trim() || '______________________', W / 2, 490, W - 200);
+
+    g.fillStyle = '#3b2f1e';
+    g.font = '26px ' + serif;
+    g.fillText('answered all ' + total + ' questions of the colliery quiz correctly,', W / 2, 560);
+    g.fillText('and is hereby placed in charge of every shaft, slope and breaker on the map.', W / 2, 600, W - 160);
+
+    var d = new Date();
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    g.font = '22px ' + serif;
+    g.beginPath(); g.moveTo(160, 720); g.lineTo(480, 720); g.moveTo(W - 480, 720); g.lineTo(W - 160, 720);
+    g.lineWidth = 2; g.stroke();
+    g.fillText(months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear(), 320, 710);
+    g.fillText('Date', 320, 750);
+    g.font = 'italic 30px ' + serif;
+    g.fillText('The Fire Boss', W - 320, 708);
+    g.font = '22px ' + serif;
+    g.fillText('Signed', W - 320, 750);
+  }
+
+  function saveCertificate() {
+    var c = document.getElementById('cert-canvas');
+    if (!c) return;
+    var a = document.createElement('a');
+    a.href = c.toDataURL('image/png');
+    a.download = 'mine-superintendent-certificate.png';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
   }
 
   box.addEventListener('click', function (e) {
+    if (e.target.id === 'quiz-bonus') { start(true); return; }
+    if (e.target.id === 'cert-save') { saveCertificate(); return; }
     var opt = e.target.closest('.quiz-option');
     if (opt && !opt.disabled) { answer(Number(opt.dataset.i)); return; }
     if (e.target.id === 'quiz-next') next();
-    if (e.target.id === 'quiz-again') start();
+    if (e.target.id === 'quiz-again') start(false);
   });
 
   // Keys 1–4 or A–D answer; Enter goes on.

@@ -96,5 +96,69 @@
     "wrong": ["Henry Clay Colliery", "Sterling Colliery", "Bear Valley Colliery"],
     "explain": "After Burnside's pumps stopped in March 1933, its water was diverted to the Big Mountain Colliery's shaft pump from July 1933 to January 1935, before a brick dam sealed the tunnel.",
     "colliery": "burnside-colliery"
+  },
+  {
+    "hard": true,
+    "question": "Who invented the steam ventilation fan that went into use at the Locustdale (Potts) Colliery in 1858?",
+    "answer": "Superintendent Louden Beadle",
+    "wrong": ["Gideon Bast", "J.B. Douty", "Gen. Henry Pleasants"],
+    "explain": "Locustdale's superintendent, Louden Beadle, invented the steam ventilation fan the colliery put into use in 1858.",
+    "colliery": "locustdale-potts-colliery"
+  },
+  {
+    "hard": true,
+    "question": "Before air locomotives arrived in 1901, how many mules hauled all of Maple Hill Colliery's coal?",
+    "answer": "82",
+    "wrong": ["19", "27", "150"],
+    "explain": "82 mules handled all of Maple Hill's output until three air locomotives took over in 1901.",
+    "colliery": "maple-hill-colliery"
+  },
+  {
+    "hard": true,
+    "question": "Glen Burn's production peaked in 1942. How many tons did it ship that year?",
+    "answer": "627,158",
+    "wrong": ["134,216", "307,246", "2,442,806"],
+    "explain": "Glen Burn's peak year was 1942, at 627,158 tons, two years after the Cameron Colliery was renamed Glen Burn.",
+    "colliery": "glen-burn-colliery"
+  },
+  {
+    "hard": true,
+    "question": "Bear Valley's No. 1 shaft was sunk under which chief engineer?",
+    "answer": "Gen. Henry Pleasants",
+    "wrong": ["Louden Beadle", "Stephen Harris", "Robert H. Sayre"],
+    "explain": "The No. 1 shaft at Bear Valley was sunk to 319 feet under chief engineer Gen. Henry Pleasants.",
+    "colliery": "bear-valley-colliery"
+  },
+  {
+    "hard": true,
+    "question": "How deep did Bear Valley's No. 2 shaft, sunk in 1906–07, go?",
+    "answer": "1,002 feet",
+    "wrong": ["319 feet", "724 feet", "1,159 feet"],
+    "explain": "Bear Valley's No. 2 shaft reached 1,002 feet in 1906–07, more than three times the depth of the No. 1 shaft.",
+    "colliery": "bear-valley-colliery"
+  },
+  {
+    "hard": true,
+    "question": "Burnside's main shaft, sunk in 1897 on the Skidmore Vein, reached its third level at what depth?",
+    "answer": "724 feet",
+    "wrong": ["345 feet", "865 feet", "1,050 feet"],
+    "explain": "Philadelphia & Reading sank Burnside's main shaft on the Skidmore Vein in 1897, to a third level at 724 feet.",
+    "colliery": "burnside-colliery"
+  },
+  {
+    "hard": true,
+    "question": "How much coal could the St. Nicholas central breaker process in a day?",
+    "answer": "12,500 tons",
+    "wrong": ["1,500 tons", "5,000 tons", "30,000 tons"],
+    "explain": "The 1931 St. Nicholas breaker could process 12,500 tons a day in two independently operable sections, each batch taking about 12 minutes.",
+    "colliery": "st-nicholas-breaker"
+  },
+  {
+    "hard": true,
+    "question": "Henry Clay's main shaft was sunk to 345 feet in 1876. How deep was it extended in 1897?",
+    "answer": "865 feet",
+    "wrong": ["724 feet", "1,002 feet", "1,186 feet"],
+    "explain": "Henry Clay's main shaft went to 345 feet in 1876 and was later extended to 865 feet in 1897.",
+    "colliery": "henry-clay-colliery"
   }
 ]

@@ -10,6 +10,7 @@
     sources: '<path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H20v15H5.5A1.5 1.5 0 0 0 4 19.5z"/><path d="M4 19.5A1.5 1.5 0 0 0 5.5 21H20v-3"/>',
     about: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>',
     settings: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
+    memorial: '<path d="M12 3c-1.6 2.2-2 3.6-1.4 4.7.4.8 2.4.8 2.8 0C14 6.6 13.6 5.2 12 3z"/><rect x="9" y="10" width="6" height="11" rx="1"/>',
     quiz: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7M12 17v.5"/>',
     menu: '<path d="M4 7h16M4 12h16M4 17h16"/>'
   };
@@ -17,6 +18,7 @@
   var PAGES = [
     { href: 'index.html', label: 'Map', note: 'Explore the collieries', icon: 'map' },
     { href: 'quiz.html', label: 'Quiz', note: 'Test what you know', icon: 'quiz' },
+    { href: 'memorial.html', label: 'In Memoriam', note: 'The men and boys who died here', icon: 'memorial' },
     { href: 'sources.html', label: 'Sources', note: 'Every citation and photo credit', icon: 'sources' },
     { href: 'about.html', label: 'About', note: 'The project and visiting safely', icon: 'about' },
     { href: 'settings.html', label: 'Settings', note: 'Customize the map', icon: 'settings' }
