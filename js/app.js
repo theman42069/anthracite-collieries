@@ -1142,6 +1142,8 @@
 
     panelId = p.id;
     showMemorialLink();
+    document.getElementById('panel-minemaps').href =
+      'minemaps.html?lat=' + item.latlng.lat.toFixed(5) + '&lng=' + item.latlng.lng.toFixed(5);
 
     var sources = listOf(p.sources);
     document.getElementById('panel-sources').innerHTML = sources.length

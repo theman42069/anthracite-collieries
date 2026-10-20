@@ -1784,3 +1784,55 @@ body.page .topbar { position: sticky; top: 0; }
 .mem-cause { font-size: 0.92rem; margin-top: 2px; }
 .mem-note { font-size: 0.85rem; color: var(--muted); margin-top: 2px; }
 .memorial-link { margin-top: 6px; }
+
+/* ---------- Old Mine Maps page ---------- */
+
+.mm-layout { flex: 1 1 auto; min-height: 0; display: flex; }
+.mm-stage { position: relative; flex: 1 1 auto; min-width: 0; }
+#mm-map { position: absolute; inset: 0; background: #0d0e10; }
+.mm-side {
+  flex: 0 0 var(--panel-w);
+  overflow-y: auto;
+  padding: 18px 18px 28px;
+  background: var(--chrome);
+  border-left: 1px solid var(--border);
+}
+.mm-side h1 { font-family: var(--serif); font-size: 1.5rem; margin: 0 0 8px; }
+.mm-intro, .mm-status, .mm-credit { color: var(--text-soft); font-size: 0.95rem; }
+.mm-credit { margin-top: 24px; font-size: 0.85rem; color: var(--muted); }
+.mm-tools { display: grid; gap: 8px; margin: 12px 0; }
+.mm-check { font-size: 0.9rem; color: var(--muted); display: flex; gap: 6px; align-items: center; }
+.mm-group h2 { font-size: 1rem; margin: 18px 0 6px; display: flex; justify-content: space-between; }
+.mm-group h2 span { color: var(--muted); font-weight: 400; }
+.mm-group ul { list-style: none; margin: 0; padding: 0; }
+.mm-sheet {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px;
+  padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--radius);
+  margin-bottom: 6px; background: var(--chrome-2);
+}
+.mm-sheet.on { border-color: var(--accent); }
+.mm-code { font-weight: 600; word-break: break-all; }
+.mm-code small { display: block; font-weight: 400; color: var(--muted); }
+.mm-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.mm-btn {
+  font: inherit; font-size: 0.85rem; padding: 4px 10px; border-radius: 6px;
+  border: 1px solid var(--border); background: var(--chrome-3); color: var(--text);
+  cursor: pointer; text-decoration: none; white-space: nowrap;
+}
+.mm-btn:hover { border-color: var(--accent); color: var(--text); }
+.mm-sheet.on .mm-show { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.mm-overlay-bar {
+  position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 1000;
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding: 8px 12px; border-radius: var(--radius); background: var(--overlay-bg);
+  border: 1px solid var(--border); box-shadow: var(--shadow); max-width: calc(100% - 32px);
+}
+.mm-overlay-name { font-weight: 600; }
+.mm-fade { display: flex; align-items: center; gap: 6px; font-size: 0.9rem; color: var(--text-soft); }
+@media (max-width: 760px) {
+  .mm-layout { flex-direction: column; }
+  .mm-stage { flex: 0 0 55vh; }
+  .mm-side { flex: 1 1 auto; border-left: 0; border-top: 1px solid var(--border); }
+  .mm-overlay-bar { bottom: 12px; }
+}
+.mm-overlay-bar[hidden], .mm-tools[hidden] { display: none; }
