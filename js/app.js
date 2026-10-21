@@ -15,22 +15,21 @@
   }
 
   // This visitor's choices from Menu → Settings (js/settings-store.js), or the defaults.
-  var STORE = window.CollierySettings || null;
-  var SETTINGS = STORE ? STORE.load() : {
-    baseLayer: 'satellite', placeLabels: true, startView: 'region', markerSize: 'normal',
-    clustering: true, mapLabels: true, listSort: 'name', textSize: 'normal', showConfidence: true, filterBox: 'closed',
-    theme: 'dark', motion: true, units: 'mi', autoLocate: false, playSpeed: 'normal', quizLength: 10
-  };
+  var STORE = window.CollierySettings;
+  var SETTINGS = STORE.load();
+  var U = window.CollieryUtil;
+  var escapeHtml = U.escapeHtml, slugify = U.slugify, isHttpUrl = U.isHttpUrl, operatorsFor = U.operatorsOf;
   // Pins are a little bigger in the phone layout so they're easier to tap.
   var MARKER_SCALE = ({ small: 0.8, normal: 1, large: 1.3 }[SETTINGS.markerSize] || 1) * (isPhone() ? 1.15 : 1);
 
   // Coal fields, in legend order. The pin color shows the field.
   var FIELDS = [
-    { key: 'Northern',       label: 'Northern Field',       color: '#f2b63c' },
-    { key: 'Eastern Middle', label: 'Eastern Middle Field', color: '#4cc3d9' },
-    { key: 'Western Middle', label: 'Western Middle Field', color: '#ef5b5b' },
-    { key: 'Southern',       label: 'Southern Field',       color: '#b28dff' }
+    { key: 'Northern',       label: 'Northern Field' },
+    { key: 'Eastern Middle', label: 'Eastern Middle Field' },
+    { key: 'Western Middle', label: 'Western Middle Field' },
+    { key: 'Southern',       label: 'Southern Field' }
   ];
+  FIELDS.forEach(function (f) { f.color = U.FIELD_COLORS[f.key.toLowerCase()]; });
   var OTHER_FIELD = { key: 'Other', label: 'Other / unknown', color: '#9aa0a6' };
 
   // Kinds of coal infrastructure. The symbol inside the pin shows the type.
@@ -79,7 +78,7 @@
   // ---------- Map and base layers ----------
 
   // "Go back to where I left off" reopens the last saved view; otherwise the whole region.
-  var savedView = SETTINGS.startView === 'last' && STORE ? STORE.loadView() : null;
+  var savedView = SETTINGS.startView === 'last' ? STORE.loadView() : null;
   var hasSavedView = savedView && isFinite(savedView.lat) && isFinite(savedView.lng) && isFinite(savedView.zoom);
 
   var map = L.map('map', {
@@ -103,7 +102,7 @@
 
   map.on('zoomend', function () { updateMapLabels(); });
 
-  if (SETTINGS.startView === 'last' && STORE) {
+  if (SETTINGS.startView === 'last') {
     map.on('moveend', function () {
       var c = map.getCenter();
       STORE.saveView({ lat: +c.lat.toFixed(5), lng: +c.lng.toFixed(5), zoom: map.getZoom() });
@@ -276,24 +275,6 @@
 
   // ---------- Helpers ----------
 
-  function escapeHtml(value) {
-    return String(value == null ? '' : value)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-  }
-
-  function slugify(text) {
-    return String(text || '')
-      .toLowerCase()
-      .normalize('NFKD').replace(/[̀-ͯ]/g, '')
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-+|-+$/g, '');
-  }
-
-  function isHttpUrl(value) {
-    return /^https?:\/\//i.test(String(value || '').trim());
-  }
-
   function listOf(value) {
     if (Array.isArray(value)) return value.filter(function (v) { return v != null && v !== ''; });
     return value != null && value !== '' ? [value] : [];
@@ -343,18 +324,6 @@
       if (TYPES[i].key === wanted) return TYPES[i];
     }
     return OTHER_TYPE;
-  }
-
-  // Company names for the operator filter: the "operators" list if given,
-  // otherwise the "operator" text split at semicolons with (dates) removed.
-  function operatorsFor(props) {
-    var list = listOf(props.operators);
-    if (!list.length && props.operator) {
-      list = String(props.operator).split(';').map(function (s) {
-        return s.replace(/\([^)]*\)/g, '').replace(/[,\s]+$/, '').trim();
-      });
-    }
-    return list.map(function (s) { return String(s).trim(); }).filter(Boolean);
   }
 
   function statusLabel(tag) {
@@ -544,7 +513,7 @@
     }).join('');
 
     var typeRows = types.length > 1
-      ? '<h4 class="legend-heading">Site types</h4>' + types.map(function (t) {
+      ? '<h4 class="legend-heading">Site types <span class="hint">pin symbol</span></h4>' + types.map(function (t) {
           return legendRow('types', t.key, t.label, markerSvg('#c9c2b4', t, 18),
             countWhere(function (it) { return it.type === t; }));
         }).join('')
@@ -560,7 +529,7 @@
           '<summary>Filter map <span class="summary-badge" hidden></span></summary>' +
           '<div class="legend-body">' +
             '<h4 class="legend-heading">Coal fields <span class="hint">pin color</span></h4>' + fieldRows +
-            (typeRows ? typeRows.replace('Site types</h4>', 'Site types <span class="hint">pin symbol</span></h4>') : '') +
+            typeRows +
             timelineHtml() +
             moreFiltersHtml() +
             '<button type="button" class="reset-filters" hidden>Show everything</button>' +
@@ -1066,25 +1035,33 @@
     if (Math.abs(dx) > 40) showPhoto(galleryIndex + (dx < 0 ? 1 : -1));
   });
 
-  // How many people data/memorial.json names at each colliery (loaded once, in the background).
-  var memorialCounts = {};
+  // How many people data/memorial.json names at each colliery.
+  // Loaded the first time a panel opens, so plain map visits skip the big file.
+  var memorialCounts = null;
+  var memorialLoading = false;
   var panelId = null;
 
+  function loadMemorialCounts() {
+    if (memorialLoading) return;
+    memorialLoading = true;
+    fetch('data/memorial.json', { cache: 'no-cache' })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        memorialCounts = {};
+        (d.people || []).forEach(function (r) { memorialCounts[r[4]] = (memorialCounts[r[4]] || 0) + 1; });
+      })
+      .catch(function () { memorialCounts = {}; /* the panel just won't show the link */ })
+      .then(function () { if (panelId) showMemorialLink(); });
+  }
+
   function showMemorialLink() {
+    if (!memorialCounts) { loadMemorialCounts(); return; }
     var n = memorialCounts[panelId] || 0;
     document.getElementById('panel-memorial-wrap').hidden = !n;
     var a = document.getElementById('panel-memorial');
     a.href = 'memorial.html#' + encodeURIComponent(panelId || '');
     a.textContent = 'The records found so far name ' + n + (n === 1 ? ' person' : ' people') + ' who died here. See their names →';
   }
-
-  fetch('data/memorial.json', { cache: 'no-cache' })
-    .then(function (r) { return r.json(); })
-    .then(function (d) {
-      (d.people || []).forEach(function (r) { memorialCounts[r[4]] = (memorialCounts[r[4]] || 0) + 1; });
-      if (panelId) showMemorialLink();
-    })
-    .catch(function () { /* the panel just won't show the link */ });
 
   function renderPanel(item) {
     var p = item.props;
@@ -1322,7 +1299,7 @@
 
   sortSelect.addEventListener('change', function () {
     listSort = sortSelect.value;
-    if (STORE) { var s = STORE.load(); s.listSort = listSort; STORE.save(s); }
+    var s = STORE.load(); s.listSort = listSort; STORE.save(s);
     if (listSort === 'nearest' && !lastLocation && !locating) startLocating(false);
     renderList();
   });

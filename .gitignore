@@ -1,0 +1,9 @@
+# Research files kept out of the published site (mine-maps has files over GitHub's 100 MB limit)
+mine-maps/
+notes/
+wikipedia/
+*.zip
+anthracite-collieries-upload/
+.claude/
+photos-on-hold/
+CREDITS-TODO.md

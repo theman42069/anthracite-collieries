@@ -104,7 +104,6 @@
     save: save,
     reset: reset,
     guessLayout: guessLayout,
-    isPhone: function () { return document.documentElement.getAttribute('data-layout') === 'phone'; },
     loadView: function () { return read(VIEW_KEY); },
     saveView: function (view) { write(VIEW_KEY, view); }
   };

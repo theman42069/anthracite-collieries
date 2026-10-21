@@ -3,31 +3,11 @@
   'use strict';
 
   var DATA_URL = 'data/collieries.geojson';
-  var FIELD_COLORS = {
-    'northern': '#f2b63c', 'eastern middle': '#4cc3d9', 'western middle': '#ef5b5b', 'southern': '#b28dff'
-  };
-
-  function escapeHtml(value) {
-    return String(value == null ? '' : value)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-  }
-
-  // Must match app.js so the links open the right panel.
-  function slugify(text) {
-    return String(text || '')
-      .toLowerCase()
-      .normalize('NFKD').replace(/[̀-ͯ]/g, '')
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-+|-+$/g, '');
-  }
-
-  function isHttpUrl(value) {
-    return /^https?:\/\//i.test(String(value || '').trim());
-  }
+  var U = window.CollieryUtil;
+  var escapeHtml = U.escapeHtml, slugify = U.slugify, isHttpUrl = U.isHttpUrl;
 
   function colorFor(field) {
-    return FIELD_COLORS[String(field || '').toLowerCase().replace(/\s+field$/, '').trim()] || '#9aa0a6';
+    return U.FIELD_COLORS[String(field || '').toLowerCase().replace(/\s+field$/, '').trim()] || '#9aa0a6';
   }
 
   // Sort key: ignore leading quotes so "Tiny Village…" sorts under T.

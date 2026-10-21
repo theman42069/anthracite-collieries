@@ -14,16 +14,8 @@
 
   // ---------- Helpers ----------
 
-  function escapeHtml(value) {
-    return String(value == null ? '' : value)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-  }
-
-  function slugify(text) {
-    return String(text || '').toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '')
-      .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-  }
+  var escapeHtml = window.CollieryUtil.escapeHtml;
+  var slugify = window.CollieryUtil.slugify;
 
   function shuffle(list) {
     var a = list.slice();
@@ -173,15 +165,18 @@
     var countyOf = function (s) { return String(s.p.county || '').split(' (')[0].trim(); };
     return sites.map(function (s) {
       var county = countyOf(s);
-      if (!county) return null;
+      // Skip sites on a county line ("Schuylkill / Northumberland / …"): no single right answer.
+      if (!county || county.indexOf('/') !== -1) return null;
       if (sites.filter(function (o) { return countyOf(o) === county; }).length !== 1) return null;
-      var others = shuffle(sites.filter(function (o) { return o !== s; })).slice(0, 3);
+      var others = shuffle(sites.filter(function (o) { return o !== s && countyOf(o).indexOf('/') === -1; })).slice(0, 3);
+      if (others.length < 3) return null;
+      var otherCounties = others.map(countyOf).filter(function (c, i, a) { return a.indexOf(c) === i; });
       return {
         kind: 'county',
         text: 'Which colliery was in ' + county + '?',
         answer: s.name,
         wrong: others.map(function (o) { return o.name; }),
-        explain: s.name + ' was in ' + s.p.county + '. The others on the map are in ' + countyOf(others[0]) + '.',
+        explain: s.name + ' was in ' + s.p.county + '. The other choices were in ' + otherCounties.join(' and ') + '.',
         site: s
       };
     });
@@ -482,8 +477,7 @@
       .filter(function (f) { return f.geometry && f.geometry.type === 'Point'; })
       .map(function (f) {
         var p = f.properties || {};
-        var ops = Array.isArray(p.operators) && p.operators.length ? p.operators
-          : String(p.operator || '').split(';').map(function (s) { return s.replace(/\([^)]*\)/g, '').replace(/[,\s]+$/, '').trim(); }).filter(Boolean);
+        var ops = window.CollieryUtil.operatorsOf(p);
         return {
           p: p,
           name: p.name || 'Unnamed colliery',

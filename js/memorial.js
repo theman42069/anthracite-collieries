@@ -13,13 +13,7 @@
   var people = [];
   var sources = {};
   var names = {};   // colliery id -> name
-  var offMap = {};  // colliery ids with no map pin
-
-  function esc(s) {
-    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-    });
-  }
+  var esc = window.CollieryUtil.escapeHtml;
 
   function niceDate(d) {
     var m = /^(\d{4})-(\d{2})(?:-(\d{2}))?$/.exec(d);
@@ -77,7 +71,6 @@
       var rows = groups[key].sort(function (a, b) { return a.date.localeCompare(b.date) || a.name.localeCompare(b.name); });
       var title = byAge ? (key === 'unknown' ? 'Age not recorded' : 'Age ' + esc(key))
         : byYear ? esc(key)
-        : offMap[key] ? esc(names[key]) + ' <span class="mem-meta">(not on the map)</span>'
         : '<a href="index.html#' + esc(key) + '">' + esc(names[key] || key) + '</a>';
       return '<section class="mem-group">' +
         '<h2>' + title + ' <span class="section-intro">' + rows.length + (rows.length === 1 ? ' name' : ' names') + '</span></h2>' +
@@ -100,10 +93,6 @@
     (res[1].features || []).forEach(function (f) {
       var p = f.properties || {};
       if (p.id) names[p.id] = p.name || p.id;
-    });
-    // Collieries whose names are listed here but which have no pin on the map.
-    Object.keys(data.off_map || {}).forEach(function (id) {
-      if (!names[id]) { names[id] = data.off_map[id]; offMap[id] = true; }
     });
     sources = data.sources || {};
     people = (data.people || []).map(function (r) {
