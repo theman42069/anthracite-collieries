@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Send a Correction · Anthracite Collieries of Pennsylvania</title>
+  <meta name="description" content="Send a correction, a photo, or a missing name for the Anthracite Collieries of Pennsylvania map.">
+  <link rel="icon" href="icons/headframe.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#16181b">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Anthracite Collieries of Pennsylvania">
+  <meta property="og:title" content="Send a Correction · Anthracite Collieries of Pennsylvania">
+  <meta property="og:description" content="Know a date that's wrong, have a photo, or know a name that's missing? Send it in.">
+  <meta property="og:url" content="https://theman42069.github.io/anthracite-collieries/contribute.html">
+  <meta property="og:image" content="https://theman42069.github.io/anthracite-collieries/icons/social-card.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/settings-store.js"></script>
+  <script src="js/util.js"></script>
+</head>
+<body class="page">
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Back to the map">
+      <img src="icons/headframe.svg" alt="" width="28" height="28">
+      <span class="brand-text">
+        <span class="brand-title">Anthracite Collieries</span>
+        <span class="brand-sub">of Pennsylvania</span>
+      </span>
+    </a>
+    <div class="site-menu" id="site-menu"></div>
+  </header>
+
+  <main class="page-main">
+    <h1>Send a Correction</h1>
+    <p class="page-intro">Spotted a wrong date, have a photo of a colliery, or know someone who's missing from the memorial? Fill this in and it becomes a note to the person who keeps the map. Please say where the information comes from (a newspaper, a book, a family record, your own photo), so it can be checked.</p>
+
+    <form id="contribute" class="contribute">
+      <fieldset class="setting">
+        <legend>What is it?</legend>
+        <div class="choices">
+          <label><input type="radio" name="kind" value="correction" checked><span>A correction</span></label>
+          <label><input type="radio" name="kind" value="photo"><span>A photo</span></label>
+          <label><input type="radio" name="kind" value="name"><span>A missing name</span></label>
+          <label><input type="radio" name="kind" value="other"><span>Something else</span></label>
+        </div>
+      </fieldset>
+
+      <label class="field">
+        <span class="field-label">Which colliery?</span>
+        <select id="c-colliery"><option value="">Not about one colliery / not sure</option></select>
+      </label>
+
+      <label class="field">
+        <span class="field-label" id="c-what-label">What should change?</span>
+        <textarea id="c-what" rows="6" required placeholder="For example: the closing year should be 1931, not 1929."></textarea>
+      </label>
+
+      <label class="field" id="c-photo-row" hidden>
+        <span class="field-label">Link to the photo</span>
+        <input id="c-photo" type="url" placeholder="https://… (a Facebook post, Flickr page, website, or shared file)">
+        <span class="field-note">Who took it, if known, and may it be shown on the map? Put that in the box below.</span>
+      </label>
+
+      <label class="field">
+        <span class="field-label">Where does this come from?</span>
+        <textarea id="c-source" rows="3" placeholder="Newspaper and date, book and page, family record, your own photo…"></textarea>
+      </label>
+
+      <p class="field-note">Please don't include phone numbers, home addresses or other private details. The note is posted publicly on GitHub.</p>
+
+      <div class="contribute-actions">
+        <button type="submit" class="button primary">Send it on GitHub</button>
+        <button type="button" class="button" id="c-copy">Copy the message instead</button>
+      </div>
+      <p class="field-note" id="c-status" role="status"></p>
+      <p class="field-note">“Send it on GitHub” opens a ready-filled issue on the project's GitHub page; you'll need a free GitHub account to post it. No account? Use “Copy the message instead” and paste it into a message to the map's keeper, for example in the Facebook group where you found this map.</p>
+    </form>
+  </main>
+
+  <script src="js/menu.js"></script>
+  <script src="js/contribute.js"></script>
+</body>
+</html>

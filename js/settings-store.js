@@ -14,7 +14,7 @@
     autoLocate: false,        // show my location as soon as the map opens
     playSpeed: 'normal',      // slow | normal | fast (timeline playback)
     quizLength: 10,           // questions per quiz round
-    baseLayer: 'satellite',   // satellite | oldtopo | topo | streets
+    baseLayer: 'satellite',   // satellite | aerial80s | oldtopo | topo | streets
     placeLabels: true,
     startView: 'region',      // region | last
     markerSize: 'normal',     // small | normal | large
@@ -32,7 +32,7 @@
     units: ['mi', 'km'],
     playSpeed: ['slow', 'normal', 'fast'],
     quizLength: [5, 10, 15],
-    baseLayer: ['satellite', 'oldtopo', 'topo', 'streets'],
+    baseLayer: ['satellite', 'aerial80s', 'oldtopo', 'topo', 'streets'],
     startView: ['region', 'last'],
     markerSize: ['small', 'normal', 'large'],
     listSort: ['name', 'oldest', 'newest', 'closed', 'nearest'],

@@ -13,7 +13,8 @@
   var people = [];
   var sources = {};
   var names = {};   // colliery id -> name
-  var esc = window.CollieryUtil.escapeHtml;
+  var U = window.CollieryUtil;
+  var esc = U.escapeHtml;
 
   function niceDate(d) {
     var m = /^(\d{4})-(\d{2})(?:-(\d{2}))?$/.exec(d);
@@ -34,7 +35,8 @@
     return '<li class="mem-person">' +
       '<div class="mem-name">' + esc(p.name) + (bits.length ? ' <span class="mem-meta">' + bits.join(', ') + '</span>' : '') + '</div>' +
       '<div class="mem-when">' + esc(niceDate(p.date)) +
-        (showColliery ? ' · <a href="memorial.html#' + esc(p.colliery) + '">' + esc(names[p.colliery] || p.colliery) + '</a>' : '') + '</div>' +
+        (showColliery ? ' · <a href="memorial.html#' + esc(p.colliery) + '">' + esc(names[p.colliery] || p.colliery) + '</a>' : '') +
+        ' · <a class="mem-map" href="index.html#' + esc(p.colliery) + '">on the map</a></div>' +
       (p.cause ? '<div class="mem-cause">' + esc(p.cause) + '</div>' : '') +
       (p.note ? '<div class="mem-note">' + esc(p.note) + '</div>' : '') +
     '</li>';
@@ -42,13 +44,16 @@
 
   function render() {
     var q = search.value.trim().toLowerCase();
+    // Names were spelled many ways in the records, so a name can be off by a letter or two.
+    var pq = U.plain(q);
     var only = pick.value;
     var byYear = group.value === 'year';
     var byAge = group.value === 'age';
     var shown = people.filter(function (p) {
       if (only && p.colliery !== only) return false;
       if (!q) return true;
-      return (p.name + ' ' + p.job + ' ' + p.cause + ' ' + p.note + ' ' + (names[p.colliery] || '')).toLowerCase().indexOf(q) !== -1;
+      if ((p.name + ' ' + p.job + ' ' + p.cause + ' ' + p.note + ' ' + (names[p.colliery] || '')).toLowerCase().indexOf(q) !== -1) return true;
+      return pq.length >= 3 && U.nameMatch(pq, p.key) >= 0;
     });
 
     var groups = {};
@@ -96,7 +101,7 @@
     });
     sources = data.sources || {};
     people = (data.people || []).map(function (r) {
-      return { date: r[0], name: r[1], age: r[2], job: r[3], colliery: r[4], cause: r[5], source: r[6], note: r[7] };
+      return { date: r[0], name: r[1], age: r[2], job: r[3], colliery: r[4], cause: r[5], source: r[6], note: r[7], key: U.plain(r[1]) };
     });
 
     var counts = {};
@@ -121,6 +126,10 @@
       return '<li><div class="cite-title"><a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.title) + '</a></div>' +
         '<div class="section-intro">' + n + (n === 1 ? ' name' : ' names') + '</div></li>';
     }).join('');
+
+    // memorial.html?q=<name> comes from the map's search box ("See all matching names").
+    var q = new URLSearchParams(location.search).get('q');
+    if (q) search.value = q;
 
     fromHash();
     window.addEventListener('hashchange', fromHash);

@@ -6,6 +6,9 @@
   <title>About · Anthracite Collieries of Pennsylvania</title>
   <meta name="description" content="About the Anthracite Collieries of Pennsylvania map: what it covers, how the research works, how to send corrections, and visiting sites safely.">
   <link rel="icon" href="icons/headframe.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#16181b">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Anthracite Collieries of Pennsylvania">
@@ -54,9 +57,15 @@
       <li><strong>Tap a pin</strong> for a colliery's photos, facts, history and sources. Pin color shows the coal field.</li>
       <li><strong>Filter map</strong> (bottom left) narrows the map by coal field, operator, present-day condition, or the year a site was working.</li>
       <li><strong>Collieries</strong> (top) lists every site; the search box finds sites by name, including former names.</li>
-      <li><strong>The layers button</strong> (top right) switches between satellite, old USGS topo maps, and modern maps.</li>
+      <li><strong>The layers button</strong> (top right) switches between satellite, 1980s aerial photos, old USGS topo maps and modern maps, and can show the old and current railroad lines.</li>
       <li><strong>The target button</strong> (top left, under the zoom buttons) shows where you are, handy in the field on a phone.</li>
-      <li><strong>Sharing:</strong> each colliery's panel has a "Copy link" button that opens the map straight to that site.</li>
+      <li><strong>Then and now</strong> (the split-square button) lays an old map over today's: drag the round handle to sweep between them.</li>
+      <li><strong>Guided tour</strong> (the play button) visits every colliery in the order it opened. Pause, skip or end it from the bar at the top.</li>
+      <li><strong>Search for a family name</strong> in the search box to find people in the memorial and jump to where they worked.</li>
+      <li><strong>Underlined mining words</strong> in a history, like gangway or culm bank, explain themselves when you tap them. They're all listed below.</li>
+      <li><strong>Old aerial photos</strong> from 1938 to the 1970s are near the bottom of each colliery's panel.</li>
+      <li><strong>Sharing and printing:</strong> each colliery's panel has a "Copy link" button that opens the map straight to that site, and a button for a printable one-page sheet.</li>
+      <li><strong>Offline:</strong> once opened, the site keeps working with no signal. Menu → Settings → Use offline can keep every photo too.</li>
       <li><strong>Menu → Settings</strong> lets you change the starting map, marker size, text size and more. Settings are saved on your device.</li>
     </ul>
 
@@ -65,7 +74,11 @@
     <p>Each entry also has a <strong>"How sure is this?"</strong> note. When sources disagree, for example on when a mine closed, the entry says so rather than picking one. Dates marked "c." are approximate, and dates that rest on a single source are marked as such.</p>
 
     <h2>Corrections, photos and new sites</h2>
-    <p>Spotted a mistake, know a date, or have a photo you own the rights to? Please <a href="https://github.com/theman42069/anthracite-collieries/issues" target="_blank" rel="noopener">open an issue on GitHub</a> with what you know and where it comes from. Sources such as a newspaper clipping, report page or book page help most.</p>
+    <p>Spotted a mistake, know a date, or have a photo you own the rights to? Please use the <a href="contribute.html">Send a Correction</a> page, or <a href="https://github.com/theman42069/anthracite-collieries/issues" target="_blank" rel="noopener">open an issue on GitHub</a> directly, with what you know and where it comes from. Sources such as a newspaper clipping, report page or book page help most.</p>
+
+    <h2 id="words">Mining words</h2>
+    <p class="section-intro">The words you'll meet in the colliery histories, in plain English.</p>
+    <dl class="glossary" id="glossary-list"></dl>
 
     <h2>Visiting sites safely</h2>
     <div class="callout">
@@ -85,6 +98,16 @@
   <script src="js/menu.js"></script>
   <script src="js/secrets.js"></script>
   <script>
+    // The mining words list, from the same file that explains words in the colliery histories.
+    fetch('data/glossary.json')
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        var esc = function (s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+        document.getElementById('glossary-list').innerHTML = (d.terms || []).slice()
+          .sort(function (a, b) { return a.term.localeCompare(b.term); })
+          .map(function (t) { return '<dt>' + esc(t.term) + '</dt><dd>' + esc(t.text) + '</dd>'; }).join('');
+      });
+
     // Live counts from the same data file the map uses.
     fetch('data/collieries.geojson', { cache: 'no-cache' })
       .then(function (r) { return r.json(); })

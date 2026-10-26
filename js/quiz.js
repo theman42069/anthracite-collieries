@@ -41,7 +41,7 @@
   function yearsAreSolid(site) {
     var text = String(site.p.years_active || '');
     var conf = String(site.p.confidence || '');
-    if (site.p.closed_estimated) return false;
+    if (site.p.closed_estimated || site.p.opened_estimated) return false;
     return !/\bc\.|\bby\b|early|unknown|\d\/\d/i.test(text) && !/^low|mixed|not certain|unverified/i.test(conf.trim());
   }
 
@@ -182,6 +182,92 @@
     });
   }
 
+  // "Which colliery is this?" from a photo. Photos whose caption quotes printed text are left out,
+  // since the name is usually printed on the picture itself.
+  function photoQuestions(sites) {
+    var out = [];
+    sites.forEach(function (s) {
+      var list = (s.p.photo_url ? [{ url: s.p.photo_url, caption: s.p.photo_caption }] : [])
+        .concat(Array.isArray(s.p.photos) ? s.p.photos : []);
+      var first = s.name.toLowerCase().split(' ')[0];
+      list.forEach(function (ph) {
+        if (!ph) return;
+        var url = typeof ph === 'string' ? ph : ph.url;
+        var cap = String((ph && ph.caption) || '');
+        if (!url || /["“”]/.test(cap) || cap.toLowerCase().indexOf(first) !== -1 || /engraving|lithograph|aerial|warning|notice/i.test(cap)) return;
+        var others = shuffle(sites.filter(function (o) { return o !== s; })).slice(0, 3);
+        if (others.length < 3) return;
+        out.push({
+          kind: 'photo',
+          text: 'Which colliery is in this picture?',
+          figure: '<img class="quiz-photo" src="' + escapeHtml(url) + '" alt="A colliery photograph">',
+          answer: s.name,
+          wrong: others.map(function (o) { return o.name; }),
+          explain: 'This is ' + s.name + (cap ? ': ' + cap.replace(/\.$/, '') : '') + '.',
+          site: s,
+          noPhoto: true
+        });
+      });
+    });
+    return out;
+  }
+
+  // "Which colliery is at the marked dot?" on a small sketch map with a few towns for bearings.
+  var TOWNS = [
+    ['Trevorton', 40.7812, -76.6730], ['Shamokin', 40.7890, -76.5588], ['Kulpmont', 40.7934, -76.4730],
+    ['Mount Carmel', 40.7970, -76.4119], ['Centralia', 40.8040, -76.3405], ['Ashland', 40.7815, -76.3460],
+    ['Shenandoah', 40.8201, -76.2008], ['Mahanoy City', 40.8126, -76.1416]
+  ];
+
+  // A window about 26 km across around the marked site (shifted a little at random, so the answer
+  // isn't always dead center), with the towns in it for bearings.
+  function sketchMap(sites, target) {
+    var W = 560, H = 260, KM = 26;
+    var kmPerLng = 111 * Math.cos(target.lat * Math.PI / 180);
+    var cx = target.lng + (Math.random() - 0.5) * 8 / kmPerLng;
+    var cy = target.lat + (Math.random() - 0.5) * 4 / 111;
+    var pxPerKm = W / KM;
+    var X = function (lng) { return W / 2 + (lng - cx) * kmPerLng * pxPerKm; };
+    var Y = function (lat) { return H / 2 - (lat - cy) * 111 * pxPerKm; };
+    var inside = function (lat, lng) { var x = X(lng), y = Y(lat); return x > -20 && x < W + 20 && y > -20 && y < H + 20; };
+    var s = '<svg class="quiz-map" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Sketch map of nearby collieries and towns, with one colliery marked">';
+    TOWNS.forEach(function (t) {
+      if (!inside(t[1], t[2])) return;
+      s += '<rect class="town-dot" x="' + (X(t[2]) - 3).toFixed(1) + '" y="' + (Y(t[1]) - 3).toFixed(1) + '" width="6" height="6"/>' +
+        '<text class="town" x="' + X(t[2]).toFixed(1) + '" y="' + (Y(t[1]) - 8).toFixed(1) + '" text-anchor="middle">' + t[0] + '</text>';
+    });
+    sites.forEach(function (o) {
+      if (o !== target && inside(o.lat, o.lng)) s += '<circle class="site" cx="' + X(o.lng).toFixed(1) + '" cy="' + Y(o.lat).toFixed(1) + '" r="4"/>';
+    });
+    s += '<text class="scale" x="' + (W - 12) + '" y="' + (H - 10) + '" text-anchor="end">5 km</text>' +
+      '<line class="scale" x1="' + (W - 12 - 5 * pxPerKm) + '" x2="' + (W - 12) + '" y1="' + (H - 26) + '" y2="' + (H - 26) + '"/>';
+    s += '<circle class="target-ring" cx="' + X(target.lng).toFixed(1) + '" cy="' + Y(target.lat).toFixed(1) + '" r="11"/>' +
+      '<circle class="target" cx="' + X(target.lng).toFixed(1) + '" cy="' + Y(target.lat).toFixed(1) + '" r="5"/>';
+    return s + '</svg>';
+  }
+
+  function mapQuestions(sites) {
+    var placed = sites.filter(function (s) { return isFinite(s.lat) && isFinite(s.lng); });
+    var km = function (a, b) {
+      var dy = (a.lat - b.lat) * 111, dx = (a.lng - b.lng) * 111 * Math.cos(a.lat * Math.PI / 180);
+      return Math.sqrt(dx * dx + dy * dy);
+    };
+    return placed.map(function (s) {
+      // Wrong answers at least 4 km away, so the dot can't be read as one of them.
+      var others = shuffle(placed.filter(function (o) { return o !== s && km(o, s) > 4; })).slice(0, 3);
+      if (others.length < 3) return null;
+      return {
+        kind: 'map',
+        text: 'Which colliery is at the marked dot?',
+        figure: sketchMap(placed, s),
+        answer: s.name,
+        wrong: others.map(function (o) { return o.name; }),
+        explain: s.name + ' was ' + (s.p.nearest_town ? 'at ' + s.p.nearest_town : 'here') + '.',
+        site: s
+      };
+    });
+  }
+
   // hard: true → only the bonus round's hard questions; false → only the normal ones.
   function curatedQuestions(extra, bySlug, hard) {
     return (Array.isArray(extra) ? extra : []).map(function (q) {
@@ -211,7 +297,9 @@
       otherNameQuestions(sites),
       operatorQuestions(sites),
       oldestQuestions(sites),
-      countyQuestions(sites)
+      countyQuestions(sites),
+      photoQuestions(sites),
+      mapQuestions(sites)
     ].map(function (g) { return shuffle(g.filter(Boolean)); });
 
     // Take questions from each kind in turn, so a round is a good mix.
@@ -267,6 +355,7 @@
         '<div class="quiz-progress"><span>Question ' + (state.index + 1) + ' of ' + total + '</span><span>Score: ' + state.score + '</span></div>' +
         '<div class="quiz-bar"><span style="width:' + (state.index / total * 100) + '%"></span></div>' +
         '<p class="quiz-question">' + escapeHtml(q.text) + '</p>' +
+        (q.figure ? '<div class="quiz-figure">' + q.figure + '</div>' : '') +
         '<div class="quiz-options">' +
           q.options.map(function (opt, i) {
             return '<button type="button" class="quiz-option" data-i="' + i + '">' +
@@ -292,7 +381,7 @@
       else if (j === i) btn.classList.add('wrong');
     });
 
-    var photo = q.site ? firstPhoto(q.site.p) : '';
+    var photo = q.site && !q.noPhoto ? firstPhoto(q.site.p) : '';
     var last = state.index === state.questions.length - 1;
     document.getElementById('quiz-after').innerHTML = '' +
       '<div class="quiz-feedback">' +
@@ -484,7 +573,9 @@
           slug: slugify(p.id) || slugify(p.name),
           opened: toYear(p.year_opened),
           closed: toYear(p.year_closed),
-          operators: ops
+          operators: ops,
+          lng: f.geometry.coordinates[0],
+          lat: f.geometry.coordinates[1]
         };
       });
     extraCache = results[1];

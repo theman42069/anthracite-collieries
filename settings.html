@@ -6,6 +6,9 @@
   <title>Settings · Anthracite Collieries of Pennsylvania</title>
   <meta name="description" content="Customize how the Anthracite Collieries of Pennsylvania map looks and opens.">
   <link rel="icon" href="icons/headframe.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#16181b">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -68,6 +71,7 @@
         <legend>Starting map</legend>
         <div class="choices">
           <label><input type="radio" name="baseLayer" value="satellite"><span>Satellite</span></label>
+          <label><input type="radio" name="baseLayer" value="aerial80s"><span>1980s aerial</span></label>
           <label><input type="radio" name="baseLayer" value="oldtopo"><span>Old USGS topo</span></label>
           <label><input type="radio" name="baseLayer" value="topo"><span>Topographic</span></label>
           <label><input type="radio" name="baseLayer" value="streets"><span>Street map</span></label>
@@ -180,6 +184,17 @@
           <label><input type="radio" name="quizLength" value="15"><span>15 (challenge)</span></label>
         </div>
       </fieldset>
+
+      <h2>Use offline</h2>
+
+      <div class="setting offline-setting">
+        <p class="setting-note">Once you've opened this site on the published address, its pages, the memorial and the charts keep working with no signal, which helps out at the collieries themselves. On a phone you can also add it to your home screen (Share → Add to Home Screen on iPhone, or the browser menu → Install app on Android).</p>
+        <p class="setting-note">Photos are kept once you've looked at them. To keep every photo now (about <span id="offline-size">10 MB</span>), use this button. The map background pictures still need a connection; their owners don't allow storing them.</p>
+        <div class="settings-actions">
+          <button type="button" class="button" id="offline-save">Keep all photos for offline use</button>
+          <span id="offline-status" class="save-status" role="status"></span>
+        </div>
+      </div>
 
       <div class="settings-actions">
         <a class="button primary" href="index.html">Back to the map</a>

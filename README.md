@@ -12,6 +12,13 @@ sources.html             every citation and photo credit, built automatically fr
 about.html               about the project, using the map, corrections, visiting sites safely
 settings.html            per-visitor settings (starting map, marker size, text size, ...)
 quiz.html                the Colliery Quiz (10 random questions per round)
+stats.html               By the Numbers: charts of the memorial names and the collieries
+print.html               printable one-page sheet for a colliery (print.html#<id>)
+contribute.html          Send a Correction: turns a form into a pre-filled GitHub issue
+manifest.webmanifest     lets phones install the site as an app
+sw.js                    offline support: keeps the pages, data and seen photos
+data/glossary.json       mining words explained in the histories and on the About page; edit freely
+data/railroads.geojson   old and current railroad lines from OpenStreetMap (ODbL)
 data/quiz-extra.json     hand-written quiz questions; edit or add your own (see below)
 css/style.css            all styling (map, side panel / phone bottom sheet, sources and about pages)
 js/app.js                map logic: layers, markers, filters, timeline, list, search, location, share links
@@ -20,6 +27,9 @@ js/menu.js               the Menu button (Map, Sources, About, Settings) on ever
 js/settings-store.js     saves/loads settings in the visitor's browser; used by every page
 js/settings-page.js      the settings form
 js/quiz.js               builds quiz questions from the data + quiz-extra.json
+js/stats.js              draws the By the Numbers charts (plain SVG, no chart library)
+js/print.js              builds the printable colliery sheet (styles in css/print-sheet.css)
+js/contribute.js         the Send a Correction form
 data/collieries.geojson  ALL site data — the only file you edit to add sites
 icons/headframe.svg      site icon
 icons/social-card.jpg    preview image shown when the link is shared (Facebook, texts, etc.)
@@ -305,7 +315,7 @@ public link.
 1. On the new repo's page, click the link **"uploading an existing file"**. Or go to
    **Add file → Upload files**.
 2. Open this project folder in File Explorer and select everything inside it: `index.html`,
-   `sources.html`, `about.html`, `settings.html`, `quiz.html`, `README.md`, and the `css`, `js`, `data`, `icons` and `photos` folders. Drag them all into the browser
+   `sources.html`, `about.html`, `settings.html`, `quiz.html`, `memorial.html`, `stats.html`, `print.html`, `contribute.html`, `manifest.webmanifest`, `sw.js`, `README.md`, and the `css`, `js`, `data`, `icons` and `photos` folders. Drag them all into the browser
    window.
    - Drag the folder's **contents**, not the folder itself. `index.html` must sit at the top level
      of the repo, or Pages will show a 404.

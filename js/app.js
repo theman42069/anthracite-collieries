@@ -121,13 +121,18 @@
       attribution: 'Labels &copy; Esri'
     });
 
+  // The two old views are made by functions, so the then-and-now slider can have its own copies.
   // Scanned USGS paper topo maps (quad dates vary, mostly mid-to-late 1900s). Detail stops at zoom 15.
-  var oldTopo = L.tileLayer(
-    'https://server.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}', {
-      maxZoom: 19,
-      maxNativeZoom: 15,
-      attribution: 'Scanned USGS topographic maps &copy; 2013 National Geographic Society, i-cubed, via <a href="https://www.esri.com/">Esri</a>'
-    });
+  function oldTopoLayer(pane) {
+    return L.tileLayer(
+      'https://server.arcgisonline.com/ArcGIS/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}', {
+        pane: pane || 'tilePane',
+        maxZoom: 19,
+        maxNativeZoom: 15,
+        attribution: 'Scanned USGS topographic maps &copy; 2013 National Geographic Society, i-cubed, via <a href="https://www.esri.com/">Esri</a>'
+      });
+  }
+  var oldTopo = oldTopoLayer();
 
   var topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
     maxZoom: 17,
@@ -139,13 +144,64 @@
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   });
 
-  var BASE_LAYERS = { satellite: satellite, oldtopo: oldTopo, topo: topo, streets: streets };
+  // 1980s National High Altitude Photography (color infrared), served by PASDA as a plain map
+  // image, not tiles, so each 256px tile is its own small export request.
+  function aerial80sLayer(pane) {
+    var layer = L.tileLayer('', {
+      pane: pane || 'tilePane',
+      maxZoom: 19,
+      maxNativeZoom: 17,
+      attribution: '1980s NHAP aerial photography via <a href="https://www.pasda.psu.edu/">PASDA</a>, Penn State'
+    });
+    layer.getTileUrl = function (c) {
+      var size = 40075016.68 / Math.pow(2, c.z);
+      var west = -20037508.34 + c.x * size, north = 20037508.34 - c.y * size;
+      return 'https://imagery.pasda.psu.edu/arcgis/rest/services/pasda/PA_NHAP80s/MapServer/export' +
+        '?bbox=' + [west, north - size, west + size, north].join(',') +
+        '&bboxSR=3857&imageSR=3857&size=256,256&format=jpg&f=image';
+    };
+    return layer;
+  }
+  var aerial80s = aerial80sLayer();
+
+  var BASE_LAYERS = { satellite: satellite, aerial80s: aerial80s, oldtopo: oldTopo, topo: topo, streets: streets };
   (BASE_LAYERS[SETTINGS.baseLayer] || satellite).addTo(map);
   if (SETTINGS.placeLabels) placeLabels.addTo(map);
 
+  // Railroad lines from OpenStreetMap (data/railroads.geojson), loaded the first time they're shown.
+  map.createPane('rails');
+  map.getPane('rails').style.zIndex = 350;   // over the maps, under the pins
+  var railroads = L.layerGroup();
+  var railsLoaded = false;
+  railroads.on('add', function () {
+    if (railsLoaded) return;
+    railsLoaded = true;
+    fetch('data/railroads.geojson').then(function (r) { return r.json(); }).then(function (d) {
+      L.geoJSON(d, {
+        pane: 'rails',
+        attribution: 'Railroads &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        style: function (f) {
+          return f.properties.status === 'active'
+            ? { color: '#f4efe6', weight: 2.5, opacity: 0.9 }
+            : { color: '#e9a23b', weight: 2.5, opacity: 0.95, dashArray: '6 5' };
+        },
+        onEachFeature: function (f, layer) {
+          var p = f.properties;
+          layer.bindTooltip(
+            '<b>' + escapeHtml(p.name || (p.status === 'active' ? 'Railroad' : 'Abandoned railroad')) + '</b>' +
+            '<br>' + (p.status === 'active' ? 'Track still in use' : 'Abandoned or removed') +
+            (p.note ? '<br>' + escapeHtml(p.note) : ''), { sticky: true, className: 'colliery-tooltip' });
+        }
+      }).addTo(railroads);
+    }).catch(function () { railsLoaded = false; flash('The railroad lines could not load.'); });
+  });
+
   L.control.layers(
-    { 'Satellite': satellite, 'Old USGS topo maps': oldTopo, 'Topographic (modern)': topo, 'Street map': streets },
-    { 'Place labels': placeLabels },
+    { 'Satellite': satellite, '1980s aerial photos (infrared)': aerial80s, 'Old USGS topo maps': oldTopo, 'Topographic (modern)': topo, 'Street map': streets },
+    {
+      'Place labels': placeLabels,
+      'Railroads (<span class="rail-key active"></span>in use, <span class="rail-key old"></span>abandoned)': railroads
+    },
     { position: 'topright' }
   ).addTo(map);
 
@@ -196,6 +252,200 @@
     }
   });
   new LocateControl().addTo(map);
+
+  // ---------- Then and now ----------
+  // An old map in its own pane over the base map, clipped at a slider: old on the left of the
+  // line, today's map on the right. Drag the handle to sweep between them.
+
+  map.createPane('then');
+  map.getPane('then').style.zIndex = 250;   // above the base tiles, below markers
+  var THEN_LAYERS = {
+    oldtopo: { label: 'Old USGS topo maps', make: oldTopoLayer },
+    aerial80s: { label: '1980s aerial photos', make: aerial80sLayer }
+  };
+  var thenLayer = null;
+  var thenKey = 'oldtopo';
+  var swipeX = 0;
+  var swipeBar = null;
+  var compareBtn = null;
+
+  function clipThen() {
+    if (!thenLayer) return;
+    var nw = map.containerPointToLayerPoint([0, 0]);
+    var se = map.containerPointToLayerPoint(map.getSize());
+    map.getPane('then').style.clip = 'rect(' + nw.y + 'px,' + (nw.x + swipeX) + 'px,' + se.y + 'px,' + nw.x + 'px)';
+    swipeBar.style.left = swipeX + 'px';
+  }
+
+  function setThen(key) {
+    thenKey = key;
+    if (thenLayer) map.removeLayer(thenLayer);
+    thenLayer = THEN_LAYERS[key].make('then').addTo(map);
+    clipThen();
+  }
+
+  function startCompare() {
+    var size = map.getSize();
+    swipeX = Math.round(size.x / 2);
+    swipeBar = L.DomUtil.create('div', 'swipe', map.getContainer());
+    swipeBar.innerHTML =
+      '<div class="swipe-line"></div>' +
+      '<button type="button" class="swipe-handle" aria-label="Drag to compare the old map with today">&#8249;&#8250;</button>' +
+      '<div class="swipe-tags"><label class="swipe-tag then">Then: <select aria-label="Old map">' +
+        Object.keys(THEN_LAYERS).map(function (k) {
+          return '<option value="' + k + '"' + (k === thenKey ? ' selected' : '') + '>' + THEN_LAYERS[k].label + '</option>';
+        }).join('') +
+      '</select></label><span class="swipe-tag now">Now</span></div>';
+    L.DomEvent.disableClickPropagation(swipeBar);
+    L.DomEvent.disableScrollPropagation(swipeBar);
+    swipeBar.querySelector('select').addEventListener('change', function (e) { setThen(e.target.value); });
+
+    var handle = swipeBar.querySelector('.swipe-handle');
+    function drag(e) {
+      var r = map.getContainer().getBoundingClientRect();
+      swipeX = Math.max(0, Math.min(r.width, e.clientX - r.left));
+      clipThen();
+    }
+    handle.addEventListener('pointerdown', function (e) {
+      handle.setPointerCapture(e.pointerId);
+      map.dragging.disable();
+      handle.addEventListener('pointermove', drag);
+    });
+    handle.addEventListener('pointerup', function () {
+      handle.removeEventListener('pointermove', drag);
+      map.dragging.enable();
+    });
+    handle.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      e.preventDefault();
+      swipeX = Math.max(0, Math.min(map.getSize().x, swipeX + (e.key === 'ArrowLeft' ? -30 : 30)));
+      clipThen();
+    });
+
+    setThen(thenKey);
+    map.on('move zoom resize', clipThen);
+    compareBtn.classList.add('active');
+    compareBtn.setAttribute('aria-pressed', 'true');
+  }
+
+  function stopCompare() {
+    map.off('move zoom resize', clipThen);
+    if (thenLayer) map.removeLayer(thenLayer);
+    thenLayer = null;
+    if (swipeBar) swipeBar.remove();
+    swipeBar = null;
+    compareBtn.classList.remove('active');
+    compareBtn.setAttribute('aria-pressed', 'false');
+  }
+
+  var CompareControl = L.Control.extend({
+    options: { position: 'topleft' },
+    onAdd: function () {
+      var bar = L.DomUtil.create('div', 'leaflet-bar compare-control');
+      compareBtn = L.DomUtil.create('a', '', bar);
+      compareBtn.href = '#';
+      compareBtn.setAttribute('role', 'button');
+      compareBtn.setAttribute('aria-pressed', 'false');
+      compareBtn.title = 'Then and now: compare an old map with today';
+      compareBtn.setAttribute('aria-label', 'Then and now: compare an old map with today');
+      compareBtn.innerHTML =
+        '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">' +
+          '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 2v20M8 10l-2 2 2 2M16 10l2 2-2 2"/>' +
+        '</svg>';
+      L.DomEvent.on(compareBtn, 'click', function (e) {
+        L.DomEvent.preventDefault(e);
+        L.DomEvent.stopPropagation(e);
+        if (thenLayer) stopCompare(); else startCompare();
+      });
+      return bar;
+    }
+  });
+  new CompareControl().addTo(map);
+
+  // ---------- Guided tour ----------
+  // Flies from colliery to colliery in the order they opened, opening each one's panel.
+
+  var TOUR_SECONDS = { slow: 14, normal: 10, fast: 6 }[SETTINGS.playSpeed] || 10;
+  var tour = null;   // { stops, index, timer, paused, bar }
+  var tourBtn = null;
+
+  function tourStops() {
+    return items.filter(function (it) { return it.opened !== null; }).sort(function (a, b) {
+      return a.opened - b.opened || String(a.props.name).localeCompare(String(b.props.name));
+    });
+  }
+
+  function tourShow(i) {
+    if (!tour) return;
+    tour.index = (i + tour.stops.length) % tour.stops.length;
+    var it = tour.stops[tour.index];
+    select(it, true);
+    tour.bar.querySelector('.tour-where').innerHTML =
+      '<span class="tour-count">' + (tour.index + 1) + ' of ' + tour.stops.length + '</span> ' +
+      '<b>' + (it.props.opened_estimated ? 'c. ' : '') + it.opened + '</b> · ' + escapeHtml(it.props.name || '');
+    tourSchedule();
+  }
+
+  function tourSchedule() {
+    clearTimeout(tour.timer);
+    tour.bar.querySelector('.tour-pause').textContent = tour.paused ? 'Play' : 'Pause';
+    if (!tour.paused) tour.timer = setTimeout(function () { tourShow(tour.index + 1); }, TOUR_SECONDS * 1000);
+  }
+
+  function startTour() {
+    if (tour) return;
+    var stops = tourStops();
+    if (!stops.length) return;
+    var bar = L.DomUtil.create('div', 'tour-bar', document.body);
+    bar.setAttribute('role', 'region');
+    bar.setAttribute('aria-label', 'Guided tour');
+    bar.innerHTML =
+      '<span class="tour-where" aria-live="polite"></span>' +
+      '<span class="tour-buttons">' +
+        '<button type="button" class="tour-prev" aria-label="Previous colliery">&#8249;</button>' +
+        '<button type="button" class="tour-pause">Pause</button>' +
+        '<button type="button" class="tour-next" aria-label="Next colliery">&#8250;</button>' +
+        '<button type="button" class="tour-stop">End tour</button>' +
+      '</span>';
+    tour = { stops: stops, index: 0, timer: null, paused: false, bar: bar };
+    bar.querySelector('.tour-prev').addEventListener('click', function () { tourShow(tour.index - 1); });
+    bar.querySelector('.tour-next').addEventListener('click', function () { tourShow(tour.index + 1); });
+    bar.querySelector('.tour-pause').addEventListener('click', function () { tour.paused = !tour.paused; tourSchedule(); });
+    bar.querySelector('.tour-stop').addEventListener('click', stopTour);
+    tourBtn.classList.add('active');
+    document.body.classList.add('touring');
+    tourShow(0);
+  }
+
+  function stopTour() {
+    if (!tour) return;
+    clearTimeout(tour.timer);
+    tour.bar.remove();
+    tour = null;
+    tourBtn.classList.remove('active');
+    document.body.classList.remove('touring');
+  }
+
+  var TourControl = L.Control.extend({
+    options: { position: 'topleft' },
+    onAdd: function () {
+      var bar = L.DomUtil.create('div', 'leaflet-bar tour-control');
+      tourBtn = L.DomUtil.create('a', '', bar);
+      tourBtn.href = '#';
+      tourBtn.setAttribute('role', 'button');
+      tourBtn.title = 'Guided tour: visit every colliery in the order they opened';
+      tourBtn.setAttribute('aria-label', 'Guided tour: visit every colliery in the order they opened');
+      tourBtn.innerHTML =
+        '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+      L.DomEvent.on(tourBtn, 'click', function (e) {
+        L.DomEvent.preventDefault(e);
+        L.DomEvent.stopPropagation(e);
+        if (tour) stopTour(); else startTour();
+      });
+      return bar;
+    }
+  });
+  new TourControl().addTo(map);
 
   function flash(message) {
     var el = document.getElementById('status');
@@ -1037,7 +1287,9 @@
 
   // How many people data/memorial.json names at each colliery.
   // Loaded the first time a panel opens, so plain map visits skip the big file.
+  // Also loaded the first time someone types a name into the search box.
   var memorialCounts = null;
+  var memorialPeople = null;
   var memorialLoading = false;
   var panelId = null;
 
@@ -1048,10 +1300,16 @@
       .then(function (r) { return r.json(); })
       .then(function (d) {
         memorialCounts = {};
-        (d.people || []).forEach(function (r) { memorialCounts[r[4]] = (memorialCounts[r[4]] || 0) + 1; });
+        memorialPeople = (d.people || []).map(function (r) {
+          memorialCounts[r[4]] = (memorialCounts[r[4]] || 0) + 1;
+          return { date: r[0], name: r[1], colliery: r[4], key: plain(r[1]) };
+        });
       })
-      .catch(function () { memorialCounts = {}; /* the panel just won't show the link */ })
-      .then(function () { if (panelId) showMemorialLink(); });
+      .catch(function () { memorialCounts = {}; memorialPeople = []; /* the panel just won't show the link */ })
+      .then(function () {
+        if (panelId) showMemorialLink();
+        if (document.activeElement === searchInput && searchInput.value.trim()) runSearch();
+      });
   }
 
   function showMemorialLink() {
@@ -1061,6 +1319,130 @@
     var a = document.getElementById('panel-memorial');
     a.href = 'memorial.html#' + encodeURIComponent(panelId || '');
     a.textContent = 'The records found so far name ' + n + (n === 1 ? ' person' : ' people') + ' who died here. See their names →';
+  }
+
+  // ---------- Mining words (data/glossary.json) ----------
+  // The first use of each glossary word in a history becomes a button that explains it.
+
+  var glossary = [];   // [{ re, entry }], longest form first so "culm bank" wins over "culm"
+
+  fetch('data/glossary.json').then(function (r) { return r.json(); }).then(function (d) {
+    (d.terms || []).forEach(function (t) {
+      if (t.link === false) return;   // explained on the About page only
+      [t.term].concat(t.forms || []).forEach(function (form) {
+        var src = String(form).replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/ /g, '[\\s-]+');
+        glossary.push({ len: form.length, re: new RegExp('\\b' + src + '\\b', 'i'), entry: t });
+      });
+    });
+    glossary.sort(function (a, b) { return b.len - a.len; });
+    if (current) document.getElementById('panel-history').innerHTML = current.props.history ? linkTerms(current.props.history) : 'No history written yet.';
+  }).catch(function () { /* histories just stay plain text */ });
+
+  function linkTerms(text) {
+    var marks = [];
+    var used = {};
+    glossary.forEach(function (g) {
+      if (used[g.entry.term]) return;
+      var m = g.re.exec(text);
+      if (!m) return;
+      var a = m.index, b = a + m[0].length;
+      if (marks.some(function (k) { return a < k.b && b > k.a; })) return;
+      marks.push({ a: a, b: b, entry: g.entry });
+      used[g.entry.term] = true;
+    });
+    marks.sort(function (x, y) { return x.a - y.a; });
+    var out = '', at = 0;
+    marks.forEach(function (k) {
+      out += escapeHtml(text.slice(at, k.a)) +
+        '<button type="button" class="term" data-term="' + escapeHtml(k.entry.term) + '">' + escapeHtml(text.slice(k.a, k.b)) + '</button>';
+      at = k.b;
+    });
+    return out + escapeHtml(text.slice(at));
+  }
+
+  var termPop = null;
+  function closeTerm() { if (termPop) { termPop.remove(); termPop = null; } }
+  document.getElementById('panel-history').addEventListener('click', function (e) {
+    var btn = e.target.closest('.term');
+    if (!btn) return;
+    e.stopPropagation();
+    var reopen = !termPop || termPop.dataset.term !== btn.dataset.term;
+    closeTerm();
+    if (!reopen) return;
+    var entry = glossary.filter(function (g) { return g.entry.term === btn.dataset.term; })[0].entry;
+    termPop = document.createElement('div');
+    termPop.className = 'term-pop';
+    termPop.dataset.term = entry.term;
+    termPop.setAttribute('role', 'note');
+    termPop.innerHTML = '<b>' + escapeHtml(entry.term) + '</b> ' + escapeHtml(entry.text);
+    document.body.appendChild(termPop);
+    var r = btn.getBoundingClientRect();
+    var w = termPop.offsetWidth;
+    termPop.style.left = Math.max(8, Math.min(window.innerWidth - w - 8, r.left)) + 'px';
+    termPop.style.top = (r.bottom + 6 + termPop.offsetHeight > window.innerHeight ? r.top - termPop.offsetHeight - 6 : r.bottom + 6) + 'px';
+  });
+  document.addEventListener('click', closeTerm);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeTerm(); });
+  panel.addEventListener('scroll', closeTerm, { passive: true });
+
+  // ---------- Old aerial photos (PennPilot) ----------
+  // PennPilot's photo centers for the 1940s–1970s flights, one layer per decade. For each decade we
+  // show the photo whose center is nearest the colliery; a photo is about 4.6 km square, so a
+  // center within 2 km keeps the colliery in frame.
+  var PENNPILOT = 'https://imagery.pasda.psu.edu/arcgis/rest/services/PennPilot/MapServer/';
+  var AERIAL_MONTHS = ['Jan.', 'Feb.', 'March', 'April', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.'];
+  var aerialCache = {};
+
+  function nearestPhoto(layer, latlng) {
+    var url = PENNPILOT + layer + '/query?f=json&geometryType=esriGeometryPoint&inSR=4326&outSR=4326' +
+      '&geometry=' + latlng.lng + ',' + latlng.lat + '&distance=2000&units=esriSRUnit_Meter&outFields=*&returnGeometry=true';
+    return fetch(url).then(function (r) { return r.json(); }).then(function (d) {
+      var best = null;
+      (d.features || []).forEach(function (f) {
+        var a = f.attributes || {};
+        if (/^y/i.test(a.missing || a.photoIsMis || '')) return;
+        // Every decade's record has an HTML snippet linking .../pennpilot/px/eraNNNN/<name>.jpg.
+        var m = null;
+        Object.keys(a).some(function (k) {
+          m = /pennpilot\/px\/(era\d{4})\/([\w-]+)\.jpg/.exec(String(a[k]));
+          return m;
+        });
+        if (!m) return;
+        var dist = latlng.distanceTo([f.geometry.y, f.geometry.x]);
+        if (!best || dist < best.dist) best = { dist: dist, era: m[1], name: m[2] };
+      });
+      if (!best) return null;
+      // Names look like "schuylkill_100338_aqs_17_21": county, then the flight date as MMDDYY.
+      var dm = /_(\d{2})(\d{2})(\d{2})_/.exec(best.name);
+      var base = 'https://www.pasda.psu.edu/pennpilot/px/' + best.era + '/';
+      return {
+        full: base + best.name + '.jpg',
+        thumb: base + 'JPEG/' + best.name + '.jpg',
+        year: dm ? 1900 + +dm[3] : null,
+        date: dm && +dm[1] >= 1 && +dm[1] <= 12 ? AERIAL_MONTHS[+dm[1] - 1] + ' ' + (+dm[2]) + ', 19' + dm[3] : best.era.slice(3) + 's'
+      };
+    }).catch(function () { return null; });
+  }
+
+  function showAerials(item) {
+    var wrap = document.getElementById('panel-aerials-wrap');
+    var list = document.getElementById('panel-aerials');
+    var id = item.props.id;
+    wrap.hidden = true;
+    list.innerHTML = '';
+    var pending = aerialCache[id] || (aerialCache[id] = Promise.all([0, 1, 2, 3].map(function (layer) {
+      return nearestPhoto(layer, item.latlng);
+    })));
+    pending.then(function (photos) {
+      if (panelId !== id) return;   // another site was opened meanwhile
+      photos = photos.filter(Boolean).sort(function (a, b) { return (a.year || 0) - (b.year || 0); });
+      wrap.hidden = !photos.length;
+      list.innerHTML = photos.map(function (ph) {
+        return '<li><a href="' + escapeHtml(ph.full) + '" target="_blank" rel="noopener">' +
+          '<img src="' + escapeHtml(ph.thumb) + '" alt="Aerial photo, ' + escapeHtml(ph.date) + '" loading="lazy">' +
+          '<span>' + escapeHtml(ph.date) + '</span></a></li>';
+      }).join('');
+    });
   }
 
   function renderPanel(item) {
@@ -1087,6 +1469,7 @@
       ['Nearest town', p.nearest_town],
       ['Operator', p.operator],
       ['Years active', p.years_active],
+      ['Opening year', p.opened_estimated && item.opened !== null ? 'c. ' + item.opened + ' (estimated)' : null],
       ['Closing year', p.closed_estimated && item.closed !== null ? 'c. ' + item.closed + ' (estimated)' : null],
       ['Status', p.status],
       ['Coordinates', item.latlng.lat.toFixed(5) + ', ' + item.latlng.lng.toFixed(5)]
@@ -1096,12 +1479,18 @@
       .map(function (f) { return '<dt>' + escapeHtml(f[0]) + '</dt><dd>' + escapeHtml(f[1]) + '</dd>'; })
       .join('');
 
-    document.getElementById('panel-history').textContent = p.history || 'No history written yet.';
+    document.getElementById('panel-history').innerHTML = p.history ? linkTerms(p.history) : 'No history written yet.';
     document.getElementById('panel-confidence-wrap').hidden = !p.confidence || !SETTINGS.showConfidence;
     document.getElementById('panel-confidence').textContent = p.confidence || '';
     // Estimated dates are always explained, even with the confidence notes turned off.
-    document.getElementById('panel-estimate-wrap').hidden = !p.closed_estimated;
-    document.getElementById('panel-estimate').textContent = p.closed_estimate_note || 'No record gives this colliery\'s closing date; the year shown is an estimate.';
+    var notes = [];
+    if (p.opened_estimated) notes.push(p.opened_estimate_note || 'No record gives this colliery\'s opening date; the year shown is an estimate.');
+    if (p.closed_estimated) notes.push(p.closed_estimate_note || 'No record gives this colliery\'s closing date; the year shown is an estimate.');
+    document.getElementById('panel-estimate-wrap').hidden = !notes.length;
+    document.getElementById('panel-estimate-title').textContent = p.opened_estimated && p.closed_estimated
+      ? 'Opening and closing years are estimates'
+      : p.opened_estimated ? 'Opening year is an estimate' : 'Closing year is an estimate';
+    document.getElementById('panel-estimate').textContent = notes.join(' ');
 
     var related = item.related.slice().sort(function (a, b) {
       return String(a.item.props.name).localeCompare(String(b.item.props.name));
@@ -1119,6 +1508,7 @@
 
     panelId = p.id;
     showMemorialLink();
+    showAerials(item);
 
     var sources = listOf(p.sources);
     document.getElementById('panel-sources').innerHTML = sources.length
@@ -1126,6 +1516,8 @@
       : '<li class="none">No sources listed yet.</li>';
 
     copyBtn.textContent = 'Copy link to this site';
+    document.getElementById('print-link').href = 'print.html#' + encodeURIComponent(p.id || item.slug);
+    document.getElementById('contribute-link').href = 'contribute.html#' + encodeURIComponent(p.id || item.slug);
   }
 
   // A source can be a plain citation string, a URL, or { "title": "...", "url": "..." }.
@@ -1387,35 +1779,32 @@
   var results = [];
   var activeIndex = -1;
 
-  // Lowercase, accents and punctuation removed, so "St. Nicholas" and "st nicholas" match.
-  function plain(text) {
-    return String(text || '').toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '')
-      .replace(/[^a-z0-9]+/g, ' ').trim();
-  }
+  var plain = window.CollieryUtil.plain;
+  var typoDistance = window.CollieryUtil.typoDistance;
 
-  // Fewest typing mistakes (letters added, missed, changed or swapped) between the query
-  // and any part of the text. 0 means the query appears exactly.
-  function typoDistance(query, text) {
-    var n = query.length, m = text.length;
-    var prev2 = null, prev = new Array(m + 1).fill(0), row;
-    for (var i = 1; i <= n; i++) {
-      row = new Array(m + 1);
-      row[0] = i;
-      for (var j = 1; j <= m; j++) {
-        var cost = query[i - 1] === text[j - 1] ? 0 : 1;
-        row[j] = Math.min(prev[j] + 1, row[j - 1] + 1, prev[j - 1] + cost);
-        if (prev2 && i > 1 && j > 1 && query[i - 1] === text[j - 2] && query[i - 2] === text[j - 1]) {
-          row[j] = Math.min(row[j], prev2[j - 2] + 1); // swapped letters
-        }
-      }
-      prev2 = prev;
-      prev = row;
-    }
-    return Math.min.apply(null, prev); // the match may start and end anywhere in the text
+  var PEOPLE_SHOWN = 5;
+
+  // Names in the memorial, for family searches. Spellings in the records vary, so close spellings
+  // count (see CollieryUtil.nameMatch). Returns person rows plus a "search the memorial" row.
+  function peopleMatching(q) {
+    if (q.length < 3) return [];
+    if (!memorialPeople) { loadMemorialCounts(); return []; }
+    var hits = [];
+    memorialPeople.forEach(function (p) {
+      var d = window.CollieryUtil.nameMatch(q, p.key);
+      if (d >= 0 && bySlug[p.colliery]) hits.push({ p: p, score: d });
+    });
+    hits.sort(function (a, b) { return a.score - b.score || a.p.date.localeCompare(b.p.date); });
+    var rows = hits.slice(0, PEOPLE_SHOWN).map(function (h) {
+      return { kind: 'person', p: h.p, it: bySlug[h.p.colliery] };
+    });
+    if (hits.length > PEOPLE_SHOWN) rows.push({ kind: 'more' });
+    return rows;
   }
 
   function runSearch() {
-    var q = plain(searchInput.value).replace(/\bcolliery\b/g, '').trim();
+    var raw = searchInput.value.trim();
+    var q = plain(raw).replace(/\bcolliery\b/g, '').trim();
     if (!q) { hideResults(); return; }
     // About one mistake per four letters; very short searches must match exactly.
     var allowed = q.length < 4 ? 0 : Math.max(1, Math.floor(q.length / 4));
@@ -1431,22 +1820,41 @@
       return r.score <= allowed;
     }).sort(function (a, b) {
       return a.score - b.score || String(a.it.props.name).localeCompare(String(b.it.props.name));
-    }).slice(0, 8).map(function (r) { return r.it; });
+    }).slice(0, 8).map(function (r) { return { kind: 'site', it: r.it }; });
+    results = results.concat(peopleMatching(q));
+    searchQuery = raw;
 
     activeIndex = results.length ? 0 : -1;
     renderResults();
   }
 
+  var searchQuery = '';
+
+  function resultHtml(r, i) {
+    var open = '<li role="option" id="result-' + i + '" data-index="' + i + '" aria-selected="' + (i === activeIndex) + '"' +
+      (r.kind === 'site' ? '' : ' class="person"') + '>';
+    if (r.kind === 'more') {
+      return open + '<span class="name">More names: search the memorial →</span></li>';
+    }
+    if (r.kind === 'person') {
+      return open + '<span class="dot" style="background:' + r.it.field.color + '"></span>' +
+        '<span class="person-text"><span class="name">' + escapeHtml(r.p.name) + '</span>' +
+        '<span class="meta">' + escapeHtml(r.p.date.slice(0, 4) + ' · ' + (r.it.props.name || '')) + '</span></span></li>';
+    }
+    return open + '<span class="dot" style="background:' + r.it.field.color + '"></span>' +
+      '<span class="name">' + escapeHtml(r.it.props.name || 'Unnamed site') + '</span>' +
+      '<span class="meta">' + escapeHtml(r.it.field === OTHER_FIELD ? '' : r.it.field.key) + '</span></li>';
+  }
+
   function renderResults() {
+    var firstPerson = -1;
+    results.some(function (r, i) { if (r.kind !== 'site') { firstPerson = i; return true; } return false; });
     resultsList.innerHTML = results.length
-      ? results.map(function (it, i) {
-          return '<li role="option" id="result-' + i + '" data-index="' + i + '" aria-selected="' + (i === activeIndex) + '">' +
-            '<span class="dot" style="background:' + it.field.color + '"></span>' +
-            '<span class="name">' + escapeHtml(it.props.name || 'Unnamed site') + '</span>' +
-            '<span class="meta">' + escapeHtml(it.field === OTHER_FIELD ? '' : it.field.key) + '</span>' +
-          '</li>';
+      ? results.map(function (r, i) {
+          return (i === firstPerson ? '<li class="group" role="presentation">In memoriam</li>' : '') + resultHtml(r, i);
         }).join('')
-      : '<li class="empty" role="option" aria-disabled="true">No sites match.</li>';
+      : '<li class="empty" role="option" aria-disabled="true">' +
+        (!memorialPeople && plain(searchQuery).length >= 3 ? 'Looking up names…' : 'No sites or names match.') + '</li>';
     resultsList.hidden = false;
     searchInput.setAttribute('aria-expanded', 'true');
     if (activeIndex >= 0) searchInput.setAttribute('aria-activedescendant', 'result-' + activeIndex);
@@ -1461,12 +1869,16 @@
   }
 
   function choose(index) {
-    var item = results[index];
-    if (!item) return;
+    var r = results[index];
+    if (!r) return;
+    if (r.kind === 'more') {
+      location.href = 'memorial.html?q=' + encodeURIComponent(searchQuery);
+      return;
+    }
     hideResults();
     searchInput.value = '';
     searchInput.blur();
-    select(item, true);
+    select(r.it, true);
   }
 
   searchInput.addEventListener('input', runSearch);

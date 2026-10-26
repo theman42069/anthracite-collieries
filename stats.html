@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>By the Numbers · Anthracite Collieries of Pennsylvania</title>
+  <meta name="description" content="Charts of the men and boys killed at the collieries on the map: by year, cause, job, age and colliery, and how many collieries were working each year.">
+  <link rel="icon" href="icons/headframe.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="theme-color" content="#16181b">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Anthracite Collieries of Pennsylvania">
+  <meta property="og:title" content="By the Numbers · Anthracite Collieries of Pennsylvania">
+  <meta property="og:description" content="Charts of the men and boys killed at the collieries on the map, by year, cause, job, age and colliery.">
+  <meta property="og:url" content="https://theman42069.github.io/anthracite-collieries/stats.html">
+  <meta property="og:image" content="https://theman42069.github.io/anthracite-collieries/icons/social-card.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/settings-store.js"></script>
+  <script src="js/util.js"></script>
+</head>
+<body class="page">
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Back to the map">
+      <img src="icons/headframe.svg" alt="" width="28" height="28">
+      <span class="brand-text">
+        <span class="brand-title">Anthracite Collieries</span>
+        <span class="brand-sub">of Pennsylvania</span>
+      </span>
+    </a>
+    <div class="site-menu" id="site-menu"></div>
+  </header>
+
+  <main class="page-main stats">
+    <h1>By the Numbers</h1>
+    <p class="page-intro">What the <a href="memorial.html">In Memoriam</a> records and the collieries on the map add up to. These charts count only the names found so far at the collieries on this map, not every death in the anthracite region, and some years are much more complete than others (see the note under the first chart).</p>
+
+    <div id="status" class="status" role="status" hidden></div>
+
+    <div class="stat-tiles" id="stat-tiles"></div>
+
+    <section class="chart-card">
+      <h2>Deaths by year</h2>
+      <p class="section-intro">Names found for each year. Tap or hover over a year for its count.</p>
+      <div class="chart" id="chart-years"></div>
+      <p class="chart-note" id="years-note"></p>
+      <details class="chart-table"><summary>Show as a table</summary><div id="table-years"></div></details>
+    </section>
+
+    <div class="chart-pair">
+      <section class="chart-card">
+        <h2>How they died</h2>
+        <p class="section-intro">The cause as the records give it, grouped.</p>
+        <div class="donut-wrap" id="chart-causes"></div>
+        <details class="chart-table"><summary>Show as a table</summary><div id="table-causes"></div></details>
+      </section>
+
+      <section class="chart-card">
+        <h2>The work they did</h2>
+        <p class="section-intro">The job written in the record.</p>
+        <div class="donut-wrap" id="chart-jobs"></div>
+        <details class="chart-table"><summary>Show as a table</summary><div id="table-jobs"></div></details>
+      </section>
+    </div>
+
+    <section class="chart-card">
+      <h2>Their ages</h2>
+      <p class="section-intro" id="ages-intro">Age at death, where the record gives one.</p>
+      <div class="chart" id="chart-ages"></div>
+      <details class="chart-table"><summary>Show as a table</summary><div id="table-ages"></div></details>
+    </section>
+
+    <section class="chart-card">
+      <h2>Names by colliery</h2>
+      <p class="section-intro">The collieries with the most names found so far. Tap a bar to see the names.</p>
+      <div class="hbars" id="chart-collieries"></div>
+      <details class="chart-table"><summary>Show all collieries as a table</summary><div id="table-collieries"></div></details>
+    </section>
+
+    <section class="chart-card">
+      <h2>Collieries working each year</h2>
+      <p class="section-intro">How many of the collieries on this map were open in each year, from their opening and closing years. Some of those years are estimates.</p>
+      <div class="chart" id="chart-working"></div>
+      <p class="chart-note" id="working-note"></p>
+      <details class="chart-table"><summary>Show as a table</summary><div id="table-working"></div></details>
+    </section>
+  </main>
+
+  <div class="chart-tip" id="chart-tip" role="status" hidden></div>
+
+  <script src="js/menu.js"></script>
+  <script src="js/stats.js"></script>
+</body>
+</html>
