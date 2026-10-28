@@ -2100,3 +2100,4 @@ html[data-theme="light"] .rail-key.active { border-top-color: #6a6256; }
 .glossary { margin: 8px 0 0; }
 .glossary dt { font-family: var(--serif); color: var(--accent); margin-top: 10px; text-transform: capitalize; }
 .glossary dd { margin: 2px 0 0; color: var(--text-soft); }
+.rail-key.spur { border-top: 3px dotted #5fd38d; }

@@ -18,7 +18,7 @@ contribute.html          Send a Correction: turns a form into a pre-filled GitHu
 manifest.webmanifest     lets phones install the site as an app
 sw.js                    offline support: keeps the pages, data and seen photos
 data/glossary.json       mining words explained in the histories and on the About page; edit freely
-data/railroads.geojson   old and current railroad lines from OpenStreetMap (ODbL)
+data/railroads.geojson   railroad lines: from OpenStreetMap (ODbL), plus breaker tracks traced from old USGS maps
 data/quiz-extra.json     hand-written quiz questions; edit or add your own (see below)
 css/style.css            all styling (map, side panel / phone bottom sheet, sources and about pages)
 js/app.js                map logic: layers, markers, filters, timeline, list, search, location, share links

@@ -181,15 +181,16 @@
         pane: 'rails',
         attribution: 'Railroads &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         style: function (f) {
-          return f.properties.status === 'active'
-            ? { color: '#f4efe6', weight: 2.5, opacity: 0.9 }
+          var s = f.properties.status;
+          return s === 'active' ? { color: '#f4efe6', weight: 2.5, opacity: 0.9 }
+            : s === 'spur' ? { color: '#5fd38d', weight: 3, opacity: 0.95, dashArray: '2 6', lineCap: 'round' }
             : { color: '#e9a23b', weight: 2.5, opacity: 0.95, dashArray: '6 5' };
         },
         onEachFeature: function (f, layer) {
           var p = f.properties;
           layer.bindTooltip(
             '<b>' + escapeHtml(p.name || (p.status === 'active' ? 'Railroad' : 'Abandoned railroad')) + '</b>' +
-            '<br>' + (p.status === 'active' ? 'Track still in use' : 'Abandoned or removed') +
+            '<br>' + (p.status === 'active' ? 'Track still in use' : p.status === 'spur' ? 'Gone; shown on old maps' : 'Abandoned or removed') +
             (p.note ? '<br>' + escapeHtml(p.note) : ''), { sticky: true, className: 'colliery-tooltip' });
         }
       }).addTo(railroads);
@@ -200,7 +201,7 @@
     { 'Satellite': satellite, '1980s aerial photos (infrared)': aerial80s, 'Old USGS topo maps': oldTopo, 'Topographic (modern)': topo, 'Street map': streets },
     {
       'Place labels': placeLabels,
-      'Railroads (<span class="rail-key active"></span>in use, <span class="rail-key old"></span>abandoned)': railroads
+      'Railroads (<span class="rail-key active"></span>in use, <span class="rail-key old"></span>abandoned, <span class="rail-key spur"></span>to the breakers)': railroads
     },
     { position: 'topright' }
   ).addTo(map);
