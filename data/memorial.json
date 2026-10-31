@@ -10,7 +10,7 @@
                               "url":  "http://files.usgwarchives.net/pa/northumberland/vitals/deaths/"
                           },
                     "L":  {
-                              "title":  "Reports of the Inspectors of Mines, fatal accident lists (1872, 1875, 1877, 1879, 1897), transcribed on the Luzerne County PAGenWeb mining pages",
+                              "title":  "Reports of the Inspectors of Mines, fatal accident lists (1872, 1875, 1877, 1879, 1882, 1897), transcribed on the Luzerne County PAGenWeb mining pages",
                               "url":  "https://pagenweb.org/~luzerne/mines/"
                           },
                     "G":  {
@@ -40,10 +40,32 @@
                     "LOC":  {
                                 "title":  "Chronicling America historic newspapers (Library of Congress): Evening Herald (Shenandoah), The Columbian (Bloomsburg), Sunbury American, Scranton Tribune and others",
                                 "url":  "https://www.loc.gov/collections/chronicling-america/"
+                            },
+                    "RW":  {
+                               "title":  "Reports of the Inspectors of Mines, fatal accident lists (1869, 1874, 1880, 1889), transcribed on Schuylkill County Genealogy Ties (RootsWeb)",
+                               "url":  "https://sites.rootsweb.com/~paschuy2/minereports.html"
+                           },
+                    "WH":  {
+                               "title":  "Jake Wynn, Wynning History (coal-region articles quoting period newspapers)",
+                               "url":  "https://wynninghistory.com/tag/mine-accident/"
+                           },
+                    "PNA":  {
+                                "title":  "Pennsylvania Newspaper Archive, Penn State (Miners\u0027 Journal, Sunbury American, Freeland Tribune, Evening Herald and other papers)",
+                                "url":  "https://panewsarchive.psu.edu/"
                             }
                 },
     "years_searched":  "Every year from 1899 to 1918 and 1924 to 1972 is covered by the state accident registers. 1919 to 1923 comes from local newspaper reports and is not complete. For 1869 to 1898 the names come from the inspectors\u0027 yearly reports and genealogy transcriptions, which are complete for most Northumberland County years but have gaps elsewhere.",
     "people":  [
+                   [
+                       "1844-07",
+                       "Weikel",
+                       "18",
+                       "",
+                       "buck-ridge-colliery",
+                       "Killed on the inclined plane while bringing down a train of coal cars with his brother",
+                       "PNA",
+                       "First name not given; about 18 years old. Pennsylvania Newspaper Archive, July 1844"
+                   ],
                    [
                        "1856-07-28",
                        "Jacob Stephenson",
@@ -55,6 +77,36 @@
                        "Formerly of Lancaster County; wife and one child. Sunbury American, Aug. 2, 1856"
                    ],
                    [
+                       "1859-11-09",
+                       "Martin Keeley",
+                       "13",
+                       "breaker boy",
+                       "bast-colliery",
+                       "Caught in the cog wheels while oiling the breaker machinery",
+                       "PNA",
+                       "Lived at Big Mine Run; killed at the breaker of Messrs. Bast \u0026 Pearson. The second of his family killed that season. Ashland Gazetteer, reported Nov. 1859"
+                   ],
+                   [
+                       "1864-08-17",
+                       "Matthew Reed",
+                       "",
+                       "miner",
+                       "st-nicholas-breaker",
+                       "Fall of slate",
+                       "PNA",
+                       "A native of England; left a wife and two children. Listed at the St. Nicholas Colliery. Pennsylvania Newspaper Archive, Aug. 20, 1864"
+                   ],
+                   [
+                       "1864-11-14",
+                       "John Valentine Spann",
+                       "",
+                       "brakeman",
+                       "glen-burn-colliery",
+                       "Caught between the bumpers while coupling cars",
+                       "PNA",
+                       "Young man from Baltimore; listed at the Cameron Colliery. Sunbury American, Nov. 15, 1864, from the Shamokin Herald"
+                   ],
+                   [
                        "1867-02",
                        "John McEwen",
                        "",
@@ -63,6 +115,16 @@
                        "Fall of coal; died of his injuries",
                        "LOC",
                        "Shamokin Herald, reported in the Bradford Reporter, Feb. 21, 1867"
+                   ],
+                   [
+                       "1867-04",
+                       "Dowd",
+                       "",
+                       "",
+                       "enterprise-colliery",
+                       "Fell to the bottom of the slope when the rope pulled out of its thimble",
+                       "PNA",
+                       "First name not given; two others were hurt. Sunbury American, Apr. 20, 1867"
                    ],
                    [
                        "1867-04-12",
@@ -195,6 +257,16 @@
                        "A German resident of Shamokin. Sunbury American, Nov. 2, 1867"
                    ],
                    [
+                       "1868-02-12",
+                       "Isaac Starr",
+                       "30",
+                       "miner",
+                       "bear-valley-colliery",
+                       "Premature explosion of a blast",
+                       "PNA",
+                       "Left a wife and three children. Sunbury American, Feb. 22, 1868"
+                   ],
+                   [
                        "1868-08-28",
                        "Philip Deitrich",
                        "60",
@@ -215,6 +287,86 @@
                        "Wife and two children. Shamokin Herald, Oct. 22, 1868, via the Sunbury American, Oct. 31, 1868"
                    ],
                    [
+                       "1868-12",
+                       "Emanuel Henninger",
+                       "",
+                       "",
+                       "hickory-swamp-colliery",
+                       "Blown down the manway by a blast",
+                       "PNA",
+                       "Sunbury American, Dec. 1868, from the Shamokin Herald"
+                   ],
+                   [
+                       "1869-03",
+                       "John Tinnes",
+                       "",
+                       "",
+                       "luke-fidler-colliery",
+                       "Fatally crushed in the mine",
+                       "PNA",
+                       "Sunbury American, Mar. 26, 1869"
+                   ],
+                   [
+                       "1869-07-03",
+                       "Thomas Russel",
+                       "",
+                       "",
+                       "mahanoy-city-colliery",
+                       "Fall of coal in the mines",
+                       "RW",
+                       "Listed at \"Hill \u0026 Harris\u0027s\" (1869 report)"
+                   ],
+                   [
+                       "1869-07-22",
+                       "Nicholas Harris",
+                       "",
+                       "",
+                       "schuylkill-colliery",
+                       "Rupture in pushing wagons",
+                       "RW",
+                       "Listed at \"Focht\u0027s Mines\" (1869 report)"
+                   ],
+                   [
+                       "1869-07-24",
+                       "William Long",
+                       "",
+                       "",
+                       "knickerbocker-colliery",
+                       "Crushed by fall of coal",
+                       "RW",
+                       "Listed at \"Fowler\u0027s Slope\" (1869 report)"
+                   ],
+                   [
+                       "1869-07-30",
+                       "Daniel Woodhall",
+                       "",
+                       "",
+                       "yatesville-colliery",
+                       "Fall of coal in the mines",
+                       "RW",
+                       "Listed at \"M\u0027Neal\u0027s Slope\" (1869 report)"
+                   ],
+                   [
+                       "1869-08",
+                       "Jacob Schwartz",
+                       "",
+                       "",
+                       "glen-burn-colliery",
+                       "Fall of rock",
+                       "PNA",
+                       "Listed at the Cameron Colliery. The 1869 inspectors\u0027 report names him Jacob Schwartz (Aug. 13); the Sunbury American of Aug. 24, 1869 prints Jacob Martz"
+                   ],
+                   [
+                       "1869-08-16",
+                       "John E. Wood",
+                       "",
+                       "",
+                       "mahanoy-city-colliery",
+                       "Caught in belts and crushed",
+                       "RW",
+                       "Listed at \"Hill \u0026 Harris\u0027s\" (1869 report)"
+                   ],
+                   [
                        "1869-09-01",
                        "David Davis",
                        "",
@@ -223,6 +375,16 @@
                        "Fall of coal",
                        "D",
                        "Listed at the Union Colliery (Bast)"
+                   ],
+                   [
+                       "1869-10-15",
+                       "James O\u0027Brien",
+                       "",
+                       "",
+                       "north-mahanoy-colliery",
+                       "Struck by a piece of coal from a blast 42 yards away in the gangway",
+                       "RW",
+                       "Listed at \"Silliman\u0027s Colliery\" (1869 report)"
                    ],
                    [
                        "1870-05-09",
@@ -263,6 +425,26 @@
                        "Fall of chute",
                        "D",
                        "Married"
+                   ],
+                   [
+                       "1870-08-08",
+                       "John Stout",
+                       "",
+                       "",
+                       "copley-colliery",
+                       "Killed by a fall at the colliery",
+                       "PNA",
+                       "His brother died in the New Philadelphia disaster. Listed at \"Coplay Colliery\". Pennsylvania Newspaper Archive, Sept. 3, 1870"
+                   ],
+                   [
+                       "1870-09",
+                       "John Slattery",
+                       "",
+                       "",
+                       "knickerbocker-colliery",
+                       "Fall of coal; the same fall took off another man\u0027s arm",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, Sept. 17, 1870"
                    ],
                    [
                        "1870-09-03",
@@ -836,6 +1018,16 @@
                    ],
                    [
                        "1874",
+                       "Patrick Farrell",
+                       "",
+                       "",
+                       "big-mine-run-west-colliery",
+                       "Fall of coal",
+                       "RW",
+                       "No date given (1875 report)"
+                   ],
+                   [
+                       "1874",
                        "Thomas Harris",
                        "",
                        "boy",
@@ -877,22 +1069,22 @@
                    [
                        "1874-03-10",
                        "George Bonick",
+                       "24",
+                       "miner",
+                       "enterprise-colliery",
+                       "Crushed between a loaded wagon he was riding out of the mine and a chute",
+                       "LOC",
+                       "Polish; recently married. Sunbury American, March 13, 1874, from the Shamokin Herald (printed \"Proh-ricl;\"); the 1875 inspectors\u0027 report names him George Bonick"
+                   ],
+                   [
+                       "1874-03-10",
+                       "George Bonick",
                        "",
                        "",
                        "enterprise-colliery",
                        "Crushed by a chute while riding out",
                        "N",
                        ""
-                   ],
-                   [
-                       "1874-03-10",
-                       "George Prohrick",
-                       "24",
-                       "miner",
-                       "enterprise-colliery",
-                       "Crushed between a loaded wagon he was riding out of the mine and a chute",
-                       "LOC",
-                       "Polish; recently married. Sunbury American, March 13, 1874, from the Shamokin Herald; surname printed unclearly (\"Proh-ricl;\")"
                    ],
                    [
                        "1874-03-19",
@@ -935,6 +1127,16 @@
                        "Widow and 6 children"
                    ],
                    [
+                       "1874-06-15",
+                       "Chas. Syngovich",
+                       "",
+                       "",
+                       "hickory-swamp-colliery",
+                       "Fall of coal and slate",
+                       "RW",
+                       "Listed at \"Hickory Swamps\" (1875 report)"
+                   ],
+                   [
                        "1874-07-15",
                        "William Heiser",
                        "",
@@ -963,6 +1165,16 @@
                        "Mortally burned by fire-damp",
                        "N",
                        "Listed under Trevorton"
+                   ],
+                   [
+                       "1874-09-28",
+                       "Caleb Snyder",
+                       "",
+                       "",
+                       "mount-carmel-colliery",
+                       "Crushed to death by props",
+                       "RW",
+                       "Widow and 5 children; listed at \"Stewartsville\" (1875 report)"
                    ],
                    [
                        "1874-09-28",
@@ -995,6 +1207,16 @@
                        "Northumberland USGenWeb list gives the name as Wm. Mulhall"
                    ],
                    [
+                       "1874-10-16",
+                       "Wm. Mulhall",
+                       "",
+                       "",
+                       "continental-colliery",
+                       "Slope rope broke at the sockets",
+                       "RW",
+                       "1875 report"
+                   ],
+                   [
                        "1874-10-23",
                        "James Delaplane",
                        "",
@@ -1023,6 +1245,16 @@
                        "The slope gate fell on him",
                        "N",
                        ""
+                   ],
+                   [
+                       "1874-11-23",
+                       "James Mangan",
+                       "",
+                       "",
+                       "locust-gap-colliery",
+                       "Fall of gangway slate",
+                       "RW",
+                       "Widow and 3 children (1875 report)"
                    ],
                    [
                        "1874-11-24",
@@ -1243,6 +1475,16 @@
                        "",
                        "L",
                        "Listed at the Cameron Colliery"
+                   ],
+                   [
+                       "1875-09-01",
+                       "William Mengley",
+                       "",
+                       "",
+                       "glen-burn-colliery",
+                       "Killed with Lewis Cox while shifting wagons at the bottom of a slope",
+                       "PNA",
+                       "Of Shamokin; surname printed unclearly (\"Meoglej\"). Sunbury American, Sept. 8, 1875"
                    ],
                    [
                        "1875-09-01",
@@ -1595,6 +1837,46 @@
                        ""
                    ],
                    [
+                       "1876-10-09",
+                       "Ed. Knauss",
+                       "",
+                       "",
+                       "new-boston-colliery",
+                       "A hoisting rope broke and three loaded cars ran back down the slope",
+                       "PNA",
+                       "Listed at the Middle Lehigh colliery. Pennsylvania Newspaper Archive, Oct. 14, 1876"
+                   ],
+                   [
+                       "1876-10-09",
+                       "Jos. Becker",
+                       "",
+                       "",
+                       "new-boston-colliery",
+                       "A hoisting rope broke and three loaded cars ran back down the slope",
+                       "PNA",
+                       "Listed at the Middle Lehigh colliery. Pennsylvania Newspaper Archive, Oct. 14, 1876"
+                   ],
+                   [
+                       "1876-10-09",
+                       "Thomas Jones",
+                       "",
+                       "",
+                       "new-boston-colliery",
+                       "A hoisting rope broke and three loaded cars ran back down the slope",
+                       "PNA",
+                       "Listed at the Middle Lehigh colliery. Pennsylvania Newspaper Archive, Oct. 14, 1876"
+                   ],
+                   [
+                       "1876-10-09",
+                       "Wm. Bachus",
+                       "",
+                       "",
+                       "new-boston-colliery",
+                       "A hoisting rope broke and three loaded cars ran back down the slope",
+                       "PNA",
+                       "Listed at the Middle Lehigh colliery. Pennsylvania Newspaper Archive, Oct. 14, 1876"
+                   ],
+                   [
                        "1876-10-17",
                        "Vincent Adgaski",
                        "",
@@ -1856,6 +2138,16 @@
                    ],
                    [
                        "1877-10-23",
+                       "Adam Ziegler",
+                       "",
+                       "",
+                       "locust-gap-colliery",
+                       "",
+                       "L",
+                       "Listed at \"Locust Gap\", Locust Gap (1877 inspectors\u0027 report, Shamokin district)"
+                   ],
+                   [
+                       "1877-10-23",
                        "John Larkin",
                        "50",
                        "miner",
@@ -1863,6 +2155,16 @@
                        "Fall of slate while taking out old timber",
                        "I",
                        ""
+                   ],
+                   [
+                       "1877-10-23",
+                       "John Larkin",
+                       "",
+                       "",
+                       "locust-gap-colliery",
+                       "",
+                       "L",
+                       "Listed at \"Locust Gap\", Locust Gap (1877 inspectors\u0027 report, Shamokin district)"
                    ],
                    [
                        "1877-11-16",
@@ -2435,6 +2737,26 @@
                        ""
                    ],
                    [
+                       "1880-02-12",
+                       "James Collins",
+                       "55",
+                       "repairman",
+                       "north-mahanoy-colliery",
+                       "Caught under gangway timber knocked out by a fall of slate",
+                       "RW",
+                       "Married (1881 report, 2nd district)"
+                   ],
+                   [
+                       "1880-03-10",
+                       "Patrick Lawlor",
+                       "50",
+                       "miner",
+                       "west-lehigh-colliery",
+                       "Fall of coal while opening a chute",
+                       "RW",
+                       "Widower, 2 children (1881 report, 2nd district)"
+                   ],
+                   [
                        "1880-03-18",
                        "Henry Arges",
                        "",
@@ -2443,6 +2765,16 @@
                        "Fall of slate",
                        "LOC",
                        "Listed at the St. Nicholas Colliery; Lancaster Daily Intelligencer, March 19, 1880"
+                   ],
+                   [
+                       "1880-03-18",
+                       "Henry Argus",
+                       "",
+                       "",
+                       "st-nicholas-breaker",
+                       "Fall of slate on the gangway",
+                       "RW",
+                       "Listed at the St. Nicholas Colliery (1881 report, 2nd district)"
                    ],
                    [
                        "1880-04-02",
@@ -2475,6 +2807,16 @@
                        "Married, 6 children"
                    ],
                    [
+                       "1880-05-07",
+                       "Peter Cleary",
+                       "",
+                       "",
+                       "ellangowan-colliery",
+                       "Head caught between cars while uncoupling them on a curve; injured May 4",
+                       "RW",
+                       "Single (1881 report, 2nd district)"
+                   ],
+                   [
                        "1880-06-03",
                        "William Reynolds",
                        "25",
@@ -2503,6 +2845,16 @@
                        "Run over by a loaded mine wagon",
                        "N",
                        ""
+                   ],
+                   [
+                       "1880-09-09",
+                       "John Rudloff",
+                       "35",
+                       "miner",
+                       "primrose-colliery",
+                       "Fall of coal while robbing back on a turnout",
+                       "RW",
+                       "Single (1881 report, 2nd district)"
                    ],
                    [
                        "1880-09-10",
@@ -2535,6 +2887,16 @@
                        ""
                    ],
                    [
+                       "1880-11-09",
+                       "John Hugo",
+                       "33",
+                       "miner",
+                       "knickerbocker-colliery",
+                       "Corner of a pillar fell on him after he went back to drilling without checking his shot; injured Nov. 8",
+                       "RW",
+                       "Married, 5 children (1881 report, 2nd district)"
+                   ],
+                   [
                        "1880-11-26",
                        "Daniel Kennady",
                        "15",
@@ -2553,6 +2915,16 @@
                        "Burned and blown down a manway by a gas explosion; died Nov. 29",
                        "N",
                        "Married, 2 children; listed at the Cameron Colliery"
+                   ],
+                   [
+                       "1880-12-05",
+                       "William Britt",
+                       "31",
+                       "miner",
+                       "ellangowan-colliery",
+                       "Fall of top rock while recovering tools in the West Primrose gangway; injured Dec. 1",
+                       "RW",
+                       "Married, 3 children (1881 report, 2nd district)"
                    ],
                    [
                        "1881-01-20",
@@ -2775,6 +3147,16 @@
                        ""
                    ],
                    [
+                       "1881-10-21",
+                       "Thomas Ward",
+                       "",
+                       "",
+                       "mahanoy-city-colliery",
+                       "Fall of top coal; his brother John was fatally injured",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, Oct. 28, 1881"
+                   ],
+                   [
                        "1881-10-25",
                        "John Barufskie",
                        "40",
@@ -2803,6 +3185,16 @@
                        "A loaded car jumped the track and crushed him against a prop in the No. 1 slant gangway",
                        "I",
                        "The state inspector called the Alaska colliery \"Mt. Carmel Shaft\" in these years (the 1878 report places it \"near Alaska station, between Locust Gap and borough of Mount Carmel\")"
+                   ],
+                   [
+                       "1881-11-25",
+                       "Martin Dwyer",
+                       "",
+                       "",
+                       "glendon-colliery",
+                       "Fall of top coal",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, Dec. 3, 1881"
                    ],
                    [
                        "1881-11-30",
@@ -2865,6 +3257,16 @@
                        "Married; 2 children"
                    ],
                    [
+                       "1882-01-31",
+                       "John Manning",
+                       "41",
+                       "miner",
+                       "mount-carmel-colliery",
+                       "",
+                       "L",
+                       "Married, 6 children. Listed at \"Mount Carmel Shaft\" (1882 inspectors\u0027 report, Shamokin (3rd) district)"
+                   ],
+                   [
                        "1882-02-02",
                        "John Manning",
                        "41",
@@ -2873,6 +3275,16 @@
                        "Crushed between a mine car and a lump of coal on Jan. 31; died two and a half days later",
                        "I",
                        "The state inspector called the Alaska colliery \"Mt. Carmel Shaft\" in these years (the 1878 report places it \"near Alaska station, between Locust Gap and borough of Mount Carmel\")"
+                   ],
+                   [
+                       "1882-02-02",
+                       "Joseph Confaski",
+                       "17",
+                       "laborer",
+                       "burnside-colliery",
+                       "",
+                       "L",
+                       "Listed at \"Burnside\" (1882 inspectors\u0027 report, Shamokin (3rd) district)"
                    ],
                    [
                        "1882-02-02",
@@ -2895,6 +3307,16 @@
                        "Wife and 3 children; listed at the Cameron Colliery"
                    ],
                    [
+                       "1882-03-07",
+                       "Martin Joyce",
+                       "51",
+                       "miner",
+                       "schuylkill-colliery",
+                       "",
+                       "L",
+                       "Listed at \"Schuylkill\" (1882 inspectors\u0027 report, Shenandoah (2nd) district)"
+                   ],
+                   [
                        "1882-03-18",
                        "Martin Kinaskie",
                        "18",
@@ -2915,6 +3337,16 @@
                        ""
                    ],
                    [
+                       "1882-03-27",
+                       "John T. Carroll",
+                       "15",
+                       "laborer",
+                       "enterprise-colliery",
+                       "",
+                       "L",
+                       "Listed at \"Enterprise\" (1882 inspectors\u0027 report, Shamokin (3rd) district)"
+                   ],
+                   [
                        "1882-04-12",
                        "Samuel Smith",
                        "37",
@@ -2923,6 +3355,26 @@
                        "Fell down the traveling way",
                        "D",
                        "Married, 4 children"
+                   ],
+                   [
+                       "1882-04-17",
+                       "William Thomas Jefferson",
+                       "13",
+                       "door-tender",
+                       "mount-carmel-colliery",
+                       "",
+                       "L",
+                       "Listed at \"Mount Carmel\" (1882 inspectors\u0027 report, Shamokin (3rd) district)"
+                   ],
+                   [
+                       "1882-04-18",
+                       "John D. Meck",
+                       "23",
+                       "miner",
+                       "reliance-colliery",
+                       "",
+                       "L",
+                       "Listed at \"Reliance\" (1882 inspectors\u0027 report, Shamokin (3rd) district)"
                    ],
                    [
                        "1882-04-18",
@@ -2955,6 +3407,16 @@
                        "Wife and three children"
                    ],
                    [
+                       "1882-05-17",
+                       "Thomas Haley",
+                       "36",
+                       "miner",
+                       "glendon-colliery",
+                       "",
+                       "L",
+                       "Married, 2 children. Listed at \"Glendon\" (1882 inspectors\u0027 report, Shenandoah (2nd) district)"
+                   ],
+                   [
                        "1882-05-20",
                        "David Green",
                        "23",
@@ -2966,6 +3428,16 @@
                    ],
                    [
                        "1882-05-20",
+                       "Frank Osman",
+                       "",
+                       "",
+                       "buck-ridge-colliery",
+                       "Explosion of sulphur gas set off by a naked lamp",
+                       "PNA",
+                       "Also printed Osmun. Pennsylvania Newspaper Archive, May 22 and 27, 1882"
+                   ],
+                   [
+                       "1882-05-20",
                        "James Lawrence",
                        "51",
                        "miner",
@@ -2973,6 +3445,46 @@
                        "Gas explosion",
                        "I",
                        "Wife"
+                   ],
+                   [
+                       "1882-05-23",
+                       "George Snyder",
+                       "13",
+                       "door-boy",
+                       "knickerbocker-colliery",
+                       "",
+                       "L",
+                       "Listed at \"Knickerbocker\" (1882 inspectors\u0027 report, Shenandoah (2nd) district)"
+                   ],
+                   [
+                       "1882-06",
+                       "David Kocher",
+                       "",
+                       "miner",
+                       "new-boston-colliery",
+                       "Fall of coal",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, July 5, 1882"
+                   ],
+                   [
+                       "1882-07",
+                       "John Chalson",
+                       "",
+                       "",
+                       "luke-fidler-colliery",
+                       "A rope broke and sent two coal wagons to the bottom of the slope",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, Aug. 3, 1882"
+                   ],
+                   [
+                       "1882-08-01",
+                       "John Sheridan",
+                       "33",
+                       "miner",
+                       "mount-carmel-colliery",
+                       "",
+                       "L",
+                       "Married, 5 children. Listed at \"Mount Carmel Shaft\" (1882 inspectors\u0027 report, Shamokin (3rd) district)"
                    ],
                    [
                        "1882-08-02",
@@ -3005,6 +3517,36 @@
                        "Wife"
                    ],
                    [
+                       "1882-09",
+                       "James Engle",
+                       "",
+                       "miner",
+                       "west-lehigh-colliery",
+                       "Fall of rock after knocking out a prop",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, Sept. 22, 1882"
+                   ],
+                   [
+                       "1882-09",
+                       "Nicholas Grell",
+                       "33",
+                       "miner",
+                       "locust-spring-colliery",
+                       "Fall of top rock",
+                       "PNA",
+                       "Left a wife and two children. Pennsylvania Newspaper Archive, Sept. 9, 1882"
+                   ],
+                   [
+                       "1882-09-02",
+                       "John Cahill",
+                       "",
+                       "pumping engineer",
+                       "new-boston-colliery",
+                       "Caught in the blades of the breaker fan",
+                       "PNA",
+                       "Listed at the Middle Lehigh colliery. Pennsylvania Newspaper Archive, Sept. 4, 1882"
+                   ],
+                   [
                        "1882-09-06",
                        "Richard Simmons",
                        "16",
@@ -3035,6 +3577,66 @@
                        "Wife and 5 children"
                    ],
                    [
+                       "1882-09-21",
+                       "John Nye Sr.",
+                       "53",
+                       "miner",
+                       "burnside-colliery",
+                       "",
+                       "L",
+                       "Married, 5 children. Listed at \"Burnside\" (1882 inspectors\u0027 report, Shamokin (3rd) district)"
+                   ],
+                   [
+                       "1882-09-21",
+                       "Joseph Owatins",
+                       "35",
+                       "miner",
+                       "schuylkill-colliery",
+                       "Killed by a shot he had prepared that hung fire",
+                       "PNA",
+                       "Polish; surname printed unclearly. Pennsylvania Newspaper Archive, Sept. 30, 1882"
+                   ],
+                   [
+                       "1882-09-21",
+                       "Thomas Jenkins",
+                       "36",
+                       "miner",
+                       "north-mahanoy-colliery",
+                       "",
+                       "L",
+                       "Married. Listed at \"North Mahanoy\" (1882 inspectors\u0027 report, Shenandoah (2nd) district)"
+                   ],
+                   [
+                       "1882-09-22",
+                       "Joseph Ewancs",
+                       "32",
+                       "miner",
+                       "schuylkill-colliery",
+                       "",
+                       "L",
+                       "Married, 3 children. Listed at \"Schuylkill\" (1882 inspectors\u0027 report, Shenandoah (2nd) district)"
+                   ],
+                   [
+                       "1882-09-22",
+                       "William Elliot",
+                       "15",
+                       "driver",
+                       "new-boston-colliery",
+                       "",
+                       "L",
+                       "Listed at \"Middle Lehigh\" (1882 inspectors\u0027 report, Pottsville (1st) district)"
+                   ],
+                   [
+                       "1882-09-29",
+                       "Nicholas Schowde",
+                       "37",
+                       "miner",
+                       "locust-gap-colliery",
+                       "",
+                       "L",
+                       "Listed at \"Locust Gap\" (1882 inspectors\u0027 report, Shamokin (3rd) district)"
+                   ],
+                   [
                        "1882-09-29",
                        "Nicholas Schwade",
                        "37",
@@ -3043,6 +3645,46 @@
                        "Rush of coal, slate and rock",
                        "I",
                        "Wife and 4 children"
+                   ],
+                   [
+                       "1882-10-21",
+                       "John Szlinski",
+                       "25",
+                       "laborer",
+                       "elmwood-colliery",
+                       "",
+                       "L",
+                       "Married, 1 children. Listed at \"Elmwood\" (1882 inspectors\u0027 report, Shenandoah (2nd) district)"
+                   ],
+                   [
+                       "1882-10-24",
+                       "William Northerly",
+                       "13",
+                       "",
+                       "tunnel-ridge-colliery",
+                       "Fell into the breaker",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, Oct. 25, 1882"
+                   ],
+                   [
+                       "1882-11-20",
+                       "Michael Ryan",
+                       "14",
+                       "bottomboy",
+                       "pennsylvania-colliery",
+                       "",
+                       "L",
+                       "Listed at \"Pennsylvania\" (1882 inspectors\u0027 report, Shamokin (3rd) district)"
+                   ],
+                   [
+                       "1882-11-21",
+                       "John McNally",
+                       "22",
+                       "laborer",
+                       "logan-colliery",
+                       "",
+                       "L",
+                       "Listed at \"Logan\" (1882 inspectors\u0027 report, Shamokin (3rd) district)"
                    ],
                    [
                        "1882-11-21",
@@ -3073,6 +3715,26 @@
                        "Fall of top coal",
                        "I",
                        "Wife, no children. The state inspector called the Alaska colliery \"Mt. Carmel Shaft\" in these years (the 1878 report places it \"near Alaska station, between Locust Gap and borough of Mount Carmel\")"
+                   ],
+                   [
+                       "1882-12-02",
+                       "David Foley",
+                       "24",
+                       "miner",
+                       "mount-carmel-colliery",
+                       "",
+                       "L",
+                       "Married. Listed at \"Mount Carmel Shaft\" (1882 inspectors\u0027 report, Shamokin (3rd) district)"
+                   ],
+                   [
+                       "1882-12-06",
+                       "James Tahanney",
+                       "22",
+                       "miner",
+                       "suffolk-colliery",
+                       "",
+                       "L",
+                       "Listed at \"Coal Run\" (1882 inspectors\u0027 report, Shenandoah (2nd) district)"
                    ],
                    [
                        "1883",
@@ -3113,6 +3775,16 @@
                        "Caught in the cogs of the breaker\u0027s counter screen",
                        "D",
                        "Married, 8 children"
+                   ],
+                   [
+                       "1883-02-07",
+                       "Teolpen Miscotoico",
+                       "",
+                       "miner",
+                       "logan-colliery",
+                       "Killed with another man, whose name was not known, in an accident at the colliery",
+                       "PNA",
+                       "Name printed unclearly. Pennsylvania Newspaper Archive, Feb. 14, 1883"
                    ],
                    [
                        "1883-02-07",
@@ -3193,6 +3865,16 @@
                        "Fall of top coal in the Buck Mountain seam",
                        "I",
                        "Wife"
+                   ],
+                   [
+                       "1883-03-15",
+                       "John Meeker",
+                       "",
+                       "",
+                       "west-lehigh-colliery",
+                       "Fall of coal; his lamp set fire to his clothes",
+                       "PNA",
+                       "Hungarian. Pennsylvania Newspaper Archive, Mar. 15 and 24, 1883"
                    ],
                    [
                        "1883-03-15",
@@ -3653,6 +4335,16 @@
                        "Crushed between the counter screen and frame in the breaker",
                        "I",
                        ""
+                   ],
+                   [
+                       "1884-03-19",
+                       "Anthony Garrison",
+                       "",
+                       "",
+                       "centralia-colliery",
+                       "A rope broke",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, Apr. 2, 1884"
                    ],
                    [
                        "1884-03-19",
@@ -4195,6 +4887,26 @@
                        "Wife"
                    ],
                    [
+                       "1886-01-20",
+                       "Jacob Branshire",
+                       "",
+                       "miner",
+                       "ellangowan-colliery",
+                       "Killed in the gangway with Nicholas Kanoute",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, Jan. 28, 1886"
+                   ],
+                   [
+                       "1886-01-20",
+                       "Nicholas Kanoute",
+                       "",
+                       "miner",
+                       "ellangowan-colliery",
+                       "Killed in the gangway with Jacob Branshire",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, Jan. 28, 1886"
+                   ],
+                   [
                        "1886-01-26",
                        "James Curan",
                        "19",
@@ -4313,6 +5025,16 @@
                        "Caught between the top of a mine car and the sump timbers",
                        "I",
                        ""
+                   ],
+                   [
+                       "1886-07-13",
+                       "Edward Jones",
+                       "21",
+                       "",
+                       "mount-carmel-colliery",
+                       "Struck on the head by a piece of coal from a blast",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, July 17, 1886"
                    ],
                    [
                        "1886-07-15",
@@ -4685,6 +5407,16 @@
                        "Single"
                    ],
                    [
+                       "1888-02",
+                       "John Edmunds",
+                       "",
+                       "miner",
+                       "luke-fidler-colliery",
+                       "Fall of top rock",
+                       "PNA",
+                       "An old miner. Pennsylvania Newspaper Archive, Feb. 24, 1888"
+                   ],
+                   [
                        "1888-02-08",
                        "Thomas Munchan",
                        "23",
@@ -4795,6 +5527,26 @@
                        "Married, 5 children"
                    ],
                    [
+                       "1889-03-18",
+                       "David Evans",
+                       "",
+                       "miner",
+                       "mahanoy-city-colliery",
+                       "The roof fell while he and his sons were robbing pillars",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, Mar. 28, 1889"
+                   ],
+                   [
+                       "1889-03-18",
+                       "Edward Evans",
+                       "",
+                       "miner",
+                       "mahanoy-city-colliery",
+                       "The roof fell while robbing pillars with his father, David Evans, and his brother",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, Mar. 28, 1889"
+                   ],
+                   [
                        "1889-05-01",
                        "William Williams",
                        "17",
@@ -4855,6 +5607,16 @@
                        "Married, 2 children; spelled \"Badskil\" by Dempsey"
                    ],
                    [
+                       "1889-06-10",
+                       "George Lord",
+                       "16",
+                       "",
+                       "new-boston-colliery",
+                       "Caught in the pea coal screen in the breaker",
+                       "RW",
+                       "Single (1890 inspectors report, 7th district)"
+                   ],
+                   [
                        "1889-06-12",
                        "Adolph Sidle",
                        "43",
@@ -4903,6 +5665,16 @@
                        "Run over by the mine locomotive",
                        "N",
                        "Married, 8 children"
+                   ],
+                   [
+                       "1889-08-02",
+                       "Joseph Conside",
+                       "38",
+                       "miner",
+                       "mount-carmel-colliery",
+                       "Premature explosion of a blast",
+                       "RW",
+                       "Married, 4 children (1890 report, 6th district)"
                    ],
                    [
                        "1889-08-03",
@@ -5056,6 +5828,16 @@
                    ],
                    [
                        "1889-11-26",
+                       "Joseph Miller",
+                       "",
+                       "",
+                       "boston-run-colliery",
+                       "Fall of coal",
+                       "PNA",
+                       "Of Shenandoah. Pennsylvania Newspaper Archive, Nov. 28, 1889"
+                   ],
+                   [
+                       "1889-11-26",
                        "Joseph Statinski",
                        "23",
                        "miner",
@@ -5193,6 +5975,16 @@
                        "Caught between two trips on a single track",
                        "I",
                        ""
+                   ],
+                   [
+                       "1890-09-08",
+                       "Charles Stirner",
+                       "25",
+                       "miner",
+                       "tunnel-ridge-colliery",
+                       "Fall of coal while drilling a hole",
+                       "PNA",
+                       "Single. Pennsylvania Newspaper Archive, Sept. 11, 1890"
                    ],
                    [
                        "1890-10-15",
@@ -5345,6 +6137,16 @@
                        ""
                    ],
                    [
+                       "1891-04",
+                       "William Warntz",
+                       "",
+                       "slate picker",
+                       "burnside-colliery",
+                       "Caught between the bumpers of cars",
+                       "PNA",
+                       "A young slate picker. Pennsylvania Newspaper Archive, May 1, 1891"
+                   ],
+                   [
                        "1891-04-06",
                        "John Leigman",
                        "34",
@@ -5395,6 +6197,16 @@
                        "Listed at the Cameron Colliery"
                    ],
                    [
+                       "1891-07-17",
+                       "Paul Punlyski",
+                       "",
+                       "laborer",
+                       "burnside-colliery",
+                       "Heavy collars fell from the roof while robbing pillars",
+                       "PNA",
+                       "Surname printed unclearly. Pennsylvania Newspaper Archive, July 23, 1891"
+                   ],
+                   [
                        "1891-08-28",
                        "John Donsosheftsky",
                        "25",
@@ -5413,6 +6225,16 @@
                        "Fall of coal",
                        "D",
                        "Married; 1 child"
+                   ],
+                   [
+                       "1891-10-19",
+                       "John Curry",
+                       "",
+                       "",
+                       "bast-colliery",
+                       "Slowly smothered by gas in a coal chute",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, Oct. 23, 1891"
                    ],
                    [
                        "1891-11-07",
@@ -5523,6 +6345,16 @@
                        "Fall of coal",
                        "N",
                        "Married"
+                   ],
+                   [
+                       "1892-04-07",
+                       "Thomas McWilliams",
+                       "",
+                       "",
+                       "glendon-colliery",
+                       "Gas explosion set off by a spark from a drill",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, Apr. 9 and 21, 1892"
                    ],
                    [
                        "1892-04-26",
@@ -5755,6 +6587,16 @@
                        ""
                    ],
                    [
+                       "1893-01-20",
+                       "Thomas Langon",
+                       "",
+                       "",
+                       "logan-colliery",
+                       "Killed by an unexpected shot",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, Jan. 23, 1893"
+                   ],
+                   [
                        "1893-01-27",
                        "William Rushon",
                        "",
@@ -5783,6 +6625,16 @@
                        "Found dead on the road, thought to have been kicked by a mule",
                        "N",
                        ""
+                   ],
+                   [
+                       "1893-02-21",
+                       "Henry Young",
+                       "",
+                       "",
+                       "boston-run-colliery",
+                       "Fall of coal",
+                       "PNA",
+                       "Evening Herald, Shenandoah, Feb. 22, 1893"
                    ],
                    [
                        "1893-03-02",
@@ -5932,7 +6784,7 @@
                        "big-mountain-colliery",
                        "Fall of slate",
                        "N",
-                       ""
+                       "Also printed as Michael Duhota; three others were seriously hurt"
                    ],
                    [
                        "1893-06-10",
@@ -6003,6 +6855,16 @@
                        "Explosion of gas",
                        "N",
                        ""
+                   ],
+                   [
+                       "1893-07",
+                       "Samuel Waldron",
+                       "",
+                       "",
+                       "luke-fidler-colliery",
+                       "Fall of rock",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, Aug. 4, 1893"
                    ],
                    [
                        "1893-07-06",
@@ -6095,6 +6957,26 @@
                        "Single"
                    ],
                    [
+                       "1893-11-20",
+                       "John Auran",
+                       "",
+                       "",
+                       "richards-colliery",
+                       "Fall of top rock",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, Nov. 24, 1893"
+                   ],
+                   [
+                       "1893-12-12",
+                       "Adam Schon",
+                       "47",
+                       "",
+                       "primrose-colliery",
+                       "Struck by a runaway car on the plane",
+                       "PNA",
+                       "A war veteran; name printed several ways (Adam Solon, Apa Schod). Pennsylvania Newspaper Archive, Dec. 13 and 14, 1893"
+                   ],
+                   [
                        "1894-01-26",
                        "George Kind",
                        "",
@@ -6105,6 +6987,16 @@
                        "The paper gives his age as 85, probably a misprint; Evening Herald (Shenandoah), Jan. 27, 1894"
                    ],
                    [
+                       "1894-03",
+                       "Horan",
+                       "",
+                       "",
+                       "boston-run-colliery",
+                       "Caught in the bell rope while riding up the slope",
+                       "PNA",
+                       "First name not given; married. Pennsylvania Newspaper Archive, Mar. 15, 1894"
+                   ],
+                   [
                        "1894-03-20",
                        "William A. Dennis",
                        "",
@@ -6113,6 +7005,26 @@
                        "Struck by a piece of a bursting flywheel; lived fifteen minutes",
                        "LOC",
                        "Evening Herald (Shenandoah), Mar. 21, 1894; surname printed unclearly (\"Drnnla\", \"Dentils\")"
+                   ],
+                   [
+                       "1894-05-14",
+                       "John Franks",
+                       "40",
+                       "",
+                       "locust-gap-colliery",
+                       "Explosion of powder",
+                       "PNA",
+                       "Of Locust Gap. Pennsylvania Newspaper Archive, May 17, 1894"
+                   ],
+                   [
+                       "1894-05-14",
+                       "John Paul",
+                       "32",
+                       "",
+                       "locust-gap-colliery",
+                       "Explosion of powder",
+                       "PNA",
+                       "Of Locust Gap. Pennsylvania Newspaper Archive, May 17, 1894"
                    ],
                    [
                        "1894-05-19",
@@ -6136,6 +7048,16 @@
                    ],
                    [
                        "1894-06-22",
+                       "Alexander Concavage",
+                       "",
+                       "",
+                       "maple-hill-colliery",
+                       "Caught between the cage and the shaft timbers",
+                       "PNA",
+                       "Single. Also printed John Punkawicz. Evening Herald (Shenandoah), June 23 and 29, 1894"
+                   ],
+                   [
+                       "1894-06-22",
                        "John Punkowicz",
                        "",
                        "",
@@ -6153,6 +7075,26 @@
                        "Fall of rock in a gangway",
                        "LOC",
                        "Wife and 2 children in Poland; spelled \"Stiney Santer\" in the later inquest report; Evening Herald (Shenandoah), June 23, 1894"
+                   ],
+                   [
+                       "1894-06-22",
+                       "Stiney Santer",
+                       "",
+                       "",
+                       "maple-hill-colliery",
+                       "Fall of rock in a gangway",
+                       "PNA",
+                       "Also printed Stiney Korch. Evening Herald (Shenandoah), June 23 and 29, 1894"
+                   ],
+                   [
+                       "1894-06-26",
+                       "John McHugh",
+                       "",
+                       "miner",
+                       "locust-gap-colliery",
+                       "Fall of top coal",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, June 27, 1894"
                    ],
                    [
                        "1894-09-05",
@@ -6173,6 +7115,16 @@
                        "Thrown from a loaded car when other cars were run into the train",
                        "LOC",
                        "Evening Herald (Shenandoah), Sept. 5, 1894"
+                   ],
+                   [
+                       "1894-09-11",
+                       "George Eleet",
+                       "30",
+                       "",
+                       "centralia-colliery",
+                       "Gas explosion set off by a naked lamp",
+                       "PNA",
+                       "Surname printed unclearly. Pennsylvania Newspaper Archive, Sept. 12, 1894"
                    ],
                    [
                        "1894-09-21",
@@ -6295,6 +7247,16 @@
                        "Walked two miles home after the explosion. The sixth victim; Freeland Tribune, Oct. 25, 1894 (died \"on Tuesday\"), and Evening Herald (Shenandoah), Oct. 24, 1894"
                    ],
                    [
+                       "1894-10-24",
+                       "Frank Werskine",
+                       "",
+                       "",
+                       "north-mahanoy-colliery",
+                       "Heavy fall (of coal or rock)",
+                       "PNA",
+                       "Name may be misspelled in the scan. Pennsylvania Newspaper Archive, Oct. 25, 1894"
+                   ],
+                   [
                        "1894-11-05",
                        "Michael Redusky",
                        "",
@@ -6355,6 +7317,16 @@
                        "Listed at the Cameron Colliery"
                    ],
                    [
+                       "1895-01-16",
+                       "Andrew Rosermorski",
+                       "",
+                       "",
+                       "glen-burn-colliery",
+                       "Fell down a manway",
+                       "PNA",
+                       "Listed at the Cameron mine. Pennsylvania Newspaper Archive, Jan. 17, 1895"
+                   ],
+                   [
                        "1895-01-21",
                        "Richard Gilham",
                        "",
@@ -6395,6 +7367,16 @@
                        ""
                    ],
                    [
+                       "1895-03",
+                       "Elijah Yarnel",
+                       "",
+                       "",
+                       "locust-gap-colliery",
+                       "Crushed by a mine wagon hoisted too fast",
+                       "PNA",
+                       "An aged man. Pennsylvania Newspaper Archive, Mar. 29, 1895"
+                   ],
+                   [
                        "1895-03-04",
                        "George Drumheller",
                        "",
@@ -6433,6 +7415,26 @@
                        "Premature explosion of a shot",
                        "N",
                        "The record does not say No. 1 or No. 2"
+                   ],
+                   [
+                       "1895-04",
+                       "Andrew Dwyer",
+                       "",
+                       "",
+                       "north-mahanoy-colliery",
+                       "Caught by a rush of coal",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, Apr. 19, 1895"
+                   ],
+                   [
+                       "1895-04",
+                       "Stanislaus Robert",
+                       "",
+                       "",
+                       "luke-fidler-colliery",
+                       "One of four men who died in the colliery; his body was recovered later",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, May 3, 1895; the other three are not named"
                    ],
                    [
                        "1895-04-02",
@@ -6523,6 +7525,16 @@
                        "Explosion of a keg of powder",
                        "N",
                        ""
+                   ],
+                   [
+                       "1895-08",
+                       "Michael Hokasil",
+                       "",
+                       "",
+                       "locust-gap-colliery",
+                       "Gas explosion, probably from a naked lamp",
+                       "PNA",
+                       "One of two men killed; the other is not named. Pennsylvania Newspaper Archive, Aug. 26, 1895"
                    ],
                    [
                        "1895-08-06",
@@ -6665,14 +7677,24 @@
                        "Evening Herald (Shenandoah), Dec. 24, 1895; surname as printed"
                    ],
                    [
+                       "1896",
+                       "Daley",
+                       "",
+                       "",
+                       "north-mahanoy-colliery",
+                       "Killed at the colliery as a boy",
+                       "PNA",
+                       "A minor son of Charles Daley of Mahanoy City, who sued the Reading over his death. Pennsylvania Newspaper Archive, Apr. 16, 1896"
+                   ],
+                   [
                        "1896-01-06",
                        "John Mauret",
-                       "",
+                       "25",
                        "shaft sinker",
                        "luke-fidler-colliery",
                        "A falling counterweight (\"billy\") struck the cage descending the new shaft",
                        "LOC",
-                       "The Columbian (Bloomsburg), Jan. 9, 1896"
+                       "Left a widow and one child; of Springfield. Also printed as James Merritt. The Columbian (Bloomsburg), Jan. 9, 1896"
                    ],
                    [
                        "1896-01-06",
@@ -6687,22 +7709,22 @@
                    [
                        "1896-01-06",
                        "Peter Boubert",
-                       "",
+                       "23",
                        "shaft sinker",
                        "luke-fidler-colliery",
                        "A falling counterweight (\"billy\") struck the cage descending the new shaft",
                        "LOC",
-                       "His brother died in the 1894 fire at the same colliery; The Columbian (Bloomsburg), Jan. 9, 1896"
+                       "Left a widow and one child. His brother died in the 1894 fire at the same colliery; The Columbian (Bloomsburg), Jan. 9, 1896"
                    ],
                    [
                        "1896-01-06",
                        "Steven Mourat",
-                       "",
+                       "28",
                        "shaft sinker",
                        "luke-fidler-colliery",
                        "A falling counterweight (\"billy\") struck the cage descending the new shaft",
                        "LOC",
-                       "The Columbian (Bloomsburg), Jan. 9, 1896"
+                       "Left a widow and one child; of Springfield. Also printed as Stephen Merritt. The Columbian (Bloomsburg), Jan. 9, 1896"
                    ],
                    [
                        "1896-01-07",
@@ -6815,6 +7837,16 @@
                        "Single; Evening Herald (Shenandoah), March 9, 1896"
                    ],
                    [
+                       "1896-03-09",
+                       "Michael Durkin",
+                       "25",
+                       "miner",
+                       "maple-hill-colliery",
+                       "Struck by a piece of coal from a blast",
+                       "PNA",
+                       "Of Mahanoy City; also printed Michael Drifua, 23. Evening Herald (Shenandoah), Mar. 9 and 10, 1896"
+                   ],
+                   [
                        "1896-04-15",
                        "William Hauler",
                        "",
@@ -6916,6 +7948,16 @@
                    ],
                    [
                        "1896-08-06",
+                       "James Popcenick",
+                       "",
+                       "",
+                       "maple-hill-colliery",
+                       "Fall of slate",
+                       "PNA",
+                       "Name printed unclearly. Evening Herald (Shenandoah), Aug. 8, 1896"
+                   ],
+                   [
+                       "1896-08-06",
                        "Popcenick (first name unclear)",
                        "",
                        "",
@@ -6965,6 +8007,16 @@
                        "Listed at the St. Nicholas jig house; Evening Herald (Shenandoah), Oct. 6, 1896"
                    ],
                    [
+                       "1896-10-19",
+                       "Steve Plonsky",
+                       "",
+                       "",
+                       "suffolk-colliery",
+                       "Falling coal",
+                       "PNA",
+                       "Evening Herald (Shenandoah), Oct. 20, 1896"
+                   ],
+                   [
                        "1896-10-20",
                        "Elmer Warner",
                        "",
@@ -6983,6 +8035,16 @@
                        "Struck by a derailed truck (No. 1)",
                        "D",
                        "Married"
+                   ],
+                   [
+                       "1896-10-26",
+                       "Peter Gullok",
+                       "",
+                       "miner",
+                       "midvalley-colliery",
+                       "Thrown against a telegraph pole when a mine car ran away on the colliery railroad",
+                       "PNA",
+                       "Four laborers were hurt. Evening Herald (Shenandoah), Oct. 27, 1896"
                    ],
                    [
                        "1896-11",
@@ -7006,6 +8068,26 @@
                    ],
                    [
                        "1896-11-07",
+                       "Andrew Monchok",
+                       "",
+                       "",
+                       "centralia-colliery",
+                       "Killed instantly when four boilers exploded",
+                       "PNA",
+                       "Married. Pennsylvania Newspaper Archive, Nov. 9 and 12, 1896"
+                   ],
+                   [
+                       "1896-11-07",
+                       "John Santhy",
+                       "",
+                       "",
+                       "centralia-colliery",
+                       "Died the same day of injuries from the boiler explosion",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, Nov. 12, 1896"
+                   ],
+                   [
+                       "1896-11-07",
                        "John Saunekey",
                        "",
                        "",
@@ -7023,6 +8105,16 @@
                        "Boiler explosion",
                        "D",
                        "Also reported as Joseph Kubick; single"
+                   ],
+                   [
+                       "1896-11-07",
+                       "Joseph Kubick",
+                       "",
+                       "",
+                       "centralia-colliery",
+                       "Died the same day of injuries from the boiler explosion",
+                       "PNA",
+                       "Pennsylvania Newspaper Archive, Nov. 12, 1896"
                    ],
                    [
                        "1896-11-07",
@@ -7153,6 +8245,16 @@
                        "Fall of coal; skull fractured; died at the Miners\u0027 Hospital",
                        "LOC",
                        "Of Locust Dale; listed at the Locust Dale colliery; the paper gives his age as 85, probably a misprint; Evening Herald (Shenandoah), Jan. 29, 1897"
+                   ],
+                   [
+                       "1897-01-27",
+                       "Henry Penant",
+                       "",
+                       "miner",
+                       "tunnel-ridge-colliery",
+                       "Struck on the back of the neck by falling coal",
+                       "PNA",
+                       "Left a widow and five children; surname printed unclearly. Evening Herald (Shenandoah), Jan. 28, 1897"
                    ],
                    [
                        "1897-02-09",
@@ -7287,22 +8389,22 @@
                    [
                        "1897-07-02",
                        "Samuel Britton",
+                       "12",
+                       "",
+                       "primrose-colliery",
+                       "Crushed by scrapers in the jig house",
+                       "LOC",
+                       "Also printed Gritton. Evening Herald (Shenandoah), July 2 and 3, 1897; Pennsylvania Newspaper Archive, July 5, 1897"
+                   ],
+                   [
+                       "1897-07-02",
+                       "Samuel Britton",
                        "13",
                        "slate picker",
                        "primrose-colliery",
                        "",
                        "L",
                        "Single"
-                   ],
-                   [
-                       "1897-07-02",
-                       "Samuel Gritton",
-                       "13",
-                       "",
-                       "primrose-colliery",
-                       "Crushed by scrapers in the jig house",
-                       "LOC",
-                       "Evening Herald (Shenandoah), July 2 and 3, 1897; surname printed unclearly"
                    ],
                    [
                        "1897-07-06",
@@ -7353,6 +8455,16 @@
                        "",
                        "L",
                        "Married, 4 orphans"
+                   ],
+                   [
+                       "1897-07-26",
+                       "Charles Kielius",
+                       "35",
+                       "",
+                       "ellangowan-colliery",
+                       "Fall of coal",
+                       "PNA",
+                       "Single; also printed Keilins. Evening Herald (Shenandoah), July 29, 1897"
                    ],
                    [
                        "1897-07-26",
@@ -7413,6 +8525,16 @@
                        "",
                        "L",
                        ""
+                   ],
+                   [
+                       "1897-08-26",
+                       "George Kranut",
+                       "",
+                       "",
+                       "hickory-swamp-colliery",
+                       "Fall of coal",
+                       "PNA",
+                       "Surname printed unclearly. Pennsylvania Newspaper Archive, Aug. 27, 1897"
                    ],
                    [
                        "1897-08-27",
@@ -7635,6 +8757,16 @@
                        "Married, 2 orphans"
                    ],
                    [
+                       "1897-11-08",
+                       "John Zach",
+                       "",
+                       "",
+                       "locust-spring-colliery",
+                       "Falling coal",
+                       "PNA",
+                       "Of Shamokin. Pennsylvania Newspaper Archive, Nov. 12, 1897"
+                   ],
+                   [
                        "1897-11-16",
                        "Stany Domeleskie",
                        "",
@@ -7705,6 +8837,16 @@
                        "Widowed; 2 orphans"
                    ],
                    [
+                       "1897-12-14",
+                       "William Urinsky",
+                       "40",
+                       "miner",
+                       "north-mahanoy-colliery",
+                       "Fall of top coal in breast 3 of the Holmes counter",
+                       "PNA",
+                       "Polish. Evening Herald (Shenandoah), Dec. 14, 1897"
+                   ],
+                   [
                        "1897-12-18",
                        "Curtis Harris",
                        "",
@@ -7763,6 +8905,16 @@
                        "Fell in front of a car at the head of the plane",
                        "LOC",
                        "Of West Apple Alley; Evening Herald (Shenandoah), May 11, 1898"
+                   ],
+                   [
+                       "1898-06",
+                       "George Hill",
+                       "",
+                       "loader boss",
+                       "locustdale-potts-colliery",
+                       "Squeezed between mine cars",
+                       "PNA",
+                       "Name printed unclearly. Pennsylvania Newspaper Archive, June 10, 1898"
                    ],
                    [
                        "1898-06-08",
@@ -16179,9 +17331,9 @@
                        "John O\u0027Donnell",
                        "32",
                        "miner",
-                       "sayre-colliery",
-                       "Fell down a manway",
-                       "N",
+                       "sioux-colliery",
+                       "Fell down manway",
+                       "R",
                        "Married"
                    ],
                    [
@@ -16189,9 +17341,9 @@
                        "John O\u0027Donnell",
                        "32",
                        "miner",
-                       "sioux-colliery",
-                       "Fell down manway",
-                       "R",
+                       "sayre-colliery",
+                       "Fell down a manway",
+                       "N",
                        "Married"
                    ],
                    [
@@ -18958,20 +20110,20 @@
                        "1913-05-12",
                        "Patrick Boyle",
                        "58",
-                       "repairman",
-                       "locust-gap-colliery",
-                       "Fall of slate on gangway",
-                       "R",
+                       "bottom man",
+                       "locust-spring-colliery",
+                       "Car on the slope",
+                       "N",
                        "Married"
                    ],
                    [
                        "1913-05-12",
                        "Patrick Boyle",
                        "58",
-                       "bottom man",
-                       "locust-spring-colliery",
-                       "Car on the slope",
-                       "N",
+                       "repairman",
+                       "locust-gap-colliery",
+                       "Fall of slate on gangway",
+                       "R",
                        "Married"
                    ],
                    [
@@ -21389,20 +22541,20 @@
                        "Anthony Kane",
                        "47",
                        "miner",
-                       "locust-gap-colliery",
-                       "Fall of rock at face",
-                       "R",
-                       "Married"
+                       "locust-spring-colliery",
+                       "Fall of rock",
+                       "N",
+                       "Married, 8 children"
                    ],
                    [
                        "1916-09-07",
                        "Anthony Kane",
                        "47",
                        "miner",
-                       "locust-spring-colliery",
-                       "Fall of rock",
-                       "N",
-                       "Married, 8 children"
+                       "locust-gap-colliery",
+                       "Fall of rock at face",
+                       "R",
+                       "Married"
                    ],
                    [
                        "1916-09-08",
@@ -22955,6 +24107,16 @@
                        "Of Shenandoah; nine others were hurt; Harrisburg Telegraph, May 5, 1919"
                    ],
                    [
+                       "1919-06",
+                       "Michael Kozma",
+                       "",
+                       "",
+                       "richards-colliery",
+                       "Fall of top coal",
+                       "PNA",
+                       "Of Exchange; left a widow and three children. Pennsylvania Newspaper Archive, June 26, 1919"
+                   ],
+                   [
                        "1919-07-23",
                        "William Reagan",
                        "37",
@@ -23115,6 +24277,16 @@
                        "Of Shenandoah. Evening Public Ledger (Philadelphia), June 23, 1921; surname as printed, the scan is unclear"
                    ],
                    [
+                       "1922-01",
+                       "Alex Gorski",
+                       "",
+                       "",
+                       "greenough-colliery",
+                       "Gas explosion as they were leaving their breast; John Coluski was badly hurt",
+                       "PNA",
+                       "Of Ranshaw. Pennsylvania Newspaper Archive, Jan. 19, 1922"
+                   ],
+                   [
                        "1922-11-16",
                        "Michael Dais",
                        "46",
@@ -23123,6 +24295,16 @@
                        "Fell about 100 feet down the slope",
                        "NP",
                        "Of Mount Carmel; widow and 5 children; Pottsville Republican, Nov. 17, 1922"
+                   ],
+                   [
+                       "1922-12-09",
+                       "Donald C. Tarr",
+                       "31",
+                       "miner",
+                       "burnside-colliery",
+                       "Caught under a heavy fall of coal while robbing pillars in the water level, West No. 4 vein, breast 17",
+                       "WH",
+                       "His brother Ramsey Tarr was badly injured beside him. Mount Carmel Item, December 1922, quoted by Wynning History"
                    ],
                    [
                        "1923-02",
