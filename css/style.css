@@ -61,6 +61,122 @@ html[data-theme="light"] .confidence.estimate h3 { color: #8a5a00; }
 html[data-theme="light"] .switch:checked::after { background: #ffffff; }
 html[data-theme="light"] .switch:checked { background: var(--accent); }
 
+/* Mine theme: coal-black walls, carbide-lamp amber, rusted iron, stenciled signage. */
+html[data-theme="mine"] {
+  --chrome: #0c0b09;
+  --chrome-2: #16130f;
+  --chrome-3: #221d17;
+  --border: #4a3a2a;
+  --text: #e8e0d0;
+  --text-soft: #cfc4b0;
+  --muted: #9b8e78;
+  --accent: #ffb43a;
+  --accent-ink: #140c00;
+  --danger: #d9502e;
+  --overlay-bg: rgba(12, 11, 9, 0.94);
+  --stencil: "Stardos Stencil", "Libre Baskerville", Georgia, serif;
+  --grit: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  --shadow: 0 8px 28px rgba(0, 0, 0, 0.7);
+}
+html[data-theme="mine"] body,
+html[data-theme="mine"] .panel,
+html[data-theme="mine"] .legend {
+  background-image: var(--grit), radial-gradient(ellipse at 50% -20%, rgba(255, 180, 58, 0.07), transparent 60%);
+}
+/* Timber header beam with a worn hazard stripe underneath */
+html[data-theme="mine"] .topbar {
+  background: var(--grit), linear-gradient(180deg, #2a2016, #17120d);
+  border-bottom: 0;
+  box-shadow: 0 2px 0 #050403, 0 6px 0 -1px transparent;
+}
+html[data-theme="mine"] .topbar::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -5px;
+  height: 5px;
+  background: repeating-linear-gradient(-45deg, #c98a1c 0 10px, #0c0b09 10px 20px);
+  opacity: 0.75;
+  pointer-events: none;
+}
+html[data-theme="mine"] :is(h1, h2, h3, .brand-title) {
+  font-family: var(--stencil);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-shadow: 0 1px 0 #000, 0 0 18px rgba(255, 180, 58, 0.12);
+}
+html[data-theme="mine"] a:hover { color: #ffd27a; text-shadow: 0 0 8px rgba(255, 180, 58, 0.45); }
+html[data-theme="mine"] button:not(.leaflet-control *) { border-color: #5a4630; }
+html[data-theme="mine"] ::selection { background: #ffb43a; color: #140c00; }
+
+/* Mine theme components. Buttons are riveted iron plates; boxes are rough-cut rock;
+   inputs are cut into the wall and light up like a lamp when focused. */
+html[data-theme="mine"] {
+  --rivet: radial-gradient(circle, #8a7458 0 1.4px, #2b2219 1.6px 2.2px, transparent 2.6px);
+  --iron: linear-gradient(180deg, #2c261f 0%, #1b1712 55%, #141110 100%);
+  --rock-edge: inset 0 1px 0 rgba(255, 220, 160, 0.06), inset 0 -2px 6px rgba(0, 0, 0, 0.6);
+}
+html[data-theme="mine"] :is(.menu-toggle, .list-toggle, .play-btn, .lb-btn, .tour-buttons button, .quiz-option, .lc-option) {
+  background:
+    var(--rivet) 5px 5px / 6px 6px no-repeat,
+    var(--rivet) calc(100% - 5px) 5px / 6px 6px no-repeat,
+    var(--rivet) 5px calc(100% - 5px) / 6px 6px no-repeat,
+    var(--rivet) calc(100% - 5px) calc(100% - 5px) / 6px 6px no-repeat,
+    var(--iron);
+  border: 1px solid #4d3d2c;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 0 rgba(255, 220, 160, 0.08), 0 2px 0 #050403;
+}
+html[data-theme="mine"] :is(.menu-toggle, .list-toggle, .play-btn, .lb-btn, .tour-buttons button, .quiz-option, .lc-option):hover {
+  border-color: var(--accent);
+  box-shadow: inset 0 1px 0 rgba(255, 220, 160, 0.12), 0 0 12px rgba(255, 180, 58, 0.25), 0 2px 0 #050403;
+}
+html[data-theme="mine"] :is(.play-btn.is-playing, .menu-toggle[aria-expanded="true"], .list-toggle[aria-expanded="true"]) {
+  border-color: var(--accent);
+  box-shadow: 0 0 14px rgba(255, 180, 58, 0.35), 0 2px 0 #050403;
+}
+html[data-theme="mine"] .play-btn.is-playing { background: var(--accent); color: var(--accent-ink); }
+html[data-theme="mine"] .quiz-option.correct { background: rgba(92, 184, 92, 0.18); border-color: #5cb85c; }
+html[data-theme="mine"] .quiz-option.wrong { background: rgba(217, 80, 46, 0.2); border-color: var(--danger); }
+
+html[data-theme="mine"] :is(.search input, select, textarea, input[type="text"], input[type="search"], input[type="email"]) {
+  background-color: #080706;
+  border: 1px solid #3a2e22;
+  border-radius: 3px;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.85);
+  color: var(--text);
+}
+html[data-theme="mine"] :is(.search input, select, textarea, input[type="text"], input[type="search"], input[type="email"]):focus {
+  border-color: var(--accent);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 180, 58, 0.4), 0 0 16px rgba(255, 180, 58, 0.25);
+  outline: none;
+}
+html[data-theme="mine"] input[type="range"],
+html[data-theme="mine"] input[type="checkbox"],
+html[data-theme="mine"] input[type="radio"] { accent-color: var(--accent); }
+
+html[data-theme="mine"] :is(.quiz-card, .chart-card, .lc-card, .menu-panel, .list-panel, .search-results) {
+  background-color: var(--chrome-2);
+  background-image: var(--grit);
+  border: 1px solid #3d3024;
+  border-radius: 3px 7px 4px 8px;
+  box-shadow: var(--rock-edge), var(--shadow);
+}
+html[data-theme="mine"] :is(.menu-panel a[aria-current="page"], .list-items button[aria-current="true"]) {
+  box-shadow: inset 3px 0 0 var(--accent), inset 14px 0 18px -14px rgba(255, 180, 58, 0.5);
+}
+html[data-theme="mine"] .data-table th { background: #1d1813; color: var(--accent); font-family: var(--stencil); letter-spacing: 0.05em; }
+html[data-theme="mine"] .data-table td { border-bottom-color: #2c241b; }
+
+/* Lamp flicker on the big headings (stops when "Smooth animations" is off) */
+@keyframes mine-flicker {
+  0%, 100% { text-shadow: 0 1px 0 #000, 0 0 18px rgba(255, 180, 58, 0.14); }
+  47% { text-shadow: 0 1px 0 #000, 0 0 22px rgba(255, 180, 58, 0.22); }
+  50% { text-shadow: 0 1px 0 #000, 0 0 10px rgba(255, 180, 58, 0.06); }
+  53% { text-shadow: 0 1px 0 #000, 0 0 20px rgba(255, 180, 58, 0.2); }
+}
+html[data-theme="mine"] h1 { animation: mine-flicker 6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { html[data-theme="mine"] h1 { animation: none; } }
+
 /* "Smooth animations" turned off */
 html[data-motion="off"] *,
 html[data-motion="off"] *::before,

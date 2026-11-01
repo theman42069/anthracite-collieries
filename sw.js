@@ -4,7 +4,7 @@
    Map background images are left to the browser: their providers don't allow storing them. */
 'use strict';
 
-var VERSION = 'v1';
+var VERSION = 'v2';
 var SHELL = 'collieries-shell-' + VERSION;
 var PHOTOS = 'collieries-photos';   // kept across versions; photo files don't change
 

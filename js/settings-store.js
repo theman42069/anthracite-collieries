@@ -8,7 +8,7 @@
 
   var DEFAULTS = {
     layout: 'unset',          // unset (ask on first visit) | phone | pc
-    theme: 'dark',            // dark | light | auto (match the device)
+    theme: 'dark',            // dark | light | mine | auto (match the device)
     motion: true,             // smooth map flights and transitions
     units: 'mi',              // mi | km
     autoLocate: false,        // show my location as soon as the map opens
@@ -28,7 +28,7 @@
 
   var CHOICES = {
     layout: ['unset', 'phone', 'pc'],
-    theme: ['dark', 'light', 'auto'],
+    theme: ['dark', 'light', 'mine', 'auto'],
     units: ['mi', 'km'],
     playSpeed: ['slow', 'normal', 'fast'],
     quizLength: [5, 10, 15],
