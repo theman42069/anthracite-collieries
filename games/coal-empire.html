@@ -37,6 +37,9 @@ h3:first-child{margin-top:2px}
 .res{display:flex;flex-direction:column;min-width:74px}
 .res .lbl{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
 .res .val{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+.savechip{cursor:pointer;padding:2px 6px;margin:-2px -6px;border-radius:4px}
+.savechip:hover{background:var(--panel2)}
+.savechip .val{font-size:12px}
 
 #main{flex:1;display:flex;min-height:0}
 #view{position:relative;flex:1;min-width:0;overflow:hidden;background:#0a0807;touch-action:manipulation;user-select:none;-webkit-user-select:none}
@@ -80,6 +83,8 @@ h3:first-child{margin-top:2px}
 .bar i{display:block;height:100%;background:linear-gradient(90deg,#8a5a1e,var(--lamp))}
 .grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:7px}
 .wcard{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--rc,#888);border-radius:5px;padding:7px 8px;display:flex;flex-direction:column;gap:4px}
+.pool .wcard{min-height:172px}
+.wstat[data-bind=wstat]{min-height:3.9em}
 .wcard.empty{align-items:center;justify-content:center;color:var(--faint);min-height:96px;border-left-color:var(--line);border-style:dashed}
 .wcard.hurt{opacity:.7}
 .wname{font-weight:700}
@@ -150,6 +155,7 @@ pre{white-space:pre-wrap;font-size:11px;background:var(--bg2);padding:6px;border
     <div class="res"><span class="lbl">Coal / sec</span><span class="val lampc" id="rCps">0</span></div>
     <div class="res"><span class="lbl">Price / ton</span><span class="val" id="rPrice">$1</span></div>
     <div class="res"><span class="lbl">Net $ / sec</span><span class="val" id="rNet">$0</span></div>
+    <div class="res savechip" data-act="openSave" title="Save options"><span class="lbl">Progress</span><span class="val" id="rSave">—</span></div>
   </header>
   <div id="main">
     <section id="view">
@@ -177,6 +183,7 @@ pre{white-space:pre-wrap;font-size:11px;background:var(--bg2);padding:6px;border
 const CONFIG = {
   version: 1,
   saveKey: 'coalEmpire.save.v1',
+  servedUrl: 'http://localhost:8000/games/coal-empire.html',   // where the saving copy lives when the preview can't store anything
   autosaveSec: 30,
   offlineCapHours: 8,
   offlineStepSec: 5,          // offline progress is simulated in steps of this size
@@ -488,7 +495,7 @@ const Store = (() => {
 let saveWarned = false;
 function save() {
   if (RT.sim) return;
-  try { Store.set(CONFIG.saveKey, serialize()); }
+  try { Store.set(CONFIG.saveKey, serialize()); RT.savedAt = Date.now(); }
   catch (e) { if (!saveWarned) { saveWarned = true; console.warn('Save failed', e); toast('Saving isn\'t working here. Use Export in ⚙ to keep your progress.', 'bad'); } }
 }
 function mergeDefaults(obj, def) {
@@ -804,7 +811,7 @@ function recalc() {
   }
   d.cps += d.holdCps;
   if (RT.offline && perk('nightShift')) d.cps *= 1.5;
-  for (const w of S.workers) d.wages += wageOf(w);
+  for (const w of S.workers) if (w.injuredUntil <= S.time) d.wages += wageOf(w);   // injured workers are off shift and unpaid
   d.price = CONFIG.market.basePrice * S.market.mult * (1 + UP.processing.per * upg('processing')) * priceM * priceH * S.perm.price * buffProd('price');
   d.riskIndex = riskW ? riskSum / riskW : 0.5;
   d.strike = Math.max(0.2, 0.4 + loud * 0.1 + Math.min(1, S.workers.length / 120) - foremen * 0.3) * Math.pow(1 / S.pay, CONFIG.pay.strikePow);
@@ -2059,34 +2066,45 @@ function renderTabs() {
   $('#tabs').innerHTML = TABS.map(([k, n]) => `<button data-act="tab" data-tab="${k}" class="${ui.tab === k ? 'on' : ''}">${n}${k === 'events' && S.ev.cur ? '<span class="dot"></span>' : ''}${k === 'upgrades' && canTierUp() ? '<span class="dot"></span>' : ''}</button>`).join('');
 }
 function renderPanel() {
-  ui.dirty = false;
+  ui.dirty = false; ui.dirtySince = 0;
   renderTabs();
   const body = $('#tabBody'); const st = body.scrollTop;
+  // Remember which card sits at the top of the view, so content changing above it doesn't shove the page around.
+  const top = body.getBoundingClientRect().top;
+  let anchor = null;
+  if (ui.renderedTab === ui.tab) for (const el of body.querySelectorAll('[data-k], #tabBody > *')) {
+    const r = el.getBoundingClientRect();
+    if (r.top >= top - 1 && r.height) { anchor ={ k: el.dataset.k || 'i' + [...body.children].indexOf(el), off: r.top - top }; break; }
+  }
   body.innerHTML = ({ workers: tabWorkers, upgrades: tabUpgrades, sites: tabSites, events: tabEvents, prestige: tabPrestige, records: tabRecords, settings: tabSettings })[ui.tab]();
   body.scrollTop = st;
+  if (anchor) {
+    const el = anchor.k[0] === 'i' && !body.querySelector(`[data-k="${CSS.escape(anchor.k)}"]`) ? body.children[+anchor.k.slice(1)] : body.querySelector(`[data-k="${CSS.escape(anchor.k)}"]`);
+    if (el) body.scrollTop += (el.getBoundingClientRect().top - top) - anchor.off;
+  }
+  ui.renderedTab = ui.tab;
   renderSiteBar();
   refreshUI();
 }
 
 function tabWorkers() {
   const d = D;
-  let h = `<div class="card"><div class="row sp"><span>Crew <b>${d.workers}</b> / ${d.cap} slots</span><span>Wages <b class="bad">${money(d.wages)}/s</b></span></div>
-    ${d.workers >= d.cap ? '<div class="bad" style="margin-top:4px">All slots full. Open a new level in the Sites tab.</div>' : ''}
+  let h = `<div class="card" data-k="sum"><div class="row sp"><span>Crew <b>${d.workers}</b> / ${d.cap} slots${d.workers >= d.cap ? ' <span class="bad">· full, open a level in Sites</span>' : ''}</span><span>Wages <b class="bad">${money(d.wages)}/s</b></span></div>
     <div class="payrow"><span>Pay rate <b data-bind="payPct"></b> <span class="faint" data-bind="payMood"></span></span>
       <input type="range" data-pay min="${CONFIG.pay.min}" max="${CONFIG.pay.max}" step="${CONFIG.pay.step}" value="${S.pay}" aria-label="Crew pay rate"></div>
     <div class="wstat" data-bind="payInfo"></div></div>`;
-  h += `<h3>Hiring pool</h3><div class="row sp" style="margin-bottom:6px"><span class="dim">New faces in <span data-bind="poolRefresh"></span></span>
-    ${costBtn('reroll', rerollCost(), 'Reroll', '', 'small')}</div><div class="grid2">`;
+  h += `<h3 data-k="hpool">Hiring pool</h3><div class="row sp" style="margin-bottom:6px"><span class="dim">New faces in <span data-bind="poolRefresh"></span></span>
+    ${costBtn('reroll', rerollCost(), 'Reroll', '', 'small')}</div><div class="grid2 pool">`;
   S.pool.slots.forEach((sl, i) => {
-    if (!sl.c) { h += `<div class="wcard empty">Next applicant in <span data-bind="arrive" data-i="${i}"></span></div>`; return; }
+    if (!sl.c) { h += `<div class="wcard empty" data-k="p${i}">Next applicant in <span data-bind="arrive" data-i="${i}"></span></div>`; return; }
     const c = sl.c, r = CONFIG.roles[c.role];
     const fakeW = { role: c.role, lvl: 1, wageMult: 1, traits: c.traits };
-    h += `<div class="wcard" style="--rc:${r.color}"><div><div class="wname">${esc(c.name)}</div><div class="wrole">${roleLabel(c.role)}</div></div>
+    h += `<div class="wcard" data-k="p${i}" style="--rc:${r.color}"><div><div class="wname">${esc(c.name)}</div><div class="wrole">${roleLabel(c.role)}</div></div>
       ${traitList(c.traits)}
       <div class="wstat" title="${esc(r.desc)}">${esc(r.desc)}<br>Wage ${money(wageOf(fakeW))}/s</div>
       ${costBtn('hire', hireCost(c), 'Hire', `data-i="${i}"`, 'primary')}</div>`;
   });
-  h += `</div><h3>Your crew</h3>`;
+  h += `</div><h3 data-k="hcrew">Your crew</h3>`;
   if (!S.workers.length) return h + '<p class="dim">Nobody yet. Click the mine to dig some coal, sell it, then hire a Digger.</p>';
   const opts = [];
   for (const s of S.sites) s.levels.forEach((_, li) => opts.push([s.id, li, `${s.name} L${li + 1}`]));
@@ -2094,12 +2112,12 @@ function tabWorkers() {
     const crew = S.workers.filter(w => w.site === s.id && w.li === li);
     if (!crew.length) return;
     const ld = D.sites[s.id].levels[li];
-    h += `<div class="lvlhead"><span>${esc(s.name)} · Level ${li + 1} (${(li + 1) * 120} ft)</span><span>${crew.length}/${levelCap(s)} · dig ${fmt(ld.dig)}/s</span></div><div class="grid2">`;
+    h += `<div class="lvlhead" data-k="lh${s.id}:${li}"><span>${esc(s.name)} · Level ${li + 1} (${(li + 1) * 120} ft)</span><span>${crew.length}/${levelCap(s)} · dig ${fmt(ld.dig)}/s</span></div><div class="grid2">`;
     for (const w of crew) {
       const r = CONFIG.roles[w.role];
       const sel = `<select data-assign="${w.id}">${opts.map(([sid, l, n]) => `<option value="${sid}:${l}" ${sid === w.site && l === w.li ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select>`;
       const maxed = w.lvl >= CONFIG.workerLevel.max;
-      h += `<div class="wcard" data-wcard="${w.id}" style="--rc:${r.color}"><div class="row sp"><div class="grow"><div class="wname">${esc(w.name)}</div><div class="wrole">${roleLabel(w.role)} · Lv ${w.lvl}</div></div></div>
+      h += `<div class="wcard" data-wcard="${w.id}" data-k="w${w.id}" style="--rc:${r.color}"><div class="row sp"><div class="grow"><div class="wname">${esc(w.name)}</div><div class="wrole">${roleLabel(w.role)} · Lv ${w.lvl}</div></div></div>
         ${traitList(w.traits)}
         <div class="wstat" data-bind="wstat" data-w="${w.id}"></div>
         <div class="wbtns">${maxed ? '<span class="dim">Max level</span>' : costBtn('promote', promoteCost(w), 'Promote', `data-w="${w.id}"`, 'small')}
@@ -2133,7 +2151,7 @@ function tabUpgrades() {
       if (maxed) btn = `<span class="good">${u.once ? 'Owned' : 'Max'}</span>`;
       else if (locked) btn = `<span class="faint">Tier ${u.tier}</span>`;
       else btn = costBtn('buyUp', upgCost(u), 'Buy', `data-id="${u.id}"`, 'small');
-      h += `<div class="up ${locked ? 'locked' : ''} ${maxed && u.once ? 'owned' : ''}"><div class="grow"><div class="nm">${esc(u.name)}${lvlTxt}</div><div class="ds">${desc}</div></div>${btn}</div>`;
+      h += `<div class="up ${locked ? 'locked' : ''} ${maxed && u.once ? 'owned' : ''}" data-k="u${u.id}"><div class="grow"><div class="nm">${esc(u.name)}${lvlTxt}</div><div class="ds">${desc}</div></div>${btn}</div>`;
     }
     h += '</div>';
   }
@@ -2255,10 +2273,15 @@ function tabSettings() {
   h += `<h3>Names</h3><div class="card"><div class="row sp"><span>Company: <b>${esc(companyName())}</b></span><button class="small" data-act="renameCompany">✎ Rename</button></div>
     <div class="row sp" style="margin-top:6px"><span>First mine: <b>${esc(S.sites[0].name)}</b></span><button class="small" data-act="renameSite" data-site="${S.sites[0].id}">✎ Rename</button></div>
     <div class="dim" style="font-size:11.5px;margin-top:4px">Custom names stay the same through tier-ups and when you sell the company.</div></div>`;
-  h += `<h3>Save</h3><div class="card"><div class="dim" style="margin-bottom:6px">${Store.persistent ? `Autosaves every ${CONFIG.autosaveSec}s to this browser.`
-      : '<span class="bad">Browser storage is blocked here</span>, so progress only lasts while this tab stays open. Use Export to keep it, or open the file from a local web server.'}</div>
-    <div class="wbtns"><button data-act="saveNow">Save now</button><button data-act="exportSave">Export</button><button data-act="importSave">Import</button>
-    <button class="danger" data-act="hardReset">${ui.resetArm ? 'Really wipe everything?' : 'Hard reset'}</button></div></div>`;
+  h += `<h3 data-k="hsave">Save</h3><div class="card">`;
+  h += Store.persistent
+    ? `<div class="dim" style="margin-bottom:6px">Your progress is remembered by this browser. It autosaves every ${CONFIG.autosaveSec}s and whenever you leave the page, so it's there when you come back.</div>`
+    : `<div style="margin-bottom:8px"><b class="bad">This preview can't remember progress.</b> <span class="dim">It's opened in a way that blocks browser storage, so closing it loses your game.
+       Open the saving version and your progress comes with you (needs the local server, serve.ps1, running).</span></div>
+       <button class="primary" data-act="openSaving" style="width:100%;margin-bottom:8px">Open the version that saves →</button>`;
+  h += `<div class="wbtns"><button data-act="saveNow">Save now</button><button data-act="exportSave">Export</button><button data-act="importSave">Import</button></div></div>
+    <h3>Wipe save</h3><div class="card"><div class="dim" style="margin-bottom:6px">Deletes everything and starts over from a bare hillside: this run, Legacy, perks, achievements and names. This can't be undone.</div>
+    <button class="danger" data-act="hardReset" style="width:100%">${ui.resetArm ? 'Click again to wipe everything' : '🗑 Wipe save'}</button></div>`;
   h += `<h3>Debug</h3><div class="card"><div class="dim" style="margin-bottom:6px">For testing pacing. Speed: ×${RT.speed}</div>
     <div class="wbtns">${CONFIG.debug.speeds.map(s => `<button class="small" data-act="dbgSpeed" data-s="${s}" ${RT.speed === s ? 'disabled' : ''}>×${s}</button>`).join('')}</div>
     <div class="wbtns" style="margin-top:6px"><button class="small" data-act="dbgMoney">+ Money</button><button class="small" data-act="dbgCoal">+ Coal mined</button>
@@ -2306,7 +2329,8 @@ const BINDS = {
     const card = el.closest('.wcard'); if (card) card.classList.toggle('hurt', hurt);
     const r = CONFIG.roles[w.role];
     const out = w.role === 'digger' ? `digs ${fmt(w._out || 0)}/s` : w.role === 'hauler' ? `hauls ${fmt(w._out || 0)}/s` : esc(r.desc);
-    return `${hurt ? `<span class="bad">Injured ${fmtTime(w.injuredUntil - S.time)}</span> · ` : ''}${out}<br>Wage ${money(wageOf(w))}/s${w.wageMult > 1.01 ? ` <span class="faint">(${pct(w.wageMult)} creep)</span>` : ''}`;
+    // always three lines, so an injury doesn't change the card's height
+    return `${hurt ? `<span class="bad">Injured, back in ${fmtTime(w.injuredUntil - S.time)} (unpaid)</span>` : '<span class="good">On shift</span>'}<br>${out}<br>Wage ${money(wageOf(w))}/s${w.wageMult > 1.01 ? ` <span class="faint">(${pct(w.wageMult)} creep)</span>` : ''}`;
   },
 };
 const PROGS = {
@@ -2314,9 +2338,26 @@ const PROGS = {
   tierMoney: () => { const t = nextTier(); return t ? S.money / t.req.money : 1; },
 };
 
+// Explain a mine that has workers but isn't producing, so the player isn't left guessing.
+function noCoalReason(site, sd) {
+  if (!site || !sd || sd.out > 0.001) return '';
+  const crew = S.workers.filter(w => w.site === site.id);
+  if (!crew.length) return '';
+  if (site.haltUntil > S.time) return `the whole mine is shut (${site.haltKind || 'stoppage'}) for ${fmtTime(site.haltUntil - S.time)}`;
+  const parts = [];
+  site.levels.forEach((lv, li) => { if (lv.haltUntil > S.time && crew.some(w => w.li === li)) parts.push(`Level ${li + 1} shut by ${lv.haltKind === 'cavein' ? 'a cave-in' : lv.haltKind || 'a stoppage'} for ${fmtTime(lv.haltUntil - S.time)}`); });
+  const diggers = crew.filter(w => w.role === 'digger'), hurt = diggers.filter(w => w.injuredUntil > S.time);
+  if (!diggers.length) parts.push('no Diggers here to cut coal');
+  else if (hurt.length === diggers.length) parts.push(`every Digger is injured (back in ${fmtTime(Math.min(...hurt.map(w => w.injuredUntil)) - S.time)})`);
+  else if (sd.haul <= 0.001) parts.push('nothing is hauling coal up');
+  return parts.join('; ') || 'the crew is idle';
+}
 function refreshUI() {
   $('#tierName').textContent = `${companyName()} · ${tierInfo(S.tier).name}`;
   $('#rCoal').textContent = fmt(S.coal);
+  const sv = $('#rSave');
+  if (Store.persistent) { sv.textContent = RT.savedAt ? `✓ saved ${fmtTime((Date.now() - RT.savedAt) / 1000)} ago` : '✓ remembered'; sv.className = 'val good'; }
+  else { sv.textContent = '⚠ not saved'; sv.className = 'val bad'; }
   $('#rMoney').textContent = money(S.money);
   $('#rCps').textContent = fmt(D.cps);
   const pm = S.market.mult;
@@ -2339,6 +2380,8 @@ function refreshUI() {
   const warns = [];
   if (D.unpaid) warns.push(['Payroll missed! Output halved until you can pay wages.', '']);
   const sd = D.sites[S.viewSite];
+  const why = noCoalReason(viewSite(), sd);
+  if (why) warns.push([`No coal: ${why}. Click the mine to dig by hand meanwhile.`, '']);
   if (sd && sd.dig > sd.haul * 1.05 && sd.dig > 0.5) warns.push([`Haul-limited: ${fmt(sd.dig - sd.haul)}/s of coal stuck underground`, '']);
   if (D.workers >= D.cap && D.cap > 0 && S.workers.length) warns.push(['All worker slots full', 'info']);
   if (canTierUp()) warns.push([`Ready: ${nextTier().buy} (Upgrades tab)`, 'info']);
@@ -2408,8 +2451,13 @@ const ACTIONS = {
     try { S = loadFrom(decodeSave($('#importBox').value)); recalc(); save(); closeModal(); renderEventBanner(); ui.dirty = true; toast('Save imported.', 'good'); }
     catch (e) { toast('That doesn\'t look like a valid save: ' + e.message, 'bad'); }
   },
+  openSave: () => { ui.tab = 'settings'; ui.dirty = true; renderPanel(); const h = document.querySelector('[data-k="hsave"]'); if (h) h.scrollIntoView({ block: 'start' }); },
+  openSaving: () => {
+    // hand the save over in the URL fragment (never sent to the server) to the copy served over http
+    location.href = `${CONFIG.servedUrl}#save=${encodeURIComponent(encodeSave(serialize()))}`;
+  },
   hardReset: () => {
-    if (!ui.resetArm) { ui.resetArm = true; ui.dirty = true; return; }
+    if (!ui.resetArm) { ui.resetArm = true; ui.dirty = true; setTimeout(() => { if (ui.resetArm) { ui.resetArm = false; ui.dirty = true; } }, 5000); return; }
     ui.resetArm = false; Store.del(CONFIG.saveKey); startRun(defaultMeta()); renderEventBanner(); save(); ui.dirty = true; toast('Everything wiped. Fresh hillside.', 'bad');
   },
   dbgSpeed: el => { RT.speed = +el.dataset.s; ui.dirty = true; },
@@ -2428,7 +2476,7 @@ const ACTIONS = {
 function bindInput() {
   document.addEventListener('click', e => {
     const el = e.target.closest('[data-act]'); if (!el || el.disabled) return;
-    const f = ACTIONS[el.dataset.act]; if (f) { f(el, e); recalc(); refreshUI(); }
+    const f = ACTIONS[el.dataset.act]; if (f) { f(el, e); recalc(); if (ui.dirty) renderPanel(); else refreshUI(); }   // your own clicks show at once
   });
   document.addEventListener('input', e => {
     if (e.target.dataset.pay == null) return;
@@ -2449,6 +2497,9 @@ function bindInput() {
     else if (e.target.closest('#panel, #eventBanner')) RT.pointerDown = performance.now();
   }, true);
   for (const ev of ['pointerup', 'pointercancel', 'blur']) window.addEventListener(ev, () => { RT.pointerDown = 0; }, true);
+  const body = $('#tabBody');   // also hold re-renders while the pointer rests on the panel, so cards don't change under it
+  body.addEventListener('pointerenter', () => { RT.hoverPanel = true; });
+  body.addEventListener('pointerleave', () => { RT.hoverPanel = false; });
   Rr.cv.addEventListener('pointerdown', e => {
     e.preventDefault();
     const v = mineClick();
@@ -2487,7 +2538,9 @@ setInterval(() => { if (performance.now() - RT.lastRaf > 1500) pump(); }, 1000);
 function frame(now) {
   const dt = clamp((now - RT.lastFrame) / 1000, 0, 1); RT.lastFrame = now; RT.lastRaf = performance.now();
   pump();
-  if (ui.dirty && !pressing()) renderPanel();
+  // background changes wait while the pointer rests on the panel (up to 5s), so cards don't move under it
+  if (ui.dirty && !ui.dirtySince) ui.dirtySince = now;
+  if (ui.dirty && !pressing() && (!RT.hoverPanel || now - ui.dirtySince > 5000)) renderPanel();
   RT.uiAt += dt;
   if (RT.uiAt >= 0.25) { RT.uiAt = 0; refreshUI(); }
   // periodic full re-render for the number-heavy tabs
@@ -2505,8 +2558,17 @@ function boot() {
   Rr.light = document.createElement('canvas'); Rr.lctx = Rr.light.getContext('2d');
   let offline = null;
   try {
-    const raw = Store.get(CONFIG.saveKey);
-    if (raw) { S = loadFrom(raw); recalc(); offline = runOffline((Date.now() - S.lastSeen) / 1000); }
+    let raw = Store.get(CONFIG.saveKey);
+    const m = location.hash.match(/^#save=(.+)$/);
+    if (m) {   // progress carried over from the no-save preview: keep whichever save is newer
+      try {
+        const incoming = decodeSave(decodeURIComponent(m[1]));
+        const mine = raw ? JSON.parse(raw).lastSeen || 0 : 0;
+        if ((JSON.parse(incoming).lastSeen || 0) >= mine) { raw = incoming; RT.carried = true; }
+      } catch (e) { console.warn('Carried-over save was unreadable.', e); }
+      history.replaceState(null, '', location.pathname + location.search);
+    }
+    if (raw) { S = loadFrom(raw); recalc(); offline = runOffline((Date.now() - S.lastSeen) / 1000); if (RT.carried) save(); }
   } catch (e) { console.warn('Save could not be loaded, starting fresh.', e); S = null; }
   if (!S) startRun(defaultMeta());
   recalc();
@@ -2524,7 +2586,8 @@ function boot() {
     <label class="dim" style="display:block;margin-top:6px">Company name <span class="faint">(optional)</span></label>
     <input id="startCompany" maxlength="${NAME_MAX}" placeholder="${esc(companyName())}" style="width:100%;padding:6px">
     <button class="primary" data-act="startGame" style="margin-top:12px">Grab the pick</button>`);
-  if (!Store.persistent) setTimeout(() => toast('Browser storage is blocked here, so progress is kept for this tab only. Use Export in ⚙ to keep it.'), 1500);
+  if (RT.carried) setTimeout(() => toast('Progress carried over. It will be remembered here from now on.', 'good'), 800);
+  if (!Store.persistent) setTimeout(() => toast('This preview can\'t remember progress. Click "Progress" in the top bar to open the version that saves.', 'bad'), 1500);
   RT.lastFrame = performance.now();
   requestAnimationFrame(frame);
 }
