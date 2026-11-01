@@ -1,0 +1,2537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Coal Empire</title>
+<style>
+:root{
+  --bg:#14100c; --bg2:#1b1510; --panel:#211a14; --panel2:#2a2119; --line:#3b2e22; --line2:#4d3c2c;
+  --text:#ebdfca; --dim:#a8977e; --faint:#6e604e;
+  --lamp:#ffb347; --lamp2:#ffd27a; --money:#a9d870; --bad:#e2603f; --good:#86c66f; --blue:#82b4d8; --purple:#b78fd8;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--text);
+  font:13px/1.35 ui-monospace,"Cascadia Mono","SF Mono",Consolas,Menlo,monospace;overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer;background:var(--panel2);border:1px solid var(--line2);
+  border-radius:4px;padding:5px 9px;transition:background .12s,border-color .12s}
+button:hover:not(:disabled){background:#3a2d20;border-color:var(--lamp)}
+button:disabled{opacity:.42;cursor:not-allowed}
+button.primary{background:#5a3a14;border-color:#9a6326;color:#ffe2b0}
+button.primary:hover:not(:disabled){background:#744b1a}
+button.danger{border-color:#7a3626;color:#f3b4a2}
+button.small{padding:2px 7px;font-size:12px}
+select,textarea,input{font:inherit;color:var(--text);background:var(--bg2);border:1px solid var(--line2);border-radius:4px}
+select{padding:2px 4px;font-size:12px;max-width:100%}
+textarea{width:100%;min-height:90px;padding:6px;font-size:11px;word-break:break-all}
+h3{margin:14px 0 6px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--lamp)}
+h3:first-child{margin-top:2px}
+.dim{color:var(--dim)} .faint{color:var(--faint)} .good{color:var(--good)} .bad{color:var(--bad)} .money{color:var(--money)} .lampc{color:var(--lamp)}
+
+#app{display:flex;flex-direction:column;height:100vh;height:100dvh}
+#topbar{display:flex;align-items:center;gap:6px 18px;padding:6px 12px;background:#0f0c09;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.brand{display:flex;flex-direction:column;margin-right:auto;min-width:150px;cursor:pointer}
+.brand:hover span{color:var(--lamp2)}
+.brand b{font-size:15px;letter-spacing:.18em;color:var(--lamp)}
+.brand span{font-size:11px;color:var(--dim)}
+.res{display:flex;flex-direction:column;min-width:74px}
+.res .lbl{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.res .val{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+
+#main{flex:1;display:flex;min-height:0}
+#view{position:relative;flex:1;min-width:0;overflow:hidden;background:#0a0807;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+#view.shake{animation:shake .45s}
+@keyframes shake{0%,100%{transform:translate(0,0)}15%{transform:translate(-5px,2px)}30%{transform:translate(4px,-3px)}45%{transform:translate(-3px,-2px)}60%{transform:translate(3px,2px)}80%{transform:translate(-1px,1px)}}
+#mine{position:absolute;left:0;top:0;image-rendering:pixelated;image-rendering:crisp-edges;cursor:pointer}
+#floaters{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.float{position:absolute;font-weight:700;color:var(--lamp2);text-shadow:0 1px 0 #000,0 0 6px rgba(255,170,60,.6);
+  animation:floatUp 1s ease-out forwards;white-space:nowrap;font-size:14px}
+.float.money{color:var(--money)}
+@keyframes floatUp{from{transform:translate(-50%,0);opacity:1}to{transform:translate(-50%,-46px);opacity:0}}
+#siteBar{position:absolute;left:8px;bottom:8px;display:flex;gap:6px;align-items:center;background:rgba(10,8,6,.78);
+  border:1px solid var(--line);border-radius:5px;padding:4px 8px;font-size:12px}
+#siteBar button{padding:0 7px}
+#hint{position:absolute;right:8px;bottom:8px;font-size:11px;color:var(--dim);background:rgba(10,8,6,.7);padding:3px 7px;border-radius:4px;pointer-events:none}
+#warn{position:absolute;left:8px;top:8px;display:flex;flex-direction:column;gap:4px;pointer-events:none;max-width:60%}
+#warn div{background:rgba(70,22,12,.85);border:1px solid #8a3a24;border-radius:4px;padding:2px 7px;font-size:11px;color:#ffc9b6}
+#warn div.info{background:rgba(20,30,40,.85);border-color:#34506a;color:#cfe3f5}
+#eventBanner{position:absolute;left:50%;top:10px;transform:translateX(-50%);width:min(440px,calc(100% - 20px));
+  background:rgba(28,20,14,.96);border:1px solid var(--lamp);border-radius:6px;padding:10px 12px;box-shadow:0 6px 30px rgba(0,0,0,.6)}
+#eventBanner .t{font-weight:700;color:var(--lamp2);font-size:14px}
+#eventBanner .x{margin:4px 0 8px;color:var(--text)}
+.choices{display:flex;flex-direction:column;gap:5px}
+.choices button{text-align:left;display:flex;flex-direction:column;gap:1px}
+.choices button small{color:var(--dim);font-size:11px}
+.evtimer{height:3px;background:#3a2c1f;margin-top:8px;border-radius:2px;overflow:hidden}
+.evtimer i{display:block;height:100%;background:var(--lamp);width:100%}
+
+#panel{width:440px;max-width:46%;display:flex;flex-direction:column;background:var(--panel);border-left:1px solid var(--line);min-height:0}
+#tabs{display:flex;overflow-x:auto;border-bottom:1px solid var(--line);background:#191410;scrollbar-width:none}
+#tabs button{border:0;border-radius:0;background:none;padding:9px 11px;color:var(--dim);white-space:nowrap;border-bottom:2px solid transparent;position:relative}
+#tabs button.on{color:var(--lamp2);border-bottom-color:var(--lamp)}
+#tabs button .dot{position:absolute;top:5px;right:3px;width:6px;height:6px;border-radius:50%;background:var(--bad)}
+#tabBody{flex:1;overflow-y:auto;padding:10px 12px 40px}
+
+.card{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:9px 10px;margin-bottom:8px}
+.row{display:flex;align-items:center;gap:8px}
+.row .grow{flex:1;min-width:0}
+.sp{justify-content:space-between}
+.bar{height:6px;background:#15100c;border-radius:3px;overflow:hidden;margin:5px 0}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#8a5a1e,var(--lamp))}
+.grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:7px}
+.wcard{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--rc,#888);border-radius:5px;padding:7px 8px;display:flex;flex-direction:column;gap:4px}
+.wcard.empty{align-items:center;justify-content:center;color:var(--faint);min-height:96px;border-left-color:var(--line);border-style:dashed}
+.wcard.hurt{opacity:.7}
+.wname{font-weight:700}
+.wrole{font-size:11px;color:var(--rc)}
+.traits{display:flex;flex-wrap:wrap;gap:3px}
+.trait{font-size:10.5px;padding:1px 5px;border-radius:9px;border:1px solid;cursor:help}
+.trait.pos{color:#bfe3a6;border-color:#4e7a3a;background:#1f2d18}
+.trait.neg{color:#f2b3a0;border-color:#7d3a28;background:#2e1712}
+.trait.mix{color:#f0d999;border-color:#7a6430;background:#2b2412}
+.traits .tr{display:flex;flex-direction:column;align-items:flex-start;gap:1px;width:100%}
+.payrow{display:flex;flex-direction:column;gap:3px;margin-top:8px;padding-top:7px;border-top:1px dashed var(--line)}
+.payrow input[type=range]{width:100%;accent-color:var(--lamp);border:0;background:none}
+.trdesc{font-size:10.5px;line-height:1.25;color:var(--dim);padding-left:2px}
+.wstat{font-size:11px;color:var(--dim)}
+.wbtns{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.lvlhead{display:flex;justify-content:space-between;font-size:12px;color:var(--dim);margin:10px 0 5px;border-bottom:1px dashed var(--line);padding-bottom:2px}
+.up{display:flex;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line)}
+.up:last-child{border-bottom:0}
+.up .nm{font-weight:600}
+.up .ds{font-size:11.5px;color:var(--dim)}
+.up.locked{opacity:.45}
+.up.owned .nm{color:var(--good)}
+.tag{font-size:10px;padding:0 5px;border-radius:3px;background:#3a2b1d;color:var(--lamp2);margin-left:4px;vertical-align:1px}
+.ach{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:5px}
+.ach div{border:1px solid var(--line);border-radius:4px;padding:5px 6px;font-size:11px;background:var(--bg2);color:var(--faint)}
+.ach div.got{color:var(--text);border-color:#6a5326;background:#2a2213}
+.ach b{display:block;font-size:11.5px}
+.log{font-size:11.5px;color:var(--dim);display:flex;flex-direction:column;gap:3px}
+.log div{border-left:2px solid var(--line2);padding-left:6px}
+.log .tm{color:var(--faint)}
+table.st{width:100%;border-collapse:collapse;font-size:12px}
+table.st td{padding:3px 2px;border-bottom:1px solid var(--line)}
+table.st td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.toggle{display:flex;gap:8px;align-items:center;padding:4px 0}
+pre{white-space:pre-wrap;font-size:11px;background:var(--bg2);padding:6px;border-radius:4px;border:1px solid var(--line);margin:6px 0 0}
+
+#toasts{position:fixed;left:12px;bottom:46px;display:flex;flex-direction:column;gap:6px;z-index:30;pointer-events:none;max-width:min(360px,calc(100vw - 24px))}
+.toast{background:rgba(30,22,15,.97);border:1px solid var(--line2);border-left:3px solid var(--lamp);border-radius:5px;padding:7px 10px;
+  box-shadow:0 4px 16px rgba(0,0,0,.5);animation:tin .25s ease-out}
+.toast.good{border-left-color:var(--good)} .toast.bad{border-left-color:var(--bad)} .toast.ach{border-left-color:#d9b44a}
+@keyframes tin{from{transform:translateY(10px);opacity:0}to{transform:none;opacity:1}}
+#modal{position:fixed;inset:0;background:rgba(5,4,3,.72);display:flex;align-items:center;justify-content:center;z-index:40;padding:16px}
+#modal[hidden]{display:none}
+#modal .box{background:var(--panel);border:1px solid var(--lamp);border-radius:8px;padding:16px 18px;width:min(460px,100%);max-height:90vh;overflow:auto}
+#modal h2{margin:0 0 8px;color:var(--lamp2);font-size:17px}
+
+@media (max-width:820px){
+  #main{flex-direction:column}
+  #view{flex:none;height:44vh;height:44dvh;min-height:220px}
+  #panel{width:auto;max-width:none;flex:1;border-left:0;border-top:1px solid var(--line)}
+  #topbar{gap:4px 12px;padding:5px 10px}
+  .brand{min-width:100%;flex-direction:row;gap:8px;align-items:baseline}
+  .res{min-width:0;flex:1 1 28%}
+  .res .val{font-size:13.5px}
+  #hint{display:none}
+  #toasts{top:6px;bottom:auto;left:8px;right:8px;max-width:none;gap:4px}
+  .toast{font-size:11px;padding:4px 8px}
+}
+@media (prefers-reduced-motion:reduce){ #view.shake{animation:none} .float{animation-duration:.6s} }
+</style>
+</head>
+<body>
+<div id="app">
+  <header id="topbar">
+    <div class="brand" data-act="renameCompany" title="Click to rename your company"><b>COAL EMPIRE</b><span id="tierName"></span></div>
+    <div class="res"><span class="lbl">Coal</span><span class="val" id="rCoal">0</span></div>
+    <div class="res"><span class="lbl">Money</span><span class="val money" id="rMoney">$0</span></div>
+    <div class="res"><span class="lbl">Coal / sec</span><span class="val lampc" id="rCps">0</span></div>
+    <div class="res"><span class="lbl">Price / ton</span><span class="val" id="rPrice">$1</span></div>
+    <div class="res"><span class="lbl">Net $ / sec</span><span class="val" id="rNet">$0</span></div>
+  </header>
+  <div id="main">
+    <section id="view">
+      <canvas id="mine"></canvas>
+      <div id="floaters"></div>
+      <div id="warn"></div>
+      <div id="siteBar"></div>
+      <div id="hint">click the mine to dig</div>
+      <div id="eventBanner" hidden></div>
+    </section>
+    <aside id="panel">
+      <nav id="tabs"></nav>
+      <div id="tabBody"></div>
+    </aside>
+  </div>
+</div>
+<div id="toasts"></div>
+<div id="modal" hidden><div class="box"></div></div>
+
+<script>
+'use strict';
+/* =====================================================================
+   1. CONFIG — every balance number lives here
+   ===================================================================== */
+const CONFIG = {
+  version: 1,
+  saveKey: 'coalEmpire.save.v1',
+  autosaveSec: 30,
+  offlineCapHours: 8,
+  offlineStepSec: 5,          // offline progress is simulated in steps of this size
+  offlineMinSec: 20,          // shorter absences are ignored
+  maxStepSec: 0.5,            // largest simulation step during normal play
+
+  market: {
+    basePrice: 1.0,           // $ per ton before multipliers
+    reversion: 0.02,          // pull back toward 1.0 per second
+    volatility: 0.045,        // random walk strength
+    min: 0.55, max: 1.9,      // market multiplier bounds
+    sellRate: 0.45,           // fraction of stockpile sold per second (exponential)
+    smartLow: 0.93, smartHigh: 1.07,  // Sales Agent holds below / dumps above these
+    smartSlowRate: 0.03, smartFastRate: 1.4,
+  },
+  click: { base: 1, cpsFrac: 0.05 },   // coal per click = base × dig mults + 5% of coal/sec
+
+  wages: {
+    growthPerSec: 0.00025,    // each worker's wage creeps up this much per second...
+    organizerMult: 3,         // ...3× faster on a level with a Union Organizer
+    cap: 1.6,                 // wage creep stops at +60%
+    unpaidOutput: 0.5,        // output multiplier while you cannot make payroll
+    unpaidSec: 6,
+    tierMult: [1, 1, 3, 15, 80, 400],  // wage scale per tier (index = tier)
+  },
+  // Pay slider. Pay p (0.5–2.0): output ×(1 + outPerDouble·log2 p), wages ×p,
+  // above 100% the crew also takes bonusShare·(p−1) of the money from the coal they dig,
+  // and strike odds scale with (1/p)^strikePow.
+  pay: {
+    min: 0.5, max: 2, step: 0.05,
+    outPerDouble: 0.4,
+    bonusShare: 0.25,
+    strikePow: 2,
+  },
+
+  roles: {
+    digger:    { name:'Digger',         icon:'⛏', color:'#d0904c', cost:12,  growth:1.13, wage:0.04, dig:1.0,  weight:36,
+                 desc:'Cuts coal at the face. Deeper levels yield more.' },
+    hauler:    { name:'Hauler',         icon:'🛒', color:'#7aa2c8', cost:15,  growth:1.13, wage:0.035, haul:1.9, weight:27,
+                 desc:'Moves coal to the surface. Hauling is pooled per site.' },
+    engineer:  { name:'Engineer',       icon:'⚙', color:'#86c070', cost:220, growth:1.24, wage:0.3,  effect:0.15, weight:9,
+                 desc:'+15% dig output for their level crew.' },
+    safety:    { name:'Safety Officer', icon:'⛑', color:'#e88438', cost:160, growth:1.24, wage:0.22, effect:0.78, weight:9,
+                 desc:'-22% accident chance on their level.' },
+    foreman:   { name:'Foreman',        icon:'📋', color:'#e9e1cc', cost:380, growth:1.27, wage:0.45, effect:0.10, weight:10,
+                 desc:'+10% dig and haul for their level crew; calms strikes.' },
+    geologist: { name:'Geologist',      icon:'🔍', color:'#b28be0', cost:520, growth:1.27, wage:0.5,  effect:0.12, rich:0.0005, weight:9,
+                 desc:'+12% depth yield on their level; finds rich seams.' },
+  },
+  workerLevel: { max:10, powerGrowth:1.3, wageGrowth:1.15, promoteBase:1.6, promoteGrowth:1.75 },
+  superstitiousSec: 600,      // a mine is "new" for 10 minutes
+
+  pool: { size:4, refreshSec:75, arriveSec:10, twoTraitChance:0.45, rerollFrac:0.3, rerollMin:5 },
+
+  accident: { base:1, perDepth:0.22, minorPerSec:0.0005, minorInjurySec:90 },
+  rich: { mult:3, sec:75 },
+
+  sites: {
+    driftMaxLevels: 3, collieryMaxLevels: 8,
+    driftCap: 4, collieryCap: 6,         // workers per level
+    driftBaseHaul: 1.0, collieryBaseHaul: 6,  // surface hoist moves this much per sec with no haulers
+    depthYield: 0.6,                     // level k digs ×(1 + 0.6k)
+    levelBase: 30, levelGrowth: 7,       // cost of level k = base × growth^k × site multiplier
+    extra: [                             // additional named sites (main site is free)
+      { name:'No. 2 Colliery',     tier:3, cost:6e5,  levelMult:8 },
+      { name:'No. 3 Colliery',     tier:3, cost:2.5e7, levelMult:60 },
+      { name:'Flagship Deep Mine', tier:4, cost:6e9,  levelMult:400 },
+    ],
+  },
+
+  tiers: [
+    null,
+    { name:'Independent Drift Mine', company:'Your Drift Mine', desc:'One hand-dug tunnel into a Schuylkill County hillside.' },
+    { name:'Colliery',               company:'Your Colliery', req:{coal:6000,  money:5000},  buy:'Sink a Shaft',
+      desc:'Sink a vertical shaft, raise a headframe, build a breaker. Up to 8 levels, 6 workers each.' },
+    { name:'Regional Coal Company',  company:'Black Diamond Coal Co.', req:{coal:1.2e6, money:7.5e5}, buy:'Incorporate',
+      desc:'Buy more collieries, build a company town, lay a rail line. Unlocks selling the company.' },
+    { name:'National Coal Corporation', company:'Black Diamond Consolidated', req:{coal:2e9, money:1e9}, buy:'Go National',
+      desc:'Divisions in a dozen states, utility contracts, and Congress takes an interest.' },
+    { name:'Global Energy Empire',   company:'Black Diamond International', req:{coal:2e12, money:1e12}, buy:'Go Global',
+      desc:'Overseas mines, bulk carriers, a commodities desk and rivals with sharp elbows.' },
+  ],
+
+  // Upgrades. once:true = one-off milestone. per = effect per level. mult = milestone multiplier.
+  upgrades: [
+    { id:'tools',      cat:'Tools', name:'Tool Maintenance', base:25, growth:1.14, max:80, tier:1, per:0.10, desc:l=>`+${l*10}% dig output` },
+    { id:'pneumatic',  cat:'Tools', name:'Pneumatic Drills', once:true, base:12000, tier:2, eff:'dig', mult:2,   desc:()=>'×2 dig output. Compressed air, now with more noise.' },
+    { id:'electric',   cat:'Tools', name:'Electric Drills', once:true, base:1.5e6, tier:3, eff:'dig', mult:2.5, desc:()=>'×2.5 dig output.' },
+    { id:'continuous', cat:'Tools', name:'Continuous Miners', once:true, base:5e8, tier:4, eff:'dig', mult:3,  desc:()=>'×3 dig output. The machine eats the seam.' },
+    { id:'autonomous', cat:'Tools', name:'Autonomous Rigs', once:true, base:3e11, tier:5, eff:'dig', mult:4,   desc:()=>'×4 dig output. Nobody is quite sure who is driving.' },
+
+    { id:'vent',     cat:'Ventilation, Pumps & Lighting', name:'Ventilation', base:60,  growth:4, max:7, tier:1, acc:0.05,
+      desc:l=>`Air for ${1+l} level${l?'s':''} deep · -${l*5}% accidents · fewer gas pockets` },
+    { id:'pumps',    cat:'Ventilation, Pumps & Lighting', name:'Pumps', base:90, growth:4, max:7, tier:1,
+      desc:l=>`Keeps ${1+l} level${l?'s':''} dry · fewer floods` },
+    { id:'lighting', cat:'Ventilation, Pumps & Lighting', name:'Lighting', base:60, growth:1.55, max:12, tier:1, per:0.04, acc:0.04,
+      desc:l=>`+${l*4}% worker output · -${l*4}% accidents` },
+
+    { id:'haulage',   cat:'Haulage', name:'Cart Maintenance', base:35, growth:1.14, max:80, tier:1, per:0.12, desc:l=>`+${l*12}% haul capacity` },
+    { id:'mineRail',  cat:'Haulage', name:'Mine Rail & Cars', once:true, base:600,   tier:1, eff:'haul', mult:1.6, desc:()=>'×1.6 haul. Rails in every tunnel.' },
+    { id:'skipHoist', cat:'Haulage', name:'Steam Skip Hoist', once:true, base:15000, tier:2, eff:'haul', mult:1.8, desc:()=>'×1.8 haul.' },
+    { id:'conveyor',  cat:'Haulage', name:'Belt Conveyors',  once:true, base:1.1e6, tier:3, eff:'haul', mult:2.5, desc:()=>'×2.5 haul.' },
+    { id:'trucks',    cat:'Haulage', name:'Diesel Haul Fleet', once:true, base:3e8, tier:4, eff:'haul', mult:3,   desc:()=>'×3 haul.' },
+    { id:'slurry',    cat:'Haulage', name:'Slurry Pipeline', once:true, base:2e11,  tier:5, eff:'haul', mult:4,   desc:()=>'×4 haul.' },
+
+    { id:'processing',   cat:'Processing', name:'Sizing & Grading', base:150, growth:1.2, max:60, tier:1, per:0.05, desc:l=>`+${l*5}% coal price` },
+    { id:'pickingTable', cat:'Processing', name:'Slate Picking Table', once:true, base:400,   tier:1, eff:'price', mult:1.25, desc:()=>'×1.25 price. Boys pick out the rock.' },
+    { id:'breaker',      cat:'Processing', name:'Coal Breaker', once:true, base:7000,  tier:2, eff:'price', mult:1.6,  desc:()=>'×1.6 price. Crushed, sized, and very loud.' },
+    { id:'washery',      cat:'Processing', name:'Washery', once:true, base:8e5,   tier:3, eff:'price', mult:1.5,  desc:()=>'×1.5 price.' },
+    { id:'prepPlant',    cat:'Processing', name:'Preparation Plant', once:true, base:2.5e8, tier:4, eff:'price', mult:1.6, desc:()=>'×1.6 price.' },
+    { id:'terminal',     cat:'Processing', name:'Export Terminal', once:true, base:1.5e11, tier:5, eff:'price', mult:1.8, desc:()=>'×1.8 price.' },
+
+    { id:'safety',   cat:'Safety & Training', name:'Safety Drills', base:80, growth:1.45, max:20, tier:1, acc:0.08, desc:l=>`-${l*8}% accidents (compounding)` },
+    { id:'training', cat:'Safety & Training', name:'Training School', base:2500, growth:1.3, max:40, tier:2, per:0.05, desc:l=>`+${l*5}% worker output` },
+    { id:'gangways', cat:'Safety & Training', name:'Wider Gangways', base:3000, growth:9, max:3, tier:2, desc:l=>`+${l} worker${l===1?'':'s'} per level` },
+    { id:'workshop', cat:'Safety & Training', name:'Mechanical Workshop', once:true, base:20000, tier:2, perk:'aptitude', mult:1.5, desc:()=>'Support roles are 50% more effective. (Legacy unlock)' },
+    { id:'trust',    cat:'Safety & Training', name:'Dynasty Trust', once:true, base:5e6, tier:3, perk:'dynasty', mult:2, desc:()=>'×2 all output. Old money. (Legacy unlock)' },
+
+    { id:'recruiter',   cat:'Management', name:'Recruiting Agent', once:true, base:300,   tier:1, desc:()=>'+2 applicant slots, applicants arrive 40% faster.' },
+    { id:'salesAgent',  cat:'Management', name:'Sales Agent', once:true, base:1200, tier:1, desc:()=>'Auto-sell gets smart: holds coal when prices are low, dumps it when high.' },
+    { id:'hiringClerk', cat:'Management', name:'Hiring Clerk', once:true, base:20000, tier:2, desc:()=>'Auto-hire: fills empty slots with diggers or haulers, whichever is short.' },
+    { id:'payroll',     cat:'Management', name:'Payroll Office', once:true, base:30000, tier:2, mult:0.8, desc:()=>'-20% wages. The clerks find creative rounding.' },
+    { id:'purchasing',  cat:'Management', name:'Purchasing Dept.', once:true, base:4e5, tier:3, desc:()=>'Auto-buy: buys the cheapest affordable upgrade.' },
+    { id:'personnel',   cat:'Management', name:'Personnel Dept.', once:true, base:5e7, tier:4, desc:()=>'Auto-promote cheap promotions, +2 applicant slots.' },
+  ],
+
+  holdings: [
+    { id:'leased',   name:'Leased Colliery',   tier:3, base:8e4,  growth:1.15, cps:90,    desc:'A contractor runs it; you take the coal.' },
+    { id:'house',    name:'Company House',     tier:3, base:3e4,  growth:1.13, max:40, workerOut:0.02, desc:'+2% output for named workers. Rent is deducted from pay, naturally.' },
+    { id:'rail',     name:'Rail Line (mile)',  tier:3, base:2e5,  growth:1.22, max:25, price:0.04, desc:'+4% price. Ship it yourself.' },
+    { id:'division', name:'Regional Division', tier:4, base:4e7,  growth:1.15, cps:3e4,   desc:'A whole state\'s worth of mines.' },
+    { id:'contract', name:'Utility Contract',  tier:4, base:1e8,  growth:1.22, max:25, price:0.05, desc:'+5% price. Power plants pay on time.' },
+    { id:'overseas', name:'Overseas Mine',     tier:5, base:4e10, growth:1.15, cps:1e7,   desc:'Coal from three continents.' },
+    { id:'carrier',  name:'Bulk Carrier',      tier:5, base:8e10, growth:1.22, max:25, price:0.06, desc:'+6% price. Shipping is the whole game.' },
+    { id:'desk',     name:'Trading Desk',      tier:5, base:2e11, growth:1.6,  max:10, price:0.03, vol:0.85, desc:'+3% price, -15% market swings.' },
+  ],
+
+  traits: {
+    hardWorker:     { name:'Hard Worker', desc:'+15% output', out:1.15, cost:1.3, w:10 },
+    unionOrganizer: { name:'Union Organizer', desc:'+10% output for the whole level crew, but the crew\'s wages rise 3× faster. Strikes more likely.', team:1.10, teamWage:true, strike:2, cost:1.15, w:6 },
+    reckless:       { name:'Reckless', desc:'+25% output, +60% accident chance on their level', out:1.25, acc:1.6, cost:1.05, w:7 },
+    superstitious:  { name:'Superstitious', desc:'-25% output in a mine less than 10 min old, +10% after that', newMine:[0.75,1.10], cost:0.9, w:6 },
+    lucky:          { name:'Lucky', desc:'Small chance to hit a rich seam (3× level output for a while)', rich:0.0007, cost:1.25, w:6 },
+    veteran:        { name:'Veteran', desc:'+5% output, -15% accident chance for the level crew', out:1.05, acc:0.85, cost:1.3, w:7 },
+    strongBack:     { name:'Strong Back', desc:'+35% hauling', haul:1.35, roles:['hauler'], cost:1.2, w:7 },
+    tinkerer:       { name:'Tinkerer', desc:'+50% role effect', support:1.5, roles:['engineer','safety','foreman','geologist'], cost:1.3, w:7 },
+    frugal:         { name:'Frugal', desc:'-30% wage', wage:0.7, cost:1.05, w:7 },
+    lazy:           { name:'Lazy', desc:'-20% output, -35% wage', out:0.8, wage:0.65, cost:0.6, w:6 },
+    bottle:         { name:'Fond of the Bottle', desc:'-10% output, +30% accident chance', out:0.9, acc:1.3, cost:0.55, w:5 },
+    clumsy:         { name:'Clumsy', desc:'+50% accident chance on their level', acc:1.5, cost:0.7, w:5 },
+    loudmouth:      { name:'Loudmouth', desc:'+5% crew output, but stirs up strikes', team:1.05, strike:1.5, cost:0.9, w:5 },
+    canary:         { name:'Canary Whisperer', desc:'Halves gas-pocket chance at their site', gas:0.5, cost:1.1, w:4 },
+    nightOwl:       { name:'Night Owl', desc:'+40% output while you are away', offline:1.4, cost:1.05, w:5 },
+    // unlocked by Legacy perks
+    prodigy:        { name:'Prodigy', desc:'+40% output, promotions cost half', out:1.4, promote:0.5, cost:1.6, w:4, unlock:'aptitude' },
+    companyMan:     { name:'Company Man', desc:'+10% output, wages never rise', out:1.1, noWageGrowth:true, cost:1.3, w:4, unlock:'aptitude' },
+    legendary:      { name:'Legendary', desc:'+100% output', out:2.0, cost:2.5, w:2, unlock:'dynasty' },
+    seamSniffer:    { name:'Seam Sniffer', desc:'Finds rich seams often, and they last twice as long', rich:0.002, richDur:2, cost:1.8, w:3, unlock:'dynasty' },
+  },
+
+  events: {
+    first: 150,                 // seconds of play before the first event
+    interval: [80, 160],        // seconds between events
+    decideSec: 45,              // the default choice is taken after this long
+    w: { cavein:7, gas:5, flood:4, strike:2, spike:4, inspection:3, rich:2, salesman:1.5, reporter:1.5,
+         beans:1.2, contract:3, regulation:2, rival:3, typhoon:2 },
+  },
+
+  prestige: { minTier:3, perPoint:0.10, div:1e4 },   // Legacy = floor(sqrt(runCoal / div)); each unspent point +10% output
+  prestigeShop: [
+    { id:'family',      name:'Family Money',       cost:1,  desc:'Start each run with $250 and a free Digger.' },
+    { id:'connections', name:'Old Connections',    cost:2,  desc:'+2 applicant slots; applicants arrive twice as fast.' },
+    { id:'maps',        name:'Survey Maps',        cost:3,  desc:'Start each run with Ventilation 2 and Pumps 2.' },
+    { id:'aptitude',    name:'Mechanical Aptitude',cost:4,  desc:'Unlocks Prodigy and Company Man traits and the Mechanical Workshop upgrade.' },
+    { id:'nightShift',  name:'Night Shift',        cost:4,  desc:'+50% offline earnings.' },
+    { id:'clerks',      name:'Loyal Clerks',       cost:5,  desc:'Keep your Management upgrades when you sell the company.' },
+    { id:'savvy',       name:'Market Savvy',       cost:5,  desc:'The coal price never drops below 80% of base.' },
+    { id:'headStart',   name:'Head Start',         cost:12, desc:'Start each run as a Colliery.' },
+    { id:'dynasty',     name:'Mining Dynasty',     cost:15, desc:'Unlocks Legendary and Seam Sniffer traits and the Dynasty Trust upgrade.' },
+  ],
+  achievementBonus: 0.02,     // +2% output per achievement
+
+  debug: { speeds:[1, 10, 50] },
+};
+
+const NAMES = {
+  first: ['Patrick','Michael','John','Thomas','Joseph','Stanley','Walter','Frank','Andrew','Stephen','George','Anthony','Peter','Edward','Daniel',
+    'Mary','Anna','Helen','Margaret','Rose','Agnes','Catherine','Sophie','Eleanor','Bridget','Dorothy','Theresa','Irene','Vera','Lena',
+    'Dai','Evan','Owen','Gwilym','Jan','Wladyslaw','Jozef','Ignatius','Vito','Salvatore','Giuseppe','Jonas','Kazimieras','Mykola','Hans','Otto'],
+  last: ['Kowalski','Brennan','Kelly','Murphy','Sullivan','Hughes','Price','Morgan','Jones','Davies','Novak','Hrabik','Kostelnik','Ferrara',
+    'Bonomo','Russo','Petrauskas','Kazlauskas','Yurkovich','Hoffman','Schaeffer','Gallagher','Boyle','Riley','Duffy','Reese','Ellis','Zelinski',
+    'Wasko','Barletta','Molitoris','Stanko','Kerrigan','McHale','Shovlin','Dougherty','Bower','Lutz','Fenstermacher','Rhoads'],
+  nick: ['Smokey','Lefty','Red','Dutch','Moose','Sparky','Shorty','Doc','Lucky','Boots','Patch','Sooty','Biscuit','Two-Lamps','Hoot'],
+};
+
+const UP = Object.fromEntries(CONFIG.upgrades.map(u => [u.id, u]));
+const HOLD = Object.fromEntries(CONFIG.holdings.map(h => [h.id, h]));
+
+/* =====================================================================
+   2. UTILITIES
+   ===================================================================== */
+const $ = s => document.querySelector(s);
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const rand = (a, b) => a + Math.random() * (b - a);
+const pick = a => a[Math.floor(Math.random() * a.length)];
+function wpick(entries) {           // entries: [[item, weight], ...]
+  let t = 0; for (const e of entries) t += Math.max(0, e[1]);
+  if (t <= 0) return null;
+  let r = Math.random() * t;
+  for (const e of entries) { r -= Math.max(0, e[1]); if (r <= 0) return e[0]; }
+  return entries[entries.length - 1][0];
+}
+function gauss() { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+const hash = i => { const x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+const chance = (perSec, dt) => Math.random() < 1 - Math.exp(-perSec * dt);
+
+const SUFFIX = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc'];
+function fmt(n) {
+  if (!isFinite(n)) return '∞';
+  const neg = n < 0; n = Math.abs(n);
+  let s;
+  if (n < 1000) s = n < 100 && n % 1 > 0.05 ? n.toFixed(1) : String(Math.floor(n));
+  else {
+    let e = Math.floor(Math.log10(n) / 3);
+    if (e >= SUFFIX.length) s = n.toExponential(2).replace('+', '');
+    else {
+      let v = n / Math.pow(1000, e);
+      let str = v < 100 ? (Math.floor(v * 10) / 10).toFixed(1) : String(Math.floor(v));
+      s = str.replace(/\.0$/, '') + SUFFIX[e];
+    }
+  }
+  return (neg ? '-' : '') + s;
+}
+const money = n => (n < 0 ? '-$' : '$') + (Math.abs(n) < 10 && Math.abs(n) % 1 > 0.005 ? Math.abs(n).toFixed(2) : fmt(Math.abs(n)));
+function fmtTime(sec) {
+  sec = Math.max(0, Math.floor(sec));
+  if (sec < 60) return sec + 's';
+  if (sec < 3600) return Math.floor(sec / 60) + 'm ' + (sec % 60) + 's';
+  return Math.floor(sec / 3600) + 'h ' + Math.floor((sec % 3600) / 60) + 'm';
+}
+const pct = m => (m >= 1 ? '+' : '') + Math.round((m - 1) * 100) + '%';
+
+/* =====================================================================
+   3. STATE — S is the save; D is derived each tick; RT is runtime-only
+   ===================================================================== */
+let S = null;
+let D = {};
+const RT = { speed:1, offline:false, sim:false, lastFrame:0, lastRaf:0, saveAt:0, slowAt:0, autoAt:0, uiAt:0, panelAt:0, pointerDown:false };
+
+function newLevel() { return { bonus:1, haltUntil:0, haltKind:'', richUntil:0 }; }
+function defaultMeta() {
+  return { legacy:0, legacyEarned:0, prestiges:0, shop:{}, ach:{}, lifetimeCoal:0, lifetimeMoney:0, clicks:0,
+           playSec:0, bestRunSec:0, settings:{ shake:true } };
+}
+function freshRun(meta, keepUpgrades) {
+  meta = meta || defaultMeta();
+  const s = {
+    v: CONFIG.version, time: 0, lastSeen: Date.now(),
+    coal: 0, money: 0, tier: 1,
+    run: { coal:0, money:0, clicks:0, hired:0, maxPrice:1, rich:0, strikes:0, caveins:0, events:0 },
+    market: { mult: 1 },
+    workers: [], nextId: 1,
+    pool: { slots: [], refreshAt: 0 },
+    sites: [{ id:1, kind:'drift', name:'No. 1 Drift', born:0, haltUntil:0, levels:[newLevel()] }],
+    nextSite: 2, viewSite: 1,
+    upgrades: {}, holdings: {},
+    ev: { cur:null, nextAt: CONFIG.events.first, log: [] },
+    buffs: [], perm: { out:1, price:1, acc:1 },
+    auto: { hire:true, buy:true, sell:true, promote:true },
+    pay: 1,
+    unpaidUntil: 0,
+    meta,
+  };
+  if (keepUpgrades) for (const k in keepUpgrades) s.upgrades[k] = keepUpgrades[k];
+  if (meta.shop.family) s.money = 250;
+  if (meta.shop.maps) { s.upgrades.vent = Math.max(s.upgrades.vent || 0, 2); s.upgrades.pumps = Math.max(s.upgrades.pumps || 0, 2); }
+  if (meta.shop.headStart) { s.tier = 2; s.sites[0].kind = 'colliery'; s.sites[0].name = 'No. 1 Colliery'; }
+  if (meta.mineName) { s.sites[0].name = meta.mineName; s.sites[0].custom = true; }   // your first mine keeps its name across resets
+  return s;
+}
+function startRun(meta, keepUpgrades) {
+  S = freshRun(meta, keepUpgrades);
+  refreshPool(true);
+  if (S.meta.shop.family) {
+    const w = makeWorker({ name: genName(), role:'digger', traits:['hardWorker'] }, 1, 0);
+    S.workers.push(w);
+  }
+  recalc();
+}
+
+/* --- save / load --- */
+function serialize() { S.lastSeen = Date.now(); return JSON.stringify(S); }
+// localStorage is blocked in some contexts (data: URLs, sandboxed previews, strict privacy modes).
+// Fall back to window.name, which survives reloads within the same tab.
+const Store = (() => {
+  try {
+    const k = CONFIG.saveKey + '.test';
+    localStorage.setItem(k, '1'); localStorage.removeItem(k);
+    return { persistent: true, get: k => localStorage.getItem(k), set: (k, v) => localStorage.setItem(k, v), del: k => localStorage.removeItem(k) };
+  } catch (e) {
+    const tag = 'coalEmpire:';
+    return { persistent: false,
+      get: () => window.name.startsWith(tag) ? window.name.slice(tag.length) : null,
+      set: (k, v) => { window.name = tag + v; },
+      del: () => { window.name = ''; } };
+  }
+})();
+let saveWarned = false;
+function save() {
+  if (RT.sim) return;
+  try { Store.set(CONFIG.saveKey, serialize()); }
+  catch (e) { if (!saveWarned) { saveWarned = true; console.warn('Save failed', e); toast('Saving isn\'t working here. Use Export in ⚙ to keep your progress.', 'bad'); } }
+}
+function mergeDefaults(obj, def) {
+  for (const k in def) {
+    if (!(k in obj)) obj[k] = def[k];
+    else if (def[k] && typeof def[k] === 'object' && !Array.isArray(def[k]) && obj[k] && typeof obj[k] === 'object') mergeDefaults(obj[k], def[k]);
+  }
+  return obj;
+}
+function loadFrom(json) {
+  const o = JSON.parse(json);
+  if (!o || typeof o !== 'object' || !Array.isArray(o.sites) || !Array.isArray(o.workers)) throw new Error('not a Coal Empire save');
+  mergeDefaults(o, freshRun(mergeDefaults(o.meta || {}, defaultMeta())));
+  for (const site of o.sites) for (const lv of site.levels) mergeDefaults(lv, newLevel());
+  return o;
+}
+const encodeSave = str => btoa(unescape(encodeURIComponent(str)));
+const decodeSave = str => decodeURIComponent(escape(atob(str.trim())));
+
+/* =====================================================================
+   4. SYSTEMS
+   ===================================================================== */
+const upg = id => S.upgrades[id] || 0;
+const has = id => (S.upgrades[id] || 0) > 0;
+const perk = id => !!S.meta.shop[id];
+const holding = id => S.holdings[id] || 0;
+const siteById = id => S.sites.find(s => s.id === id);
+const NAME_MAX = 32;
+const cleanName = v => String(v || '').replace(/\s+/g, ' ').trim().slice(0, NAME_MAX);
+const companyName = () => S.meta.companyName || CONFIG.tiers[S.tier].company;
+function renameSite(id, name) {
+  const s = siteById(id); name = cleanName(name); if (!s || !name) return false;
+  s.name = name; s.custom = true;
+  if (S.sites[0] === s) S.meta.mineName = name;
+  ui.dirty = true; return true;
+}
+function renameCompany(name) { name = cleanName(name); S.meta.companyName = name || ''; ui.dirty = true; }
+const traitsOf = w => w.traits.map(t => CONFIG.traits[t]).filter(Boolean);
+const tierInfo = t => CONFIG.tiers[t];
+function incomeRate() { return Math.max(1, D.cps * D.price); }
+
+/* --- buffs (temporary event effects) --- */
+function addBuff(key, label, sec, fx) {
+  S.buffs = S.buffs.filter(b => b.key !== key);
+  S.buffs.push(Object.assign({ key, label, until: S.time + sec }, fx));
+}
+function buffProd(field) { let m = 1; for (const b of S.buffs) if (b[field] != null) m *= b[field]; return m; }
+
+/* --- workers --- */
+function power(w) { return Math.pow(CONFIG.workerLevel.powerGrowth, w.lvl - 1); }
+function supportPower(w) {
+  let p = power(w);
+  for (const t of traitsOf(w)) if (t.support) p *= t.support;
+  if (has('workshop')) p *= UP.workshop.mult;
+  return p;
+}
+function selfOut(w, site) {
+  let m = 1;
+  for (const t of traitsOf(w)) {
+    if (t.out) m *= t.out;
+    if (t.newMine) m *= (S.time - site.born < CONFIG.superstitiousSec) ? t.newMine[0] : t.newMine[1];
+    if (RT.offline && t.offline) m *= t.offline;
+  }
+  return m;
+}
+const payOutput = () => 1 + CONFIG.pay.outPerDouble * Math.log2(S.pay);
+function wageOf(w) {
+  const r = CONFIG.roles[w.role];
+  let m = r.wage * Math.pow(CONFIG.workerLevel.wageGrowth, w.lvl - 1) * w.wageMult * CONFIG.wages.tierMult[S.tier];
+  for (const t of traitsOf(w)) if (t.wage) m *= t.wage;
+  if (has('payroll')) m *= UP.payroll.mult;
+  m *= S.pay;
+  return m;
+}
+function roleCount(role) { let n = 0; for (const w of S.workers) if (w.role === role) n++; return n; }
+function hireCost(c) {
+  const r = CONFIG.roles[c.role];
+  let m = r.cost * Math.pow(r.growth, roleCount(c.role));
+  for (const t of c.traits) m *= CONFIG.traits[t].cost;
+  return Math.ceil(m);
+}
+function promoteCost(w) {
+  const r = CONFIG.roles[w.role], L = CONFIG.workerLevel;
+  let m = r.cost * Math.pow(r.growth, roleCount(w.role)) * L.promoteBase * Math.pow(L.promoteGrowth, w.lvl - 1);
+  for (const t of traitsOf(w)) if (t.promote) m *= t.promote;
+  return Math.ceil(m);
+}
+function genName() {
+  const f = pick(NAMES.first), l = pick(NAMES.last);
+  return Math.random() < 0.15 ? `${f} "${pick(NAMES.nick)}" ${l}` : `${f} ${l}`;
+}
+function genCandidate(forceRole) {
+  const role = forceRole || wpick(Object.entries(CONFIG.roles).map(([k, r]) => [k, r.weight]));
+  const n = Math.random() < CONFIG.pool.twoTraitChance ? 2 : 1;
+  const traits = [];
+  for (let i = 0; i < n; i++) {
+    const opts = Object.entries(CONFIG.traits).filter(([k, t]) =>
+      !traits.includes(k) && (!t.roles || t.roles.includes(role)) && (!t.unlock || perk(t.unlock)));
+    const k = wpick(opts.map(([k, t]) => [k, t.w]));
+    if (k) traits.push(k);
+  }
+  return { name: genName(), role, traits };
+}
+function makeWorker(c, siteId, li) {
+  return { id: S.nextId++, name: c.name, role: c.role, traits: c.traits.slice(), lvl: 1, site: siteId, li, wageMult: 1, injuredUntil: 0 };
+}
+function poolSize() { return CONFIG.pool.size + (has('recruiter') ? 2 : 0) + (perk('connections') ? 2 : 0) + (has('personnel') ? 2 : 0); }
+function arriveDelay() { let d = CONFIG.pool.arriveSec; if (has('recruiter')) d *= 0.6; if (perk('connections')) d *= 0.5; return d; }
+function refreshPool(first) {
+  S.pool.slots = [];
+  for (let i = 0; i < poolSize(); i++) {
+    const force = first ? (i === 0 ? 'digger' : i === 1 ? 'hauler' : i === 2 ? 'digger' : null) : null;
+    S.pool.slots.push({ c: genCandidate(force), at: 0 });
+  }
+  S.pool.refreshAt = S.time + CONFIG.pool.refreshSec;
+  ui.dirty = true;
+}
+function rerollCost() {
+  const avg = (CONFIG.roles.digger.cost * Math.pow(CONFIG.roles.digger.growth, roleCount('digger')));
+  return Math.max(CONFIG.pool.rerollMin, Math.ceil(avg * CONFIG.pool.rerollFrac));
+}
+function poolTick() {
+  while (S.pool.slots.length < poolSize()) S.pool.slots.push({ c: genCandidate(), at: 0 });
+  for (const sl of S.pool.slots) if (!sl.c && S.time >= sl.at) { sl.c = genCandidate(); ui.dirty = true; }
+  if (S.time >= S.pool.refreshAt) refreshPool();
+}
+function levelCap(site) { return (site.kind === 'drift' ? CONFIG.sites.driftCap : CONFIG.sites.collieryCap) + upg('gangways'); }
+function crewCount(siteId, li) { let n = 0; for (const w of S.workers) if (w.site === siteId && w.li === li) n++; return n; }
+function totalCap() { let n = 0; for (const s of S.sites) n += levelCap(s) * s.levels.length; return n; }
+function findSlot(prefSiteId) {
+  const order = [siteById(prefSiteId), ...S.sites.filter(s => s.id !== prefSiteId)].filter(Boolean);
+  for (const s of order) for (let li = s.levels.length - 1; li >= 0; li--) if (crewCount(s.id, li) < levelCap(s)) return { site: s.id, li };
+  return null;
+}
+function hire(idx, prefSite) {
+  const sl = S.pool.slots[idx]; if (!sl || !sl.c) return false;
+  const cost = hireCost(sl.c);
+  if (S.money < cost) return false;
+  const slot = findSlot(prefSite || S.viewSite);
+  if (!slot) { toast('No room underground. Dig a new level or buy a site.', 'bad'); return false; }
+  S.money -= cost;
+  const w = makeWorker(sl.c, slot.site, slot.li);
+  S.workers.push(w);
+  sl.c = null; sl.at = S.time + arriveDelay();
+  S.run.hired++;
+  ui.dirty = true;
+  if (!RT.sim) toast(`Hired ${w.name} (${CONFIG.roles[w.role].name})`);
+  return true;
+}
+function rerollPool() {
+  const c = rerollCost(); if (S.money < c) return;
+  S.money -= c; refreshPool();
+}
+function promote(id) {
+  const w = S.workers.find(x => x.id === id); if (!w || w.lvl >= CONFIG.workerLevel.max) return false;
+  const c = promoteCost(w); if (S.money < c) return false;
+  S.money -= c; w.lvl++; ui.dirty = true; return true;
+}
+function fire(id) {
+  const w = S.workers.find(x => x.id === id); if (!w) return;
+  S.workers = S.workers.filter(x => x !== w);
+  logEvent(`${w.name} was let go.${w.traits.includes('unionOrganizer') ? ' The crew noticed.' : ''}`);
+  if (w.traits.includes('unionOrganizer')) S.ev.nextAt = Math.min(S.ev.nextAt, S.time + 20);
+  ui.dirty = true;
+}
+function assign(id, siteId, li) {
+  const w = S.workers.find(x => x.id === id); const s = siteById(siteId); if (!w || !s || !s.levels[li]) return;
+  if (w.site === siteId && w.li === li) return;
+  if (crewCount(siteId, li) >= levelCap(s)) { toast('That level is full.', 'bad'); return; }
+  w.site = siteId; w.li = li; ui.dirty = true;
+}
+
+/* --- sites & levels --- */
+function siteIndex(site) { return S.sites.indexOf(site); }
+function siteLevelMult(site) { const i = siteIndex(site); return i === 0 ? 1 : CONFIG.sites.extra[i - 1].levelMult; }
+function maxLevelsByKind(site) { return site.kind === 'drift' ? CONFIG.sites.driftMaxLevels : CONFIG.sites.collieryMaxLevels; }
+function depthAllowed() { return 1 + Math.min(upg('vent'), upg('pumps')); }
+function levelCost(site) { const k = site.levels.length; return Math.ceil(CONFIG.sites.levelBase * Math.pow(CONFIG.sites.levelGrowth, k) * siteLevelMult(site)); }
+function levelBlock(site) {
+  if (site.levels.length >= maxLevelsByKind(site)) return site.kind === 'drift' ? 'A drift mine tops out at 3 levels. Sink a shaft (Colliery) to go deeper.' : 'Deepest workable level reached.';
+  if (site.levels.length >= depthAllowed()) {
+    const need = site.levels.length;
+    return `Needs Ventilation ${need} and Pumps ${need}.`;
+  }
+  return '';
+}
+function buyLevel(siteId) {
+  const s = siteById(siteId); if (!s || levelBlock(s)) return false;
+  const c = levelCost(s); if (S.money < c) return false;
+  S.money -= c; s.levels.push(newLevel()); ui.dirty = true;
+  if (!RT.sim) { toast(`${s.name}: Level ${s.levels.length} opened at ${s.levels.length * 120} ft.`, 'good'); shake(); }
+  return true;
+}
+function nextExtraSite() { const i = S.sites.length - 1; return CONFIG.sites.extra[i] || null; }
+function buySite() {
+  const x = nextExtraSite(); if (!x || S.tier < x.tier || S.money < x.cost) return false;
+  S.money -= x.cost;
+  const s = { id: S.nextSite++, kind:'colliery', name:x.name, born:S.time, haltUntil:0, levels:[newLevel()] };
+  S.sites.push(s); S.viewSite = s.id; ui.dirty = true;
+  if (!RT.sim) { toast(`Bought ${x.name}!`, 'good'); shake(); }
+  return true;
+}
+
+/* --- upgrades & holdings --- */
+function upgVisible(u) { return !u.perk || perk(u.perk); }
+function upgCost(u) { return u.once ? u.base : Math.ceil(u.base * Math.pow(u.growth, upg(u.id))); }
+function upgMaxed(u) { return u.once ? has(u.id) : upg(u.id) >= u.max; }
+function buyUpgrade(id) {
+  const u = UP[id]; if (!u || !upgVisible(u) || upgMaxed(u) || S.tier < u.tier) return false;
+  const c = upgCost(u); if (S.money < c) return false;
+  S.money -= c; S.upgrades[id] = upg(id) + 1; ui.dirty = true;
+  if (id === 'recruiter' || id === 'personnel') poolTick();
+  return true;
+}
+function holdCost(h) { return Math.ceil(h.base * Math.pow(h.growth, holding(h.id))); }
+function buyHolding(id) {
+  const h = HOLD[id]; if (!h || S.tier < h.tier || (h.max && holding(id) >= h.max)) return false;
+  const c = holdCost(h); if (S.money < c) return false;
+  S.money -= c; S.holdings[id] = holding(id) + 1; ui.dirty = true; return true;
+}
+
+/* --- tiers --- */
+function nextTier() { return CONFIG.tiers[S.tier + 1] || null; }
+function canTierUp() { const t = nextTier(); return !!t && S.run.coal >= t.req.coal && S.money >= t.req.money; }
+function tierUp() {
+  if (!canTierUp()) return false;
+  const t = nextTier();
+  S.money -= t.req.money; S.tier++;
+  if (S.tier === 2) { const s = S.sites[0]; s.kind = 'colliery'; if (!s.custom) s.name = 'No. 1 Colliery'; s.born = S.time; }
+  ui.dirty = true;
+  if (!RT.sim) {
+    shake(); toast(`You are now a ${t.name}!`, 'good');
+    showModal(`<h2>${esc(t.name)}</h2><p>${esc(t.desc)}</p><p class="dim">New upgrades and buildings are available.</p><button class="primary" data-act="closeModal">Get to work</button>`);
+  }
+  return true;
+}
+
+/* --- derived stats --- */
+function recalc() {
+  const d = { sites:{}, cps:0, dig:0, haul:0, holdCps:0, wages:0, riskIndex:0.5, strike:1, geologists:0, gas:{}, organizers:0 };
+  const R = CONFIG.roles;
+  const achMult = 1 + CONFIG.achievementBonus * Object.keys(S.meta.ach).length;
+  const legMult = 1 + CONFIG.prestige.perPoint * S.meta.legacy;
+  const general = achMult * legMult * S.perm.out * buffProd('out') * (has('trust') ? UP.trust.mult : 1);
+  let digM = 1, haulM = 1, priceM = 1;
+  for (const u of CONFIG.upgrades) if (u.once && has(u.id)) {
+    if (u.eff === 'dig') digM *= u.mult; else if (u.eff === 'haul') haulM *= u.mult; else if (u.eff === 'price') priceM *= u.mult;
+  }
+  const digMult = (1 + UP.tools.per * upg('tools')) * digM;
+  const haulMult = (1 + UP.haulage.per * upg('haulage')) * haulM;
+  const unpaid = S.time < S.unpaidUntil;
+  const workerMult = general * (1 + UP.lighting.per * upg('lighting')) * (1 + UP.training.per * upg('training'))
+    * (1 + HOLD.house.workerOut * holding('house')) * (unpaid ? CONFIG.wages.unpaidOutput : 1) * payOutput();
+  const accUp = Math.pow(1 - UP.safety.acc, upg('safety')) * Math.pow(1 - UP.lighting.acc, upg('lighting'))
+    * Math.pow(1 - UP.vent.acc, upg('vent')) * S.perm.acc * buffProd('acc');
+  d.general = general; d.digMult = digMult; d.haulMult = haulMult; d.workerMult = workerMult; d.unpaid = unpaid;
+
+  const idx = {};
+  for (const w of S.workers) { const k = w.site + ':' + w.li; (idx[k] || (idx[k] = [])).push(w); }
+  let riskSum = 0, riskW = 0, foremen = 0, loud = 0;
+  for (const site of S.sites) {
+    const siteHalt = site.haltUntil > S.time;
+    const base = (site.kind === 'drift' ? CONFIG.sites.driftBaseHaul : CONFIG.sites.collieryBaseHaul) * haulMult * general;
+    const sd = { dig:0, haul: siteHalt ? 0 : base, baseHaul: base, levels:[], workers:0, cap: levelCap(site) * site.levels.length, gas:1, halted: siteHalt };
+    site.levels.forEach((lv, li) => {
+      const crew = idx[site.id + ':' + li] || [];
+      const active = crew.filter(w => w.injuredUntil <= S.time);
+      let team = 1, foreP = 0, engP = 0, geoP = 0, safP = 0, accT = 1;
+      for (const w of crew) for (const t of traitsOf(w)) if (t.acc) accT *= t.acc;
+      for (const w of active) {
+        for (const t of traitsOf(w)) {
+          if (t.team) team *= t.team; if (t.gas) sd.gas *= t.gas;
+          if (t.strike) loud += t.strike; if (t.teamWage) d.organizers++;
+        }
+        if (w.role === 'foreman') { foreP += supportPower(w); foremen++; }
+        else if (w.role === 'engineer') engP += supportPower(w);
+        else if (w.role === 'geologist') { geoP += supportPower(w); d.geologists++; }
+        else if (w.role === 'safety') safP += supportPower(w);
+      }
+      const halted = siteHalt || lv.haltUntil > S.time;
+      const rich = lv.richUntil > S.time ? CONFIG.rich.mult : 1;
+      const foreM = 1 + R.foreman.effect * foreP, engM = 1 + R.engineer.effect * engP, geoM = 1 + R.geologist.effect * geoP;
+      const depthM = 1 + CONFIG.sites.depthYield * li;
+      let dig = 0, haul = 0;
+      for (const w of crew) w._out = 0;
+      if (!halted) for (const w of active) {
+        const so = selfOut(w, site);
+        if (w.role === 'digger') {
+          w._out = R.digger.dig * power(w) * so * team * foreM * engM * geoM * depthM * lv.bonus * rich * digMult * workerMult;
+          dig += w._out;
+        } else if (w.role === 'hauler') {
+          let h = R.hauler.haul * power(w) * so * team * foreM * haulMult * workerMult;
+          for (const t of traitsOf(w)) if (t.haul) h *= t.haul;
+          w._out = h; haul += h;
+        }
+      }
+      const risk = CONFIG.accident.base * (1 + CONFIG.accident.perDepth * li) * accT * Math.pow(R.safety.effect, safP) * accUp;
+      sd.levels.push({ dig, haul, risk, crew: crew.length, active: active.length, halted, rich: rich > 1 });
+      sd.dig += dig; sd.haul += haul; sd.workers += crew.length;
+      if (crew.length) { riskSum += risk * crew.length; riskW += crew.length; }
+    });
+    sd.out = Math.min(sd.dig, sd.haul);
+    sd.limit = sd.dig > sd.haul ? 'haul' : 'dig';
+    d.gas[site.id] = sd.gas;
+    d.sites[site.id] = sd;
+    d.cps += sd.out; d.dig += sd.dig; d.haul += sd.haul;
+  }
+  let priceH = 1;
+  for (const h of CONFIG.holdings) {
+    const n = holding(h.id); if (!n) continue;
+    if (h.cps) d.holdCps += n * h.cps * general * digM;
+    if (h.price) priceH *= 1 + h.price * n;
+  }
+  d.cps += d.holdCps;
+  if (RT.offline && perk('nightShift')) d.cps *= 1.5;
+  for (const w of S.workers) d.wages += wageOf(w);
+  d.price = CONFIG.market.basePrice * S.market.mult * (1 + UP.processing.per * upg('processing')) * priceM * priceH * S.perm.price * buffProd('price');
+  d.riskIndex = riskW ? riskSum / riskW : 0.5;
+  d.strike = Math.max(0.2, 0.4 + loud * 0.1 + Math.min(1, S.workers.length / 120) - foremen * 0.3) * Math.pow(1 / S.pay, CONFIG.pay.strikePow);
+  // the crew's bonus share only comes out of coal they dug, not holdings
+  d.payCut = Math.max(0, S.pay - 1) * CONFIG.pay.bonusShare * (d.cps > 0 ? (d.cps - d.holdCps) / d.cps : 1);
+  d.clickValue = CONFIG.click.base * digMult * workerMult + d.cps * CONFIG.click.cpsFrac;
+  d.workers = S.workers.length; d.cap = totalCap();
+  D = d;
+}
+
+/* --- economy tick --- */
+function tick(dt) {
+  S.time += dt;
+  S.meta.playSec += dt;
+  recalc();
+  // production
+  const mined = D.cps * dt;
+  addCoal(mined);
+  // selling
+  const M = CONFIG.market;
+  let rate = M.sellRate;
+  if (has('salesAgent') && S.auto.sell) rate = S.market.mult < M.smartLow ? M.smartSlowRate : S.market.mult > M.smartHigh ? M.smartFastRate : M.sellRate;
+  const sold = S.coal * (1 - Math.exp(-rate * dt));
+  S.coal -= sold;
+  const rev = sold * D.price * (1 - D.payCut);
+  S.money += rev; S.run.money += rev; S.meta.lifetimeMoney += rev;
+  // wages
+  S.money -= D.wages * dt;
+  if (S.money < 0) { S.money = 0; S.unpaidUntil = S.time + CONFIG.wages.unpaidSec; }
+  // market drift
+  const vol = M.volatility * Math.pow(HOLD.desk.vol, holding('desk'));
+  const target = 1;
+  S.market.mult += M.reversion * (target - S.market.mult) * dt + vol * Math.sqrt(dt) * gauss();
+  S.market.mult = clamp(S.market.mult, perk('savvy') ? Math.max(0.8, M.min) : M.min, M.max);
+  S.run.maxPrice = Math.max(S.run.maxPrice, S.market.mult);
+  // workers: wage creep, minor injuries, lucky strikes
+  const orgLevels = new Set();
+  for (const w of S.workers) if (w.traits.includes('unionOrganizer')) orgLevels.add(w.site + ':' + w.li);
+  for (const w of S.workers) {
+    if (!w.traits.includes('companyMan') && w.wageMult < CONFIG.wages.cap)
+      w.wageMult = Math.min(CONFIG.wages.cap, w.wageMult + CONFIG.wages.growthPerSec * dt * (orgLevels.has(w.site + ':' + w.li) ? CONFIG.wages.organizerMult : 1));
+    if (w.injuredUntil > S.time) continue;
+    const site = D.sites[w.site]; const lvd = site && site.levels[w.li];
+    if (!lvd || lvd.halted) continue;
+    if (!RT.offline && chance(CONFIG.accident.minorPerSec * lvd.risk, dt)) {
+      w.injuredUntil = S.time + CONFIG.accident.minorInjurySec;
+      logEvent(`${w.name} was hurt on Level ${w.li + 1}. Out for ${CONFIG.accident.minorInjurySec}s.`);
+    }
+    let rc = 0, dur = 1;
+    for (const t of traitsOf(w)) { if (t.rich) rc += t.rich; if (t.richDur) dur = t.richDur; }
+    if (w.role === 'geologist') rc += CONFIG.roles.geologist.rich * supportPower(w);
+    if (rc && chance(rc, dt)) {
+      const lv = siteById(w.site).levels[w.li];
+      if (lv.richUntil <= S.time) {
+        lv.richUntil = S.time + CONFIG.rich.sec * dur; S.run.rich++;
+        logEvent(`${w.name} struck a rich seam on Level ${w.li + 1}! ×${CONFIG.rich.mult} output for ${CONFIG.rich.sec * dur}s.`);
+        if (!RT.sim && !RT.offline) toast(`✨ ${w.name} hit a rich seam!`, 'good');
+      }
+    }
+  }
+  S.buffs = S.buffs.filter(b => b.until > S.time);
+  poolTick();
+  if (!RT.offline) eventTick();
+}
+function addCoal(n) { S.coal += n; S.run.coal += n; S.meta.lifetimeCoal += n; }
+function mineClick() {
+  const v = D.clickValue || 1;
+  addCoal(v); S.run.clicks++; S.meta.clicks++;
+  return v;
+}
+function stepGame(dt) {
+  while (dt > 0) { const s = Math.min(dt, CONFIG.maxStepSec); tick(s); dt -= s; }
+}
+function slowTick() {   // once per game second
+  checkAchievements();
+  if (S.auto.hire && has('hiringClerk')) autoHire();
+  if (S.auto.buy && has('purchasing')) autoBuy();
+  if (S.auto.promote && has('personnel')) autoPromote();
+}
+function autoHire() {
+  for (let guard = 0; guard < 3; guard++) {
+    let best = null;
+    for (const s of S.sites) { const sd = D.sites[s.id]; if (sd && sd.workers < sd.cap) { best = s; break; } }
+    if (!best) return;
+    const sd = D.sites[best.id];
+    const want = sd.dig > sd.haul * 0.9 ? 'hauler' : 'digger';
+    let pickI = -1, pickC = Infinity;
+    S.pool.slots.forEach((sl, i) => { if (sl.c && sl.c.role === want) { const c = hireCost(sl.c); if (c < pickC) { pickC = c; pickI = i; } } });
+    if (pickI < 0 || pickC > S.money * 0.5) return;
+    hire(pickI, best.id); recalc();
+  }
+}
+function autoBuy() {
+  let best = null, bc = Infinity;
+  for (const u of CONFIG.upgrades) {
+    if (u.once || !upgVisible(u) || S.tier < u.tier || upgMaxed(u)) continue;
+    const c = upgCost(u); if (c < bc) { bc = c; best = u; }
+  }
+  if (best && bc <= S.money * 0.5) buyUpgrade(best.id);
+}
+function autoPromote() {
+  for (const w of S.workers) { if (w.lvl < CONFIG.workerLevel.max) { const c = promoteCost(w); if (c < S.money * 0.05) promote(w.id); } }
+}
+
+/* --- offline progress --- */
+function runOffline(sec) {
+  sec = Math.min(sec, CONFIG.offlineCapHours * 3600);
+  if (sec < CONFIG.offlineMinSec) return null;
+  const c0 = S.run.coal, m0 = S.money;
+  RT.offline = true;
+  const step = CONFIG.offlineStepSec;
+  let t = sec;
+  while (t > 0) { const s = Math.min(step, t); tick(s); t -= s; }
+  RT.offline = false;
+  recalc();
+  return { sec, coal: S.run.coal - c0, money: S.money - m0 };
+}
+function showOffline(r) {
+  if (!r) return;
+  showModal(`<h2>While you were away</h2>
+    <p>The crew kept at it for <b>${fmtTime(r.sec)}</b>${r.sec >= CONFIG.offlineCapHours * 3600 ? ' (capped)' : ''}.</p>
+    <table class="st"><tr><td>Coal mined</td><td>${fmt(r.coal)}</td></tr><tr><td>Money gained (after wages)</td><td class="money">${money(r.money)}</td></tr></table>
+    <p class="dim">Events don't happen while you're gone. The pit is quieter without you watching.</p>
+    <button class="primary" data-act="closeModal">Back to the face</button>`);
+}
+
+/* --- events --- */
+function pickLevel(byRisk, needDiggers) {
+  const opts = [];
+  for (const s of S.sites) s.levels.forEach((lv, li) => {
+    const n = crewCount(s.id, li); if (!n) return;
+    const lvd = D.sites[s.id].levels[li]; if (lvd.halted) return;
+    opts.push([{ site: s.id, li }, byRisk ? lvd.risk * n : n]);
+  });
+  return wpick(opts);
+}
+const lvlName = (siteId, li) => { const s = siteById(siteId); return `${s ? s.name : '?'}, Level ${li + 1}`; };
+function haltLevel(siteId, li, sec, kind) { const s = siteById(siteId); if (!s || !s.levels[li]) return; const lv = s.levels[li]; lv.haltUntil = Math.max(lv.haltUntil, S.time + sec); lv.haltKind = kind; }
+function haltSite(siteId, sec, kind) { const s = siteById(siteId); if (!s) return; s.haltUntil = Math.max(s.haltUntil, S.time + sec); s.haltKind = kind; }
+function injureOn(siteId, li, n, sec) {
+  const crew = S.workers.filter(w => w.site === siteId && (li == null || w.li === li) && w.injuredUntil <= S.time);
+  const hurt = [];
+  for (let i = 0; i < n && crew.length; i++) { const w = crew.splice(Math.floor(Math.random() * crew.length), 1)[0]; w.injuredUntil = S.time + sec; hurt.push(w.name); }
+  return hurt;
+}
+function pay(n) { const p = Math.min(S.money, n); S.money -= p; return p; }
+
+const EVENTS = [
+  { id:'cavein', title:'Cave-in!', weight: () => CONFIG.events.w.cavein * D.riskIndex,
+    make: () => { const l = pickLevel(true); return l && { ...l, cost: Math.ceil(Math.max(40, incomeRate() * 40)) }; },
+    text: e => `The roof gave way on ${lvlName(e.site, e.li)}. Part of the crew is behind the fall.`,
+    choices: [
+      { label:'Send the rescue team', desc: e => `Pay ${money(e.cost)}. Level shut for 20s.`, cost: e => e.cost,
+        run: e => { pay(e.cost); haltLevel(e.site, e.li, 20, 'cavein'); return 'Rescue team brought everyone out. Expensive, but nobody is buried.'; } },
+      { label:'Dig them out by hand', desc: () => 'Free. Level shut for 75s, one worker injured.',
+        run: e => { haltLevel(e.site, e.li, 75, 'cavein'); const h = injureOn(e.site, e.li, 1, 180); return `Slow going with shovels. ${h[0] || 'Nobody'} was hurt.`; } },
+    ], def: 1, after: () => { S.run.caveins++; } },
+
+  { id:'gas', title:'Gas pocket', weight: () => CONFIG.events.w.gas * D.riskIndex * Math.pow(0.85, upg('vent')) * buffProd('gas'),
+    make: () => { const l = pickLevel(false); return l && { site: l.site }; },
+    text: e => `Firedamp! The safety lamps at ${siteById(e.site).name} are burning blue.`,
+    choices: [
+      { label:'Evacuate and ventilate', desc: () => 'Whole site stops for 45s.', run: e => { haltSite(e.site, 45, 'gas'); return 'Everyone out, fans on high. Safe and dull.'; } },
+      { label:'Keep cutting', desc: () => '60%: +25% output for 90s. 40%: explosion, site down 2 min, 3 hurt.',
+        run: e => {
+          if (Math.random() < 0.4) { haltSite(e.site, 120, 'gas'); const h = injureOn(e.site, null, 3, 400); if (!RT.sim) shake(); return `BOOM. ${h.length} workers hurt and the site is wrecked for 2 minutes.`; }
+          addBuff('nerve', 'Nerves of steel', 90, { out: 1.25 }); return 'The gas drifted off. The crew is oddly proud of themselves.';
+        } },
+    ], def: 0 },
+
+  { id:'flood', title:'Water in the workings',
+    weight: () => { let deep = 0; for (const s of S.sites) deep = Math.max(deep, s.levels.length - 1); return deep ? CONFIG.events.w.flood * deep * Math.pow(0.8, upg('pumps')) : 0; },
+    make: () => { const s = S.sites.reduce((a, b) => b.levels.length > a.levels.length ? b : a); return s.levels.length > 1 && { site: s.id, li: s.levels.length - 1, cost: Math.ceil(incomeRate() * 60) }; },
+    text: e => `An old working broke through. Water is rising on ${lvlName(e.site, e.li)}.`,
+    choices: [
+      { label:'Rent emergency pumps', desc: e => `Pay ${money(e.cost)}. Level shut for 15s.`, cost: e => e.cost,
+        run: e => { pay(e.cost); haltLevel(e.site, e.li, 15, 'flood'); return 'The pumps from Pottsville arrived in record time.'; } },
+      { label:'Let it fill, pump it out later', desc: () => 'Free. The level is out for 2 minutes.', run: e => { haltLevel(e.site, e.li, 120, 'flood'); return 'The level is a lake for a while.'; } },
+    ], def: 1 },
+
+  { id:'strike', title:'Strike!', weight: () => S.workers.length >= 6 ? CONFIG.events.w.strike * D.strike : 0,
+    make: () => ({ cost: Math.ceil(incomeRate() * 90) }),
+    text: () => 'The crews have downed tools and are marching on the company office with signs.',
+    choices: [
+      { label:'Raise wages 15%', desc: () => 'Wages up for everyone, permanently. Good morale: +10% output for 10 min.',
+        run: () => { for (const w of S.workers) w.wageMult *= 1.15; addBuff('morale', 'Good morale', 600, { out: 1.10 }); return 'A raise all round. The singing in the gangways is almost tuneful.'; } },
+      { label:'Hold out', desc: () => 'Free. All sites stop for 45s, then a sulk: -10% output for 5 min.',
+        run: () => { for (const s of S.sites) haltSite(s.id, 45, 'strike'); addBuff('sulk', 'Sulking crews', 345, { out: 0.9 }); return 'Nobody blinked for 45 seconds. Then everyone went back, grumbling.'; } },
+      { label:'Hire strikebreakers', desc: e => `Pay ${money(e.cost)}. 60%: back to work at once. 40%: it backfires, sites stop 2 min.`, cost: e => e.cost,
+        run: e => { pay(e.cost); if (Math.random() < 0.4) { for (const s of S.sites) haltSite(s.id, 120, 'strike'); return 'It backfired badly. The newspapers loved it.'; } return 'The strike collapsed. Nobody is happy about how.'; } },
+    ], def: 1, after: () => { S.run.strikes++; } },
+
+  { id:'spike', title:'Price spike', weight: () => CONFIG.events.w.spike,
+    make: () => ({}),
+    text: () => 'A cold snap in Philadelphia! Every coal dealer on the coast wants anthracite now.',
+    choices: [
+      { label:'Sell the whole pile now at 2×', desc: () => `Sells ${fmt(S.coal)} coal for about ${money(S.coal * D.price * 2)}.`,
+        run: () => { const v = S.coal * D.price * 2; S.money += v; S.run.money += v; S.coal = 0; return `Sold everything for ${money(v)}.`; } },
+      { label:'Ride the wave', desc: () => 'Price +50% for 2 minutes.', run: () => { addBuff('spike', 'Cold snap prices', 120, { price: 1.5 }); return 'Prices are up. Keep the coal coming.'; } },
+    ], def: 1 },
+
+  { id:'inspection', title:'Mine inspector', weight: () => S.tier >= 2 ? CONFIG.events.w.inspection * Math.max(0.3, D.riskIndex) : 0,
+    make: () => ({ cost: Math.ceil(incomeRate() * 50 * Math.max(0.3, D.riskIndex)) }),
+    text: () => 'The state mine inspector has arrived, clipboard first.',
+    choices: [
+      { label:'Comply with everything', desc: e => `Pay ${money(e.cost)} in fixes. -40% accidents for 10 min.`, cost: e => e.cost,
+        run: e => { pay(e.cost); addBuff('inspected', 'Freshly inspected', 600, { acc: 0.6 }); return 'Timbers replaced, lamps checked. The inspector almost smiled.'; } },
+      { label:'Grease some palms', desc: e => `Pay ${money(e.cost * 0.3)}. 35% chance you get caught: pay double and all sites stop 60s.`, cost: e => e.cost * 0.3,
+        run: e => { pay(e.cost * 0.3); if (Math.random() < 0.35) { pay(e.cost * 2); for (const s of S.sites) haltSite(s.id, 60, 'inspection'); return 'Caught! A fine, a closure, and a write-up in the Miners\' Journal.'; } return 'The inspector found everything in perfect order. Funny, that.'; } },
+    ], def: 0 },
+
+  { id:'rich', title:'Rich seam spotted', weight: () => CONFIG.events.w.rich + D.geologists * 2,
+    make: () => { const l = pickLevel(false); return l; },
+    text: e => `A thick, clean seam showed up on ${lvlName(e.site, e.li)}.`,
+    choices: [
+      { label:'Work it hard', desc: () => `×${CONFIG.rich.mult} output on that level for 2 min.`, run: e => { siteById(e.site).levels[e.li].richUntil = S.time + 120; S.run.rich++; return 'Every pick on the level is swinging at it.'; } },
+      { label:'Survey it properly', desc: () => '+15% output on that level, permanently.', run: e => { siteById(e.site).levels[e.li].bonus *= 1.15; return 'The surveyors mapped it. That level will pay for years.'; } },
+    ], def: 0 },
+
+  { id:'salesman', title:'A travelling salesman', weight: () => CONFIG.events.w.salesman,
+    make: () => ({ cost: Math.ceil(Math.max(25, incomeRate() * 20)) }),
+    text: () => 'A man in a checked suit is selling a "Canary Subscription Service". Fresh birds every Monday.',
+    choices: [
+      { label:'Subscribe', desc: e => `Pay ${money(e.cost)}. Gas pockets 70% less likely for 15 min.`, cost: e => e.cost,
+        run: e => { pay(e.cost); addBuff('canaries', 'Canary subscription', 900, { gas: 0.3 }); return 'The birds arrive in tiny crates, singing.'; } },
+      { label:'Shoo him off', desc: () => 'He leaves a pamphlet anyway.', run: () => 'He tipped his hat and left a pamphlet.' },
+    ], def: 1 },
+
+  { id:'reporter', title:'A reporter from the Herald', weight: () => S.tier >= 2 ? CONFIG.events.w.reporter : 0,
+    make: () => { const l = pickLevel(false); return l && { site: l.site }; },
+    text: () => 'A reporter wants a tour of the works for a Sunday feature.',
+    choices: [
+      { label:'Give the grand tour', desc: () => 'Site stops 30s. Good press: price +10% for 5 min.', run: e => { haltSite(e.site, 30, 'tour'); addBuff('press', 'Good press', 300, { price: 1.1 }); return '"A Modern Marvel of Industry," says the headline.'; } },
+      { label:'"No comment."', desc: () => 'Nothing happens.', run: () => 'The reporter wrote about the weather instead.' },
+    ], def: 1 },
+
+  { id:'beans', title:'Company store crisis', weight: () => S.tier >= 3 ? CONFIG.events.w.beans : 0,
+    make: () => ({ cost: Math.ceil(incomeRate() * 15) }),
+    text: () => 'The company store has run out of beans. This is, somehow, a crisis.',
+    choices: [
+      { label:'Rush in more beans', desc: e => `Pay ${money(e.cost)}. +5% output for 5 min.`, cost: e => e.cost,
+        run: e => { pay(e.cost); addBuff('beans', 'Well fed', 300, { out: 1.05 }); return 'Beans restored. Order restored.'; } },
+      { label:'"Let them eat cabbage."', desc: () => '-10% output for 3 min.', run: () => { addBuff('cabbage', 'Cabbage again', 180, { out: 0.9 }); return 'The cabbage was not popular.'; } },
+    ], def: 1 },
+
+  { id:'contract', title:'Railroad supply contract', weight: () => S.tier >= 4 ? CONFIG.events.w.contract : 0,
+    make: () => ({}),
+    text: () => 'The Reading Railroad wants a big supply contract at a premium, delivered fast.',
+    choices: [
+      { label:'Sign it', desc: () => 'Price +30% for 10 min, but rushed crews: accidents +40%.', run: () => { addBuff('contract', 'Rail contract', 600, { price: 1.3, acc: 1.4 }); return 'Signed. Now dig.'; } },
+      { label:'Decline', desc: () => 'Nothing happens.', run: () => 'The railroad went to a competitor. Their loss.' },
+    ], def: 1 },
+
+  { id:'regulation', title:'New federal mine act', weight: () => S.tier >= 4 ? CONFIG.events.w.regulation : 0,
+    make: () => ({ cost: Math.ceil(incomeRate() * 120) }),
+    text: () => 'Congress has passed a sweeping mine safety act. Your lawyers have opinions.',
+    choices: [
+      { label:'Comply fully', desc: e => `Pay ${money(e.cost)}. Accidents -15% permanently.`, cost: e => e.cost,
+        run: e => { pay(e.cost); S.perm.acc *= 0.85; return 'Rock dust, roof bolts, the works. Safer for good.'; } },
+      { label:'Lobby against it', desc: e => `Pay ${money(e.cost * 0.25)}. 50%: nothing changes. 50%: you comply anyway and -20% output for 5 min.`, cost: e => e.cost * 0.25,
+        run: e => { pay(e.cost * 0.25); if (Math.random() < 0.5) { pay(e.cost); addBuff('compliance', 'Rushed compliance', 300, { out: 0.8 }); return 'The lobbying failed. Now you comply, in a hurry.'; } return 'The act was "delayed for further study."'; } },
+    ], def: 0 },
+
+  { id:'rival', title:'Rival: Ashcroft & Vane', weight: () => S.tier >= 5 ? CONFIG.events.w.rival : 0,
+    make: () => ({ cost: Math.ceil(incomeRate() * 300) }),
+    text: () => 'Ashcroft & Vane Mining are undercutting you in every port from Rotterdam to Yokohama.',
+    choices: [
+      { label:'Price war', desc: () => 'Price -20% for 5 min, then +5% permanently as you take their share.',
+        run: () => { addBuff('pricewar', 'Price war', 300, { price: 0.8 }); S.perm.price *= 1.05; return 'You undercut the undercutters.'; } },
+      { label:'Buy them out', desc: e => `Pay ${money(e.cost)}. +10% output permanently.`, cost: e => e.cost,
+        run: e => { pay(e.cost); S.perm.out *= 1.1; return 'Ashcroft & Vane is now a subsidiary. Their letterhead is nicer.'; } },
+    ], def: 0 },
+
+  { id:'typhoon', title:'Typhoon in the shipping lanes', weight: () => S.tier >= 5 ? CONFIG.events.w.typhoon : 0,
+    make: () => ({ cost: Math.ceil(incomeRate() * 40) }),
+    text: () => 'A typhoon is bearing down on your Pacific shipping route.',
+    choices: [
+      { label:'Reroute the fleet', desc: e => `Pay ${money(e.cost)} in fuel. No disruption.`, cost: e => e.cost, run: e => { pay(e.cost); return 'The long way round. Expensive, on time.'; } },
+      { label:'Wait it out', desc: () => 'Price -15% for 3 min while cargoes are late.', run: () => { addBuff('typhoon', 'Late cargoes', 180, { price: 0.85 }); return 'The ships sat in port for a while.'; } },
+    ], def: 1 },
+];
+const EVBYID = Object.fromEntries(EVENTS.map(e => [e.id, e]));
+
+function eventTick() {
+  const ev = S.ev;
+  if (ev.cur) { if (S.time >= ev.cur.expires) resolveEvent(EVBYID[ev.cur.id].def, true); return; }
+  if (S.time < ev.nextAt || S.workers.length < 2) return;
+  spawnEvent();
+}
+function spawnEvent(forceId) {
+  const opts = EVENTS.filter(e => !forceId || e.id === forceId).map(e => [e, forceId ? 1 : e.weight()]);
+  const def = wpick(opts);
+  S.ev.nextAt = S.time + rand(...CONFIG.events.interval);
+  if (!def) return;
+  const data = def.make(); if (!data) return;
+  S.ev.cur = Object.assign({ id: def.id, expires: S.time + CONFIG.events.decideSec, start: S.time }, data);
+  S.run.events++;
+  if (!RT.sim) { shake(); renderEventBanner(); ui.dirty = true; }
+}
+function resolveEvent(i, auto) {
+  const cur = S.ev.cur; if (!cur) return;
+  const def = EVBYID[cur.id]; const ch = def.choices[i]; if (!ch) return;
+  if (ch.cost && !auto && S.money < ch.cost(cur)) return;
+  const msg = ch.run(cur);
+  if (def.after) def.after(cur);
+  S.ev.cur = null;
+  logEvent(`<b>${esc(def.title)}</b> ${auto ? '(no answer, so:) ' : ''}${esc(ch.label)} — ${esc(msg)}`, true);
+  if (!RT.sim) { renderEventBanner(); toast(`${def.title}: ${msg}`); ui.dirty = true; }
+}
+function logEvent(html, raw) {
+  S.ev.log.unshift({ t: S.time, m: raw ? html : esc(html) });
+  if (S.ev.log.length > 40) S.ev.log.length = 40;
+}
+
+/* --- achievements --- */
+const ACHIEVEMENTS = [
+  { id:'click1',   name:'Elbow Grease',     desc:'Dig coal by hand.',                test: () => S.meta.clicks >= 1 },
+  { id:'click500', name:'Calloused',        desc:'Dig by hand 500 times.',           test: () => S.meta.clicks >= 500 },
+  { id:'hire1',    name:'Payroll',          desc:'Hire your first worker.',          test: () => S.workers.length >= 1 },
+  { id:'crew12',   name:'A Proper Crew',    desc:'Have 12 workers.',                 test: () => S.workers.length >= 12 },
+  { id:'crew50',   name:'Patch Town',       desc:'Have 50 workers.',                 test: () => S.workers.length >= 50 },
+  { id:'crew150',  name:'Company Town',     desc:'Have 150 workers.',                test: () => S.workers.length >= 150 },
+  { id:'coal1k',   name:'First Ton... ish', desc:'Mine 1,000 coal in a run.',        test: () => S.run.coal >= 1e3 },
+  { id:'coal1m',   name:'Black Diamonds',   desc:'Mine 1M coal in a run.',           test: () => S.run.coal >= 1e6 },
+  { id:'coal1b',   name:'Mountain Mover',   desc:'Mine 1B coal in a run.',           test: () => S.run.coal >= 1e9 },
+  { id:'coal1t',   name:'Hollow Earth',     desc:'Mine 1T coal in total.',           test: () => S.meta.lifetimeCoal >= 1e12 },
+  { id:'rich1',    name:'Strike It Rich',   desc:'Hit a rich seam.',                 test: () => S.run.rich >= 1 },
+  { id:'promo5',   name:'Up Through the Ranks', desc:'Promote a worker to level 5.', test: () => S.workers.some(w => w.lvl >= 5) },
+  { id:'promo10',  name:'Lifer',            desc:'Promote a worker to level 10.',    test: () => S.workers.some(w => w.lvl >= 10) },
+  { id:'deep3',    name:'Going Down',       desc:'Open 3 levels at one site.',       test: () => S.sites.some(s => s.levels.length >= 3) },
+  { id:'deep8',    name:'Bottom of the Basin', desc:'Open 8 levels at one site.',   test: () => S.sites.some(s => s.levels.length >= 8) },
+  { id:'cavein',   name:'Still Standing',   desc:'Live through a cave-in.',          test: () => S.run.caveins >= 1 },
+  { id:'strike',   name:'Labor Relations',  desc:'Settle a strike.',                 test: () => S.run.strikes >= 1 },
+  { id:'price',    name:'Seller\'s Market', desc:'See the market at +50%.',          test: () => S.run.maxPrice >= 1.5 },
+  { id:'goodhire', name:'Diamond in the Rough', desc:'Employ a worker with two good traits.', test: () => S.workers.some(w => w.traits.length === 2 && w.traits.every(t => CONFIG.traits[t].cost > 1.1)) },
+  { id:'mill',     name:'Coal Baron',       desc:'Hold $1M at once.',                test: () => S.money >= 1e6 },
+  { id:'sites3',   name:'Holding Company',  desc:'Own 3 named mines.',               test: () => S.sites.length >= 3 },
+  { id:'tier2',    name:'Shaft Sunk',       desc:'Become a Colliery.',               test: () => S.tier >= 2 },
+  { id:'tier3',    name:'Incorporated',     desc:'Become a Regional company.',       test: () => S.tier >= 3 },
+  { id:'tier4',    name:'Coast to Coast',   desc:'Go National.',                     test: () => S.tier >= 4 },
+  { id:'tier5',    name:'Sun Never Sets',   desc:'Go Global.',                       test: () => S.tier >= 5 },
+  { id:'prest1',   name:'Sold Out',         desc:'Sell the company once.',           test: () => S.meta.prestiges >= 1 },
+  { id:'prest5',   name:'Serial Founder',   desc:'Sell the company 5 times.',        test: () => S.meta.prestiges >= 5 },
+];
+function checkAchievements() {
+  for (const a of ACHIEVEMENTS) if (!S.meta.ach[a.id] && a.test()) {
+    S.meta.ach[a.id] = Math.floor(S.meta.playSec);
+    if (!RT.sim) toast(`🏆 ${a.name} — ${a.desc} (+${Math.round(CONFIG.achievementBonus * 100)}% output)`, 'ach');
+    ui.dirty = true;
+  }
+}
+
+/* --- prestige --- */
+function legacyGain() { return S.tier >= CONFIG.prestige.minTier ? Math.floor(Math.sqrt(S.run.coal / CONFIG.prestige.div)) : 0; }
+function doPrestige() {
+  const g = legacyGain(); if (g <= 0) return;
+  const meta = S.meta;
+  meta.legacy += g; meta.legacyEarned += g; meta.prestiges++;
+  const keep = {};
+  if (meta.shop.clerks) for (const u of CONFIG.upgrades) if (u.cat === 'Management' && has(u.id)) keep[u.id] = 1;
+  startRun(meta, keep);
+  checkAchievements();
+  save(); ui.dirty = true; ui.tab = 'workers';
+  showModal(`<h2>Company sold!</h2><p>The conglomerate paid handsomely. You walk away with <b class="lampc">${g} Legacy</b> and a new hat.</p>
+    <p>Unspent Legacy gives <b>+${Math.round(CONFIG.prestige.perPoint * 100)}% output each</b>. You can also spend it in the Prestige tab on permanent perks.</p>
+    <p class="dim">Somewhere in Schuylkill County there's another hillside with your name on it.</p><button class="primary" data-act="closeModal">Start again</button>`);
+}
+function buyPerk(id) {
+  const p = CONFIG.prestigeShop.find(x => x.id === id); if (!p || S.meta.shop[id] || S.meta.legacy < p.cost) return;
+  S.meta.legacy -= p.cost; S.meta.shop[id] = true; ui.dirty = true;
+  toast(`Perk unlocked: ${p.name}`, 'good');
+}
+
+/* --- pacing simulation (debug) --- */
+function botStep() {
+  if (canTierUp()) tierUp();
+  const nt = nextTier(), saving = nt && S.run.coal >= nt.req.coal;   // a sensible player saves up for the tier
+  if (S.tier >= 3 && nextExtraSite() && S.money >= nextExtraSite().cost && S.tier >= nextExtraSite().tier) buySite();
+  recalc();
+  // hire for the most constrained site
+  for (let g = 0; g < 4; g++) {
+    const site = S.sites.find(s => D.sites[s.id].workers < D.sites[s.id].cap); if (!site) break;
+    const sd = D.sites[site.id];
+    const want = sd.dig > sd.haul * 0.9 ? 'hauler' : (S.tier >= 2 && Math.random() < 0.15 ? pick(['foreman', 'engineer', 'geologist', 'safety']) : 'digger');
+    let pi = -1, pc = Infinity;
+    S.pool.slots.forEach((sl, i) => { if (sl.c && sl.c.role === want) { const c = hireCost(sl.c); if (c < pc) { pc = c; pi = i; } } });
+    if (pi < 0 || pc > S.money || (saving && pc > S.money * 0.05)) break;
+    hire(pi, site.id); recalc();
+  }
+  // cheapest of: upgrade, level, holding
+  for (let g = 0; g < 6; g++) {
+    const opts = [];
+    for (const u of CONFIG.upgrades) if (upgVisible(u) && S.tier >= u.tier && !upgMaxed(u)) {
+      if ((u.id === 'vent' || u.id === 'pumps') && S.sites.every(s => s.levels.length < depthAllowed() || s.levels.length >= maxLevelsByKind(s))) continue;
+      if (u.id === 'safety' && upg('safety') > 8) continue;
+      opts.push([upgCost(u), () => buyUpgrade(u.id)]);
+    }
+    for (const s of S.sites) if (!levelBlock(s) && D.sites[s.id].workers >= D.sites[s.id].cap - 1) opts.push([levelCost(s) * 0.5, () => buyLevel(s.id)]);
+    for (const h of CONFIG.holdings) if (S.tier >= h.tier && !(h.max && holding(h.id) >= h.max)) opts.push([holdCost(h), () => buyHolding(h.id)]);
+    opts.sort((a, b) => a[0] - b[0]);
+    if (!opts.length || opts[0][0] > S.money || (saving && opts[0][0] > S.money * 0.05)) break;
+    opts[0][1](); recalc();
+  }
+}
+function simulatePacing(minutes, clicksPerSec) {
+  const backup = serialize();
+  RT.sim = true;
+  const out = [];
+  try {
+    startRun(defaultMeta());
+    let lastTier = 1, prestigeAt = null;
+    for (let t = 1; t <= minutes * 60; t++) {
+      if (t <= 300) for (let c = 0; c < clicksPerSec; c++) { recalc(); mineClick(); }
+      stepGame(1);
+      if (S.ev.cur) resolveEvent(EVBYID[S.ev.cur.id].def, true);
+      slowTick();
+      botStep();
+      if (S.tier !== lastTier) { out.push(`${fmtTime(t).padStart(8)}  reached tier ${S.tier} (${CONFIG.tiers[S.tier].name})`); lastTier = S.tier; }
+      if (prestigeAt == null && legacyGain() > 0) { prestigeAt = t; out.push(`${fmtTime(t).padStart(8)}  can sell company (+${legacyGain()} Legacy)`); }
+      if (t % 300 === 0) out.push(`${fmtTime(t).padStart(8)}  ${fmt(D.cps)}/s  ${money(S.money)}  ${S.workers.length} workers  legacy ${legacyGain()}`);
+    }
+  } finally {
+    RT.sim = false;
+    S = loadFrom(backup); recalc(); ui.dirty = true;
+  }
+  return out.join('\n');
+}
+
+/* =====================================================================
+   5. RENDERING — painted cutaway on a low-res canvas.
+      Sky, buildings, rock and tunnels are drawn once into cached layers;
+      only moving things (people, carts, cage, smoke, light) draw per frame.
+   ===================================================================== */
+const PAL = {
+  role: { digger:'#5c4733', hauler:'#36425a', engineer:'#4f5b38', safety:'#5e5440', foreman:'#d2c9b2', geologist:'#7c6649' },
+  skin: '#b98d6a', grime: '#7e604a', trousers: '#2b2723', boots: '#141110',
+  timber: '#7a5634', timberHi: '#9c7149', timberLo: '#4b331e',
+  rail: '#76726c', brick: '#7a4632', brickDk: '#5a3224', wood: '#5d4636', iron: '#3f3c3a',
+};
+const Rr = { cv:null, ctx:null, light:null, lctx:null, W:480, H:320, px:1, S:100,
+  strata:null, strataKey:'', surf:null, surfKey:'', under:null, underKey:'', spr:null, lamps:[], parts:[], t:0 };
+
+const _shade = new Map();
+function shade(hex, f) {
+  const k = hex + f; let v = _shade.get(k); if (v) return v;
+  const n = parseInt(hex.slice(1), 16);
+  v = `rgb(${clamp(((n >> 16) & 255) * f | 0, 0, 255)},${clamp(((n >> 8) & 255) * f | 0, 0, 255)},${clamp((n & 255) * f | 0, 0, 255)})`;
+  _shade.set(k, v); return v;
+}
+function box(c, x, y, w, h, col) { c.fillStyle = col; c.fillRect(Math.round(x), Math.round(y), Math.round(w), Math.round(h)); }
+function line(c, x0, y0, x1, y1, col) {
+  c.fillStyle = col;
+  const n = Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0)) | 0 || 1;
+  for (let i = 0; i <= n; i++) c.fillRect(Math.round(x0 + (x1 - x0) * i / n), Math.round(y0 + (y1 - y0) * i / n), 1, 1);
+}
+const smooth = t => t <= 0 ? 0 : t >= 1 ? 1 : t * t * (3 - 2 * t);
+function noise1(x) { const i = Math.floor(x), u = smooth(x - i); return hash(i) * (1 - u) + hash(i + 1) * u; }
+function noise2(x, y) {
+  const xi = Math.floor(x), yi = Math.floor(y), u = smooth(x - xi), v = smooth(y - yi);
+  const h = (a, b) => hash(a * 57.13 + b * 311.7);
+  const a = h(xi, yi), b = h(xi + 1, yi), c = h(xi, yi + 1), d = h(xi + 1, yi + 1);
+  return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
+}
+function glowSprite(stops) {
+  const c = document.createElement('canvas'); c.width = c.height = 64;
+  const g = c.getContext('2d'), gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+  for (const [o, col] of stops) gr.addColorStop(o, col);
+  g.fillStyle = gr; g.fillRect(0, 0, 64, 64); return c;
+}
+function initSprites() {
+  Rr.spr = {
+    hole:  glowSprite([[0, 'rgba(0,0,0,1)'], [0.35, 'rgba(0,0,0,.85)'], [0.7, 'rgba(0,0,0,.35)'], [1, 'rgba(0,0,0,0)']]),
+    warm:  glowSprite([[0, 'rgba(255,196,120,.6)'], [0.25, 'rgba(255,160,70,.22)'], [1, 'rgba(255,130,40,0)']]),
+    cool:  glowSprite([[0, 'rgba(255,246,222,.55)'], [0.3, 'rgba(240,226,192,.2)'], [1, 'rgba(220,210,180,0)']]),
+    smoke: glowSprite([[0, 'rgba(84,80,76,.9)'], [0.5, 'rgba(84,80,76,.45)'], [1, 'rgba(84,80,76,0)']]),
+    steam: glowSprite([[0, 'rgba(236,233,228,.9)'], [0.5, 'rgba(236,233,228,.4)'], [1, 'rgba(236,233,228,0)']]),
+    sun:   glowSprite([[0, 'rgba(255,240,200,1)'], [0.1, 'rgba(255,228,175,.95)'], [0.28, 'rgba(255,200,130,.28)'], [1, 'rgba(255,180,110,0)']]),
+  };
+}
+function lamp(x, y, r, kind, a) { Rr.lamps.push({ x, y, r, k: kind || 'warm', a: a == null ? 1 : a }); }
+function puff(x, y, steam, size) {
+  Rr.parts.push({ x, y, vx: rand(0.04, 0.18), vy: -rand(0.12, 0.28), life: steam ? 90 : 240, max: steam ? 90 : 240,
+    s: size || 4, grow: steam ? 0.12 : 0.09, smoke: !steam, steam, a: steam ? 0.5 : 0.42 });
+}
+
+function resizeCanvas() {
+  if (!Rr.spr) initSprites();
+  const r = $('#view').getBoundingClientRect();
+  if (!r.width || !r.height) return;
+  let p = Math.min(r.width / 480, r.height / 300);
+  p = p >= 2 ? Math.floor(p) : Math.max(1, Math.round(p * 4) / 4);
+  Rr.px = p;
+  Rr.W = Math.round(r.width / p); Rr.H = Math.round(r.height / p);
+  Rr.cv.width = Rr.W; Rr.cv.height = Rr.H;
+  Rr.cv.style.width = Rr.W * p + 'px'; Rr.cv.style.height = Rr.H * p + 'px';
+  Rr.cv.style.imageRendering = Number.isInteger(p) ? 'pixelated' : 'auto';
+  Rr.light.width = Rr.W; Rr.light.height = Rr.H;
+  Rr.S = clamp(Math.round(Rr.H * 0.3), 84, 140);
+  Rr.ctx.imageSmoothingEnabled = false;
+  Rr.strataKey = Rr.surfKey = Rr.underKey = '';
+}
+function viewSite() { return siteById(S.viewSite) || S.sites[0]; }
+function layout(site) {
+  const W = Rr.W, H = Rr.H, Sy = Rr.S;
+  const sp = (H - Sy - 12) / CONFIG.sites.collieryMaxLevels;
+  const th = clamp(Math.floor(sp * 0.64), 13, 22);
+  const drift = site.kind === 'drift', sx = 64;
+  return { W, H, Sy, sp, th, drift, sx, adit: 100, x0: drift ? 124 : sx + 12, x1: W - 6, y: i => Math.round(Sy + 12 + sp * i + th) };
+}
+// the drift's slope runs from the adit down to where level 3 would be
+function slopeX(L, y) { return L.adit + 8 + (y - L.Sy) / (L.y(2) - L.Sy) * (L.x0 - L.adit - 8); }
+const toolTierNow = () => has('autonomous') ? 4 : has('continuous') ? 3 : has('electric') ? 2 : has('pneumatic') ? 1 : 0;
+
+/* --- rock: banded sandstone/shale with coal seams at every level --- */
+function buildStrata() {
+  const W = Rr.W, H = Rr.H, Sy = Rr.S, key = W + 'x' + H + ':' + Sy;
+  if (Rr.strataKey === key) return;
+  Rr.strataKey = key;
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const g = c.getContext('2d');
+  const img = g.createImageData(W, H - Sy), d = img.data;
+  const rocks = [[104, 88, 68], [76, 72, 68], [56, 50, 45], [92, 78, 60], [84, 72, 58], [66, 59, 52], [98, 92, 84]];
+  const L = layout({ kind: 'colliery' });
+  const seams = []; for (let i = 0; i < CONFIG.sites.collieryMaxLevels; i++) seams.push(L.y(i) - L.th / 2);
+  for (let yy = 0; yy < H - Sy; yy++) {
+    const Y = Sy + yy, depth = yy / (H - Sy);
+    for (let x = 0; x < W; x++) {
+      const warp = noise2(x * 0.012, Y * 0.02) * 8 + x * 0.018;
+      const band = Math.floor((Y + warp) / 7);
+      let [r, gg, b] = rocks[Math.floor(hash(band * 1.37) * rocks.length)];
+      const grain = (hash(x * 13.1 + Y * 7.7) - 0.5) * 16 + (noise2(x * 0.22, Y * 0.3) - 0.5) * 18;
+      const k = (1 - depth * 0.5) * (hash(band * 3.1) < 0.15 ? 0.82 : 1);
+      r = r * k + grain; gg = gg * k + grain; b = b * k + grain;
+      for (let s = 0; s < seams.length; s++) {
+        const cy = seams[s] + Math.sin(x * 0.017 + s) * 2 + (noise1(x * 0.05 + s * 9) - 0.5) * 3;
+        const half = L.th / 2 + 1 + noise1(x * 0.03 + s * 4) * 3;
+        if (Math.abs(Y - cy) < half) {
+          const lus = hash(x * 3.3 + Y * 5.1) > 0.988;
+          r = 20 + grain * 0.3; gg = 19 + grain * 0.3; b = 21 + grain * 0.3;
+          if (Math.abs(Y - cy) > half - 1.5) { r += 10; gg += 9; b += 8; }   // shaly partings at the seam edges
+          if (lus) { r = 58; gg = 62; b = 72; }
+          break;
+        }
+      }
+      if (yy < 5) { const t = yy / 5; r = 74 * (1 - t) + r * t; gg = 58 * (1 - t) + gg * t; b = 40 * (1 - t) + b * t; }
+      if (hash(x * 0.71 + Y * 1.93) > 0.994) { r *= 0.6; gg *= 0.6; b *= 0.6; }   // fractures and pebbles
+      const o = (yy * W + x) * 4;
+      d[o] = r; d[o + 1] = gg; d[o + 2] = b; d[o + 3] = 255;
+    }
+  }
+  g.putImageData(img, 0, Sy);
+  Rr.strata = c;
+}
+
+/* --- surface plan: where everything stands (shared by static and moving layers) --- */
+function surfacePlan(L) {
+  const p = {}, T = S.tier, Sy = L.Sy;
+  let x;
+  if (L.drift) {
+    p.fan = upg('vent') > 0 ? { x: 26, y: Sy - 49 } : null;
+    x = 142; p.shed = { x, w: 34 }; x += 40;
+  } else {
+    p.fan = upg('vent') > 0 ? { x: 20, y: Sy } : null;
+    p.head = { x: L.sx + 6 };
+    p.hoist = { x: L.sx + 24, w: 30 };
+    p.boiler = { x: L.sx + 56, w: 22, stacks: [L.sx + 60, L.sx + 71] };
+    x = L.sx + 84;
+    if (has('breaker')) { p.breaker = { x, w: 72 }; x += 78; } else { p.shed = { x, w: 34 }; x += 40; }
+    if (has('washery')) { p.washery = { x, w: 30 }; x += 34; }
+    if (has('prepPlant')) { p.prep = { x, w: 32 }; x += 36; }
+  }
+  const cs = clamp(Math.log10(1 + S.run.coal), 0, 12);
+  p.culm = { x, w: Math.round(22 + cs * 7), h: Math.round(5 + cs * 2.6) }; x += p.culm.w + 4;
+  if (upg('pumps') > 0) { p.pump = { x, w: 16 }; x += 22; }
+  p.office = { x, w: 28, floors: 1 + Math.min(3, CONFIG.upgrades.filter(u => u.cat === 'Management' && has(u.id)).length) }; x += 34;
+  if (upg('safety') > 0) { p.aid = { x, w: 14 }; x += 18; }
+  p.housesX = x;
+  p.housesEnd = T >= 5 ? L.W - 76 : L.W - 4;
+  if (T >= 4) p.plant = { x: L.W - (T >= 5 ? 150 : 110), stacks: 2 + Math.min(3, holding('division')) };
+  if (T >= 5) p.sea = { x: L.W - 70 };
+  return p;
+}
+
+/* --- sky & distance --- */
+function ridgeY(L, x, base, amp, freq, seed) { return L.Sy - base - (noise1(x * freq + seed) - 0.5) * amp * 2 - noise1(x * freq * 4 + seed) * amp * 0.35; }
+function ridge(g, L, base, amp, freq, seed, col) {
+  g.fillStyle = col; g.beginPath(); g.moveTo(0, L.Sy);
+  for (let x = 0; x <= L.W; x += 2) g.lineTo(x, ridgeY(L, x, base, amp, freq, seed));
+  g.lineTo(L.W, L.Sy); g.fill();
+}
+function pine(g, x, yb, h, col) {
+  for (let k = 0; k < h; k++) { const w = Math.max(1, Math.round((h - k) * 0.42 + (k % 3 === 0 ? 1 : 0))); box(g, x - Math.floor(w / 2), yb - k, w, 1, col); }
+}
+function drawSky(g, L) {
+  const W = L.W, Sy = L.Sy, T = S.tier;
+  const gr = g.createLinearGradient(0, 0, 0, Sy);
+  gr.addColorStop(0, '#4a5f7c'); gr.addColorStop(0.55, '#a59d8e'); gr.addColorStop(1, '#e3b27c');
+  g.fillStyle = gr; g.fillRect(0, 0, W, Sy);
+  g.drawImage(Rr.spr.sun, W * 0.8 - 44, Sy * 0.4 - 44, 88, 88);
+  g.globalAlpha = 0.2;
+  for (let k = 0; k < 6; k++) g.drawImage(Rr.spr.steam, hash(k * 9.1) * W - 30, 6 + hash(k + 4) * Sy * 0.35, 70 + hash(k) * 50, 8 + hash(k * 2) * 6);
+  g.globalAlpha = 1;
+  const smog = [0, 0, 0.1, 0.22, 0.34, 0.26][T];
+  if (smog) { g.fillStyle = `rgba(92,84,76,${smog})`; g.fillRect(0, 0, W, Sy); }
+}
+function drawBackground(g, L, p) {
+  const W = L.W, Sy = L.Sy, T = S.tier;
+  ridge(g, L, Sy * 0.44, 10, 0.011, 3, '#7a7e86');
+  ridge(g, L, Sy * 0.3, 8, 0.02, 11, '#5f5a52');
+  const dens = [0, 0.55, 0.4, 0.2, 0.08, 0.04][T];
+  for (let x = 0; x < W; x += 3) if (hash(x * 1.7) < dens) pine(g, x, ridgeY(L, x, Sy * 0.3, 8, 0.02, 11) + 2, 4 + Math.floor(hash(x) * 4), '#46483a');
+  // leased collieries on the far ridge: little breakers and headframes
+  const n = Math.min(10, holding('leased'));
+  for (let i = 0; i < n; i++) {
+    const x = Math.round(W * 0.36 + i * 21 + hash(i + 50) * 8), y = Math.round(ridgeY(L, x, Sy * 0.3, 8, 0.02, 11)) + 3;
+    const col = '#4a4640';
+    box(g, x, y - 11, 9, 11, col); box(g, x + 2, y - 15, 5, 4, col); box(g, x + 11, y - 12, 1, 12, col); box(g, x + 15, y - 12, 1, 12, col); box(g, x + 10, y - 13, 7, 1, col);
+  }
+  ridge(g, L, Sy * 0.14, 5, 0.03, 23, '#4c4438');
+  // the patch town climbs the hillside behind the works
+  const houses = Math.min(40, holding('house'));
+  for (let i = 0; i < houses; i++) {
+    const row = Math.floor(i / 14), x = Math.round(W * 0.3 + (i % 14) * 13 + row * 6);
+    if (x > W - 12) continue;
+    const y = Math.round(ridgeY(L, x, Sy * 0.14, 5, 0.03, 23)) + 5 + row * 6;
+    const col = ['#6a5a4c', '#7a7266', '#5e5a54', '#80694f'][i % 4];
+    box(g, x, y - 5, 9, 5, col); box(g, x + 8, y - 5, 1, 5, shade(col, 1.2));
+    box(g, x - 1, y - 6, 11, 1, '#34302d'); box(g, x + 1, y - 7, 7, 1, '#3c3835');
+    box(g, x + 2, y - 3, 1, 1, hash(i * 3.3) < 0.5 ? '#e0b060' : '#2a2622'); box(g, x + 6, y - 3, 1, 1, hash(i * 7.1) < 0.4 ? '#e0b060' : '#2a2622');
+  }
+  for (let x = 0; x < W; x += 2) if (hash(x * 2.9 + 7) < dens * 0.8) pine(g, x, ridgeY(L, x, Sy * 0.14, 5, 0.03, 23) + 2, 6 + Math.floor(hash(x * 3) * 6), '#353829');
+  if (p.plant) {   // coal-fired power station
+    const x = p.plant.x, y = Sy - 2, col = '#55504a';
+    box(g, x, y - 24, 46, 24, col); box(g, x, y - 24, 46, 1, '#6d6760');
+    for (let k = 0; k < 9; k++) box(g, x + 3 + k * 5, y - 18, 2, 3, hash(k + 5) < 0.4 ? '#d9b46a' : '#2a2725');
+    for (let k = 0; k < p.plant.stacks; k++) {
+      const sx = x + 4 + k * 10;
+      box(g, sx, y - 70, 5, 46, '#6a5244'); box(g, sx, y - 66, 5, 2, '#d8d2c8'); box(g, sx - 1, y - 71, 7, 1, '#4a3a30');
+    }
+  }
+  if (p.sea) {
+    const x = p.sea.x;
+    const gr = g.createLinearGradient(0, Sy - 14, 0, Sy); gr.addColorStop(0, '#5b7686'); gr.addColorStop(1, '#2c4656');
+    g.fillStyle = gr; g.fillRect(x, Sy - 14, W - x, 16);
+    box(g, x - 4, Sy - 4, 8, 4, '#4a4440');    // quay
+    for (let k = 0; k < 2; k++) {               // gantry cranes
+      const cx = x + 4 + k * 22; const col = '#8a5a34';
+      box(g, cx, Sy - 34, 2, 30, col); box(g, cx + 8, Sy - 34, 2, 30, col); box(g, cx - 6, Sy - 36, 22, 2, col); line(g, cx, Sy - 34, cx + 9, Sy - 20, col);
+    }
+  }
+  const hz = g.createLinearGradient(0, Sy - 50, 0, Sy);
+  hz.addColorStop(0, 'rgba(210,175,135,0)'); hz.addColorStop(1, `rgba(200,170,130,${0.16 + T * 0.04})`);
+  g.fillStyle = hz; g.fillRect(0, Sy - 50, W, 50);
+}
+
+/* --- buildings --- */
+function building(g, x, ground, w, h, base, o) {
+  o = o || {};
+  const top = ground - h;
+  box(g, x, top, w, h, base);
+  if (o.brick) {
+    for (let yy = top + 1; yy < ground; yy += 3) {
+      box(g, x, yy, w, 1, shade(base, 0.8));
+      for (let xx = x + ((yy / 3 | 0) % 2 ? 0 : 2); xx < x + w; xx += 4) box(g, xx, yy + 1, 1, 2, shade(base, 0.86));
+    }
+  } else {
+    for (let xx = x + 1; xx < x + w; xx += 2) box(g, xx, top, 1, h, shade(base, 0.86 + hash(xx * 3.7 + h) * 0.2));
+  }
+  for (let k = 0; k < w; k += 3) if (hash(x + k * 5.3) < 0.35) box(g, x + k, top + 1, 1, Math.floor(h * hash(k + x)), 'rgba(20,16,12,.18)');   // weather streaks
+  box(g, x + w - 1, top, 1, h, shade(base, 1.22));   // sunlit side
+  box(g, x, top, 1, h, shade(base, 0.68));
+  box(g, x, ground - 1, w, 1, 'rgba(0,0,0,.3)');
+  const rc = o.roofCol || '#3a3634';
+  if (o.roof === 'gable') {
+    const rh = o.rh || Math.max(3, Math.round(w * 0.3));
+    for (let k = 0; k < rh; k++) {
+      const ww = Math.round((w + 4) * (1 - k / rh));
+      box(g, x - 2 + Math.round((w + 4 - ww) / 2), top - k - 1, ww, 1, shade(rc, k % 2 ? 0.9 : 1.08));
+    }
+  } else if (o.roof === 'flat') { box(g, x - 1, top - 2, w + 2, 2, rc); box(g, x - 1, top - 2, w + 2, 1, shade(rc, 1.3)); }
+  else if (o.roof === 'shed') { for (let k = 0; k < 4; k++) box(g, x - 2, top - 4 + k, w + 4 - (3 - k) * 2, 1, shade(rc, 0.9 + k * 0.08)); }
+  if (o.win) {
+    const [cols, rows, ox, oy, dx, dy, ww, wh] = o.win;
+    for (let r = 0; r < rows; r++) for (let cc = 0; cc < cols; cc++) {
+      if (o.skip && hash(x * 5.7 + cc * 13 + r * 29) < o.skip) continue;
+      const lit = hash(x * 3.1 + cc * 17 + r * 31) < (o.lit == null ? 0.3 : o.lit);
+      const wx = x + ox + cc * dx, wy = top + oy + r * dy;
+      box(g, wx, wy, ww, wh, lit ? '#d9a75a' : '#22201e');
+      box(g, wx, wy, ww, 1, lit ? '#f2cd85' : '#4a4642');
+    }
+  }
+  if (o.door) box(g, x + o.door, ground - 6, 3, 6, '#1e1813');
+}
+function drawHill(g, L) {
+  const Sy = L.Sy;
+  const hh = x => x > 140 ? 0 : 52 * (1 - smooth((x - 34) / 106)) + (noise1(x * 0.08) - 0.5) * 5;
+  for (let x = 0; x < 141; x++) {
+    const h = Math.round(hh(x)); if (h <= 0) continue;
+    for (let k = 0; k < h; k++) {
+      const yy = Sy - h + k;
+      const v = hash(x * 5.1 + yy * 2.3);
+      const col = k < 2 ? (v < 0.5 ? '#4e5a33' : '#5a6538') : k < 6 ? '#5a4532' : v < 0.08 ? '#6e665c' : v < 0.5 ? '#4f3d2c' : '#5a4634';
+      box(g, x, yy, 1, 1, col);
+    }
+  }
+  for (let x = 4; x < 128; x += 4) if (hash(x * 4.4) < 0.45) pine(g, x, Sy - Math.round(hh(x)) + 2, 8 + Math.floor(hash(x) * 8), hash(x * 2) < 0.5 ? '#2f3a26' : '#38432c');
+  // adit portal cut into the hillside
+  const a = L.adit;
+  box(g, a - 4, Sy - 16, 16, 16, '#0a0807');
+  box(g, a - 5, Sy - 17, 2, 17, PAL.timber); box(g, a + 11, Sy - 17, 2, 17, PAL.timber);
+  box(g, a - 7, Sy - 19, 22, 2, PAL.timberHi); box(g, a - 7, Sy - 17, 22, 1, PAL.timberLo);
+  box(g, a - 9, Sy - 4, 4, 4, '#6e665c'); box(g, a + 14, Sy - 3, 5, 3, '#5f574e');   // spoil stones
+}
+function drawHeadframe(g, L) {
+  const cx = L.sx + 6, Sy = L.Sy, top = Sy - 66, steel = S.tier >= 3;
+  const col = steel ? '#5d6168' : '#5a4027', hi = steel ? '#8c9098' : '#7e5c39', lo = shade(col, 0.75);
+  line(g, cx - 13, Sy, cx - 4, top, col); line(g, cx - 12, Sy, cx - 3, top, lo);
+  line(g, cx + 13, Sy, cx + 4, top, hi); line(g, cx + 12, Sy, cx + 3, top, col);
+  for (let k = 1; k < 6; k++) { const y = Sy - k * 11, hw = 13 - k * 1.5; line(g, cx - hw, y, cx + hw, y, col); }
+  for (let k = 0; k < 6; k++) {
+    const y0 = Sy - k * 11, y1 = Sy - (k + 1) * 11, h0 = 13 - k * 1.5, h1 = 13 - (k + 1) * 1.5;
+    line(g, cx - h0, y0, cx + h1, y1, lo); line(g, cx + h0, y0, cx - h1, y1, lo);
+  }
+  line(g, cx + 3, top + 2, cx + 30, Sy, col); line(g, cx + 4, top + 2, cx + 31, Sy, hi);   // back-stay
+  box(g, cx - 8, top - 2, 18, 2, shade(col, 1.1));
+  building(g, cx - 11, Sy, 22, 10, steel ? '#55524e' : '#5f4632', { roof: 'flat', roofCol: '#33302e' });
+  box(g, cx - 4, Sy - 9, 8, 9, '#141110');
+}
+function drawBreaker(g, L, b) {
+  const Sy = L.Sy, x = b.x;
+  const segs = [[0, 20, 86], [20, 16, 76], [36, 20, 62], [56, 16, 46]];
+  for (const [dx, w, h] of segs) {
+    building(g, x + dx, Sy - 6, w, h - 6, '#5a4434', { roof: 'gable', rh: 4, roofCol: '#3b3836', win: [Math.floor(w / 5), Math.floor((h - 18) / 9), 2, 5, 5, 9, 2, 3], lit: 0.07, skip: 0.45 });
+    box(g, x + dx, Sy - h + 2, w, 1, 'rgba(0,0,0,.25)');   // eave shadow
+  }
+  box(g, x + 3, Sy - 98, 12, 8, '#4f3c2e'); box(g, x + 2, Sy - 99, 14, 1, '#3b3836');   // head house
+  // loading pockets over the track
+  for (let k = 0; k < 6; k++) { box(g, x + 4 + k * 12, Sy - 7, 2, 7, '#3e2e22'); line(g, x + 8 + k * 12, Sy - 7, x + 11 + k * 12, Sy - 3, '#2a2420'); }
+  box(g, x, Sy - 8, b.w, 2, '#3a2c20');
+  // the plane: an inclined conveyor gallery from the headframe up to the breaker head
+  const x0 = L.sx + 14, y0 = Sy - 60, x1 = x + 4, y1 = Sy - 94;
+  for (let k = 0; k < 3; k++) line(g, x0, y0 + k, x1, y1 + k, k === 0 ? '#6a5240' : k === 1 ? '#4c3a2c' : '#3a2c22');
+  for (let k = 1; k < 5; k++) { const tx = x0 + (x1 - x0) * k / 5, ty = y0 + (y1 - y0) * k / 5; line(g, tx, ty + 3, tx, Sy, '#4a3828'); }
+}
+function drawCulm(g, L, cb) {
+  const Sy = L.Sy;
+  for (let xx = 0; xx < cb.w; xx++) {
+    const u = xx / cb.w * 2 - 1;
+    const h = Math.round(cb.h * Math.pow(Math.max(0, 1 - u * u), 0.7) + (noise1(xx * 0.3 + cb.w) - 0.5) * 2);
+    for (let k = 0; k < h; k++) {
+      const v = hash((cb.x + xx) * 3.7 + k * 9.1);
+      box(g, cb.x + xx, Sy - h + k, 1, 1, ((xx + k) % 7 === 0 && v < 0.6) ? '#4c4a48' : v < 0.15 ? '#5a554f' : v < 0.6 ? '#2a2928' : '#33312f');
+    }
+  }
+  if (S.tier >= 2) line(g, cb.x - 8, Sy - 2, cb.x + cb.w / 2, Sy - cb.h - 1, '#3e3226');   // rock conveyor to the top
+}
+function drawDoubleHouse(g, x, Sy, i) {
+  const cols = ['#7a5a48', '#8b8274', '#6d6a63', '#94785a', '#7d6655'];
+  building(g, x, Sy, 16, 10, cols[i % cols.length], { roof: 'gable', rh: 6, roofCol: '#3a3533', win: [2, 1, 2, 3, 10, 0, 2, 2], lit: 0.5 });
+  box(g, x + 7, Sy - 10, 1, 10, shade(cols[i % cols.length], 0.7));   // party wall
+  box(g, x + 5, Sy - 5, 2, 5, '#2a1e16'); box(g, x + 9, Sy - 5, 2, 5, '#2a1e16');
+  box(g, x + 3, Sy - 19, 2, 4, '#5a3224');   // chimney
+  for (let k = 0; k < 16; k += 2) box(g, x + k, Sy - 2, 1, 2, '#6b5a46');   // fence
+}
+function drawSurfaceStatic(g, L, site, p) {
+  const Sy = L.Sy, W = L.W, T = S.tier;
+  const ground = T >= 3 ? '#2f2924' : '#4a3d2c';
+  box(g, 0, Sy - 1, W, 3, ground);
+  for (let x = 0; x < W; x++) {
+    if (T <= 2 && hash(x * 2.3) < 0.5) box(g, x, Sy - 1 - (hash(x) < 0.3 ? 1 : 0), 1, 1, hash(x * 5) < 0.5 ? '#56603a' : '#4c5634');
+    if (T >= 3 && hash(x * 2.3) < 0.2) box(g, x, Sy - 1, 1, 1, '#1c1a19');
+  }
+  if (L.drift) drawHill(g, L);
+  // surface track
+  if (T >= 2) {
+    box(g, L.sx + 18, Sy - 1, W, 2, '#3b3530');
+    for (let x = L.sx + 18; x < W; x += 3) box(g, x, Sy - 1, 2, 1, '#2a2018');
+    box(g, L.sx + 18, Sy - 2, W, 1, PAL.rail);
+  } else if (has('mineRail')) {
+    box(g, L.adit + 12, Sy - 1, 34, 1, PAL.rail);
+  }
+  if (p.fan) {   // Guibal fan: brick housing and flared evasé chimney
+    const f = p.fan;
+    building(g, f.x - 14, f.y, 12, 10, PAL.brick, { brick: true, roof: 'gable', rh: 4 });
+    g.fillStyle = '#4a3a2e'; g.beginPath(); g.arc(f.x + 6, f.y - 9, 9, Math.PI, 0); g.lineTo(f.x + 15, f.y); g.lineTo(f.x - 3, f.y); g.fill();
+    g.fillStyle = '#5d4a3a'; g.beginPath(); g.moveTo(f.x + 9, f.y - 12); g.lineTo(f.x + 13, f.y - 24); g.lineTo(f.x + 19, f.y - 24); g.lineTo(f.x + 15, f.y - 12); g.fill();
+  }
+  if (!L.drift) {
+    drawHeadframe(g, L);
+    const h = p.hoist, bo = p.boiler;
+    building(g, h.x, Sy, h.w, 22, PAL.brick, { brick: true, roof: 'gable', rh: 7, win: [3, 1, 4, 6, 9, 0, 3, 6], lit: 0.4 });
+    building(g, bo.x, Sy, bo.w, 15, PAL.brickDk, { brick: true, roof: 'flat' });
+    for (const sx of bo.stacks) {
+      for (let k = 0; k < 58; k++) box(g, sx + Math.floor(k / 30), Sy - 15 - k, 5 - Math.floor(k / 30), 1, k % 3 ? PAL.brick : PAL.brickDk);
+      box(g, sx, Sy - 70, 5, 2, '#d6cfc2'); box(g, sx - 1, Sy - 74, 6, 1, '#3a2a22');
+    }
+    line(g, L.sx + 8, Sy - 74, h.x + 6, Sy - 28, '#1e1c1a');   // hoist rope to the engine house
+    if (p.breaker) drawBreaker(g, L, p.breaker);
+    if (p.washery) {
+      const w = p.washery;
+      building(g, w.x, Sy, w.w, 30, '#6d675f', { roof: 'flat', win: [5, 3, 3, 4, 5, 8, 2, 4], lit: 0.25 });
+      box(g, w.x + 4, Sy - 6, w.w - 8, 3, '#5d7c8c');
+    }
+    if (p.prep) {
+      const pp = p.prep;
+      building(g, pp.x, Sy, pp.w, 42, '#5a5e64', { roof: 'flat', roofCol: '#2e3034', win: [5, 6, 3, 4, 5, 6, 3, 2], lit: 0.45 });
+      line(g, pp.x - 10, Sy - 4, pp.x + 2, Sy - 40, '#3d4044');
+    }
+  }
+  if (p.shed) {   // tipple / slate-picking shed
+    const s = p.shed;
+    for (let k = 0; k < 4; k++) box(g, s.x + k * 10, Sy - 14, 2, 14, PAL.timberLo);
+    for (let k = 0; k < 5; k++) box(g, s.x - 2, Sy - 18 + k, s.w + 4 - k, 1, shade('#3c3836', 1 + k * 0.06));
+    box(g, s.x + 2, Sy - 8, s.w - 6, 2, '#4a3a2c');   // picking chute
+    if (has('pickingTable')) for (let k = 0; k < 3; k++) { const bx = s.x + 6 + k * 8; box(g, bx, Sy - 11, 2, 2, PAL.skin); box(g, bx - 1, Sy - 9, 3, 3, '#3a332c'); box(g, bx - 1, Sy - 12, 4, 1, '#2c2723'); }
+  }
+  drawCulm(g, L, p.culm);
+  if (p.pump) {
+    const pu = p.pump;
+    building(g, pu.x, Sy, 12, 9, PAL.brickDk, { brick: true, roof: 'gable', rh: 4 });
+    box(g, pu.x + 12, Sy - 3, 5, 1, '#4c4f54');
+    for (let k = 0; k < 14; k++) box(g, pu.x + 16 + k, Sy, 1, 1, k % 3 ? '#a3542a' : '#c06a34');   // orange mine-water runoff
+  }
+  const o = p.office, oh = 8 + o.floors * 6;
+  building(g, o.x, Sy, o.w, oh, '#b2a58c', { roof: 'gable', rh: 6, roofCol: '#45403c', win: [4, o.floors, 3, 3, 6, 6, 3, 3], lit: 0.45, door: 12 });
+  box(g, o.x - 2, Sy - 7, o.w + 4, 1, '#6b5a46');   // porch roof
+  if (p.aid) { const a = p.aid; building(g, a.x, Sy, a.w, 9, '#cfc8b6', { roof: 'gable', rh: 4 }); box(g, a.x + 6, Sy - 8, 2, 6, '#3a8a3a'); box(g, a.x + 4, Sy - 6, 6, 2, '#3a8a3a'); }
+  const houses = holding('house');
+  for (let i = 0, hx = p.housesX; i < houses && hx + 16 < p.housesEnd; i++, hx += 19) drawDoubleHouse(g, hx, Sy, i);
+}
+function surfaceLayer(L, site, p) {
+  const key = [L.W, L.H, L.Sy, S.tier, site.kind, ...['pickingTable', 'breaker', 'washery', 'prepPlant', 'mineRail'].map(has),
+    upg('vent') > 0, upg('pumps') > 0, upg('safety') > 0, p.office.floors, holding('house'), holding('leased'), holding('division'),
+    Math.floor(Math.log10(1 + S.run.coal) * 2)].join();
+  if (key === Rr.surfKey) return Rr.surf;
+  Rr.surfKey = key;
+  const c = document.createElement('canvas'); c.width = L.W; c.height = L.H;
+  const g = c.getContext('2d');
+  drawSky(g, L); drawBackground(g, L, p); drawSurfaceStatic(g, L, site, p);
+  g.clearRect(0, L.Sy + 2, L.W, L.H);
+  Rr.surf = c; return c;
+}
+
+/* --- underground static: shaft or slope, gangways, timbering, rails --- */
+function drawShaft(g, L, site) {
+  const sx = L.sx, Sy = L.Sy, deep = L.y(site.levels.length - 1) + 8;
+  box(g, sx, Sy, 12, deep - Sy, '#0b0908');
+  for (let y = Sy; y < deep; y += 4) box(g, sx, y, 12, 1, '#2e2216');
+  box(g, sx, Sy, 2, deep - Sy, PAL.timberLo); box(g, sx + 10, Sy, 2, deep - Sy, PAL.timberLo);
+  box(g, sx + 7, Sy, 1, deep - Sy, '#4e3520');
+  for (let y = Sy + 2; y < deep; y += 3) box(g, sx + 8, y, 2, 1, '#6b4a2b');   // ladderway
+  box(g, sx + 2, Sy, 1, deep - Sy, '#55504a'); box(g, sx + 6, Sy, 1, deep - Sy, '#55504a');   // cage guides
+  box(g, sx + 2, deep - 4, 8, 4, '#22374a'); box(g, sx + 2, deep - 4, 8, 1, '#4a6a84');   // sump
+}
+function drawSlope(g, L, site) {
+  const deep = L.y(site.levels.length - 1);
+  for (let y = L.Sy - 15; y <= deep; y++) {
+    const xs = Math.round(slopeX(L, Math.max(L.Sy, y)));
+    for (let x = xs - 7; x < xs + 6; x++) box(g, x, y, 1, 1, hash(x * 7.3 + y * 3.1) > 0.7 ? '#1c1814' : '#141110');
+    box(g, xs + 4, y, 1, 1, PAL.rail);
+    if (y % 9 === 0) { box(g, xs - 7, y, 2, 1, PAL.timber); box(g, xs + 4, y, 2, 1, PAL.timber); box(g, xs - 7, y - 1, 13, 1, PAL.timberLo); }
+  }
+}
+function carveLevel(g, L, site, i) {
+  const y = L.y(i), top = y - L.th, xs = L.drift ? Math.round(slopeX(L, y)) : L.x0, x1 = L.x1, T = S.tier;
+  for (let x = xs; x < x1; x++) {
+    const rt = top + Math.round((noise1(x * 0.11 + i * 31) - 0.5) * 3);
+    const fl = y + Math.round((noise1(x * 0.19 + i * 17) - 0.4) * 1.2);
+    for (let yy = rt; yy < fl; yy++) {
+      const v = hash(x * 7.31 + yy * 3.17 + i);
+      g.fillStyle = v > 0.985 ? '#4a4e58' : v > 0.7 ? '#1c1814' : '#141110';
+      g.fillRect(x, yy, 1, 1);
+    }
+    box(g, x, fl - 2, 1, 2, hash(x * 1.3 + i) < 0.5 ? '#2c241b' : '#33291f');
+    if (noise1(x * 0.05 + i * 3) > 0.8) box(g, x, fl - 2, 1, 1, '#3a4a58');   // puddles
+    box(g, x, rt, 1, 1, '#3a2a1c');
+  }
+  for (let xx = xs + 10; xx < x1 - 16; xx += 22) {   // timber sets: posts, cap, lagging
+    box(g, xx, top + 1, 2, L.th - 1, PAL.timber); box(g, xx + 1, top + 1, 1, L.th - 1, PAL.timberLo);
+    box(g, xx - 2, top, 6, 2, PAL.timberHi); box(g, xx - 1, y - 2, 4, 1, PAL.timberLo);
+    for (let k = 3; k < 21; k += 4) box(g, xx + k, top, 3, 1, '#5a3f27');
+    if (((xx - xs) / 22 | 0) % 3 === 1) { box(g, xx + 10, top - 6, 5, 7, '#0e0b09'); box(g, xx + 10, top - 2, 5, 1, PAL.timberLo); }   // chute into the breast above
+  }
+  if (has('mineRail') || T >= 2) {
+    for (let x = xs; x < x1 - 4; x += 4) box(g, x, y - 1, 3, 1, '#3d2e20');
+    box(g, xs, y - 2, x1 - xs - 4, 1, '#6f6b66');
+  }
+  if (T >= 2) {   // compressed-air line
+    box(g, xs, top + 3, x1 - xs - 8, 1, '#56595f');
+    for (let x = xs + 6; x < x1 - 8; x += 28) box(g, x, top + 2, 1, 3, '#6c7077');
+  }
+  if (T >= 3) for (let xx = xs + 10; xx < x1 - 38; xx += 22) for (let k = 0; k < 22; k++) box(g, xx + k, top + 5 + Math.round(Math.sin(Math.PI * k / 22) * 2), 1, 1, '#1f1f22');
+  if (has('conveyor')) {
+    box(g, xs + 4, y - 7, x1 - xs - 30, 1, '#2a2826');
+    for (let x = xs + 4; x < x1 - 26; x += 6) box(g, x, y - 6, 1, 1, '#6c6a66');
+    for (let x = xs + 6; x < x1 - 26; x += 12) box(g, x, y - 6, 1, 4, '#3a3836');
+  }
+  for (let yy = top; yy < y; yy++) {   // the coal face
+    const w = 3 + Math.round(noise1(yy * 0.4 + i * 5) * 4);
+    box(g, x1 - w, yy, w, 1, '#0d0c0d');
+    if (hash(yy * 3 + i) > 0.7) box(g, x1 - w + 1, yy, 1, 1, '#525866');
+  }
+  for (let k = 0; k < 10; k++) box(g, x1 - 16 + k, y - 1 - Math.round(Math.sin(Math.PI * k / 10) * 3), 1, Math.round(Math.sin(Math.PI * k / 10) * 3) + 1, '#111012');
+  if (!L.drift) { box(g, xs - 2, y - 1, 5, 1, PAL.timber); box(g, xs + 3, top + 4, 6, 3, '#6b4f33'); }
+}
+function underLayer(L, site) {
+  const key = [L.W, L.H, L.Sy, site.id, site.kind, site.levels.length, S.tier, has('mineRail'), has('conveyor'), upg('vent'), upg('pumps')].join();
+  if (key === Rr.underKey) return Rr.under;
+  Rr.underKey = key;
+  const c = document.createElement('canvas'); c.width = L.W; c.height = L.H;
+  const g = c.getContext('2d');
+  g.drawImage(Rr.strata, 0, 0);
+  if (L.drift) drawSlope(g, L, site); else drawShaft(g, L, site);
+  for (let i = 0; i < site.levels.length; i++) carveLevel(g, L, site, i);
+  const n = site.levels.length;
+  if (n < maxLevelsByKind(site)) {
+    const y = L.y(n), xs = L.drift ? Math.round(slopeX(L, y)) : L.x0;
+    g.strokeStyle = levelBlock(site) ? 'rgba(170,120,90,.28)' : 'rgba(255,190,100,.5)'; g.setLineDash([3, 3]);
+    g.strokeRect(xs + 0.5, y - L.th + 0.5, L.x1 - xs - 1, L.th - 1); g.setLineDash([]);
+  }
+  Rr.under = c; return c;
+}
+
+/* --- people, animals, machines --- */
+function drawMiner(c, x, b, role, o) {
+  x = Math.round(x); b = Math.round(b);
+  const f = o.face || 1, fr = o.frame || 0, hard = S.tier >= 3;
+  const shirt = PAL.role[role], dark = shade(shirt, 0.72);
+  const hat = role === 'safety' ? '#e9e4d6' : role === 'foreman' ? '#d8cfb8' : hard ? '#c9a94a' : '#2c2723';
+  if (o.hurt) {
+    box(c, x - 6, b - 3, 9, 3, shirt); box(c, x - 6, b - 2, 4, 2, PAL.trousers);
+    box(c, x + 3, b - 4, 3, 3, PAL.skin); box(c, x + 3, b - 5, 3, 1, hat);
+    box(c, x - 2, b - 8, 1, 3, '#c33'); box(c, x - 3, b - 7, 3, 1, '#c33');
+    return;
+  }
+  const walking = o.act === 'walk' || o.act === 'push';
+  const lg = walking ? [0, 1, 0, -1][fr % 4] : 0;
+  const lean = o.act === 'push' ? f : o.act === 'shovel' && fr % 2 ? f : 0;
+  box(c, x - 2 + lg, b - 5, 2, 4, PAL.trousers); box(c, x + 1 - lg, b - 5, 2, 4, shade(PAL.trousers, 0.8));
+  box(c, x - 2 + lg, b - 1, 3, 1, PAL.boots); box(c, x + 1 - lg, b - 1, 3, 1, PAL.boots);
+  const tx = x - 2 + lean;
+  box(c, tx, b - 10, 5, 5, shirt); box(c, f > 0 ? tx : tx + 4, b - 10, 1, 5, dark);
+  box(c, tx, b - 6, 5, 1, '#1d1915');
+  if (role === 'foreman') box(c, tx + 1, b - 10, 3, 4, '#3a3530');
+  if (role === 'safety') box(c, f > 0 ? tx : tx + 4, b - 9, 1, 2, '#e8822e');
+  if (role === 'geologist') box(c, f > 0 ? tx : tx + 3, b - 7, 2, 2, '#6b4a2b');
+  box(c, tx + 2, b - 8, 1, 1, shade(shirt, 0.6));
+  const hx = x - 1 + lean;
+  box(c, hx, b - 13, 3, 3, PAL.skin); box(c, f > 0 ? hx + 2 : hx, b - 12, 1, 1, PAL.grime);
+  box(c, hx - 1, b - 14, 5, 1, hat); box(c, hx, b - 15, 3, 1, hat);
+  const lx = hx + 1 + f * 2;
+  if (hard) box(c, lx, b - 14, 1, 1, '#fff7d0');
+  else { box(c, lx, b - 15, 1, 2, '#c9a24a'); box(c, lx, b - 16, 1, 1, Math.random() < 0.85 ? '#ffcc66' : '#ff9a3a'); }
+  const shx = x + lean + f, shy = b - 9;
+  if (o.act === 'dig') {
+    if (o.tool >= 1) {
+      const j = fr % 2, dx = shx + f * 2;
+      box(c, shx, shy, 2 * f, 1, shirt);
+      box(c, f > 0 ? dx : dx - 6, shy - 1, 6, 2, '#6d7076'); box(c, f > 0 ? dx + 6 + j : dx - 9 - j, shy, 3, 1, '#a0a4aa');
+      if (o.tool >= 2) line(c, dx - f, shy + 1, dx - f * 9, b - 1, '#1a1a1a');
+    } else {
+      const P = [[-2, -7], [2, -7], [6, -2], [5, 1]][fr % 4];
+      const ex = shx + P[0] * f, ey = shy + P[1];
+      line(c, shx, shy, ex, ey, '#7a5a3a');
+      box(c, ex - 1, ey - (P[1] < -3 ? 0 : 1), 3, 1, '#9aa0a6'); box(c, ex + f, ey, 1, 2, '#9aa0a6');
+    }
+  } else if (o.act === 'push') box(c, shx, shy, 3 * f, 1, shirt);
+  else if (o.act === 'shovel') { const P = fr % 2 ? [5, 2] : [3, -3]; line(c, shx, shy, shx + P[0] * f, shy + P[1], '#7a5a3a'); box(c, shx + P[0] * f, shy + P[1], 2, 1, '#8a8e94'); }
+  else if (o.act === 'idle') {
+    if (role === 'foreman') box(c, shx + f, shy - 1, 2, 3, '#e8e2d0');
+    else if (role === 'geologist') { const up = fr % 2; line(c, shx, shy, shx + f * 3, shy - 2 - up, '#7a5a3a'); box(c, shx + f * 3, shy - 3 - up, 1, 2, '#9aa0a6'); }
+    else if (role === 'engineer') box(c, shx + f, shy, 3 * f, 1, '#8a8e94');
+    else if (role === 'safety') { box(c, shx + f, shy - 3, 1, 3, shirt); box(c, shx + f, shy - 5, 2, 2, '#c9a24a'); lamp(shx + f, shy - 4, 14, 'warm', 0.7); }
+    else box(c, shx, shy, 1, 3, shirt);
+  } else box(c, shx, shy, 1, 3, shirt);
+  lamp(lx, b - 15, 24, hard ? 'cool' : 'warm', 1);
+}
+function drawCar(c, x, b, full, steel) {
+  x = Math.round(x);
+  const body = steel ? '#6d7075' : '#7a5a40';
+  box(c, x - 6, b - 8, 12, 5, body); box(c, x - 7, b - 8, 14, 1, shade(body, 1.3)); box(c, x - 6, b - 4, 12, 1, shade(body, 0.7));
+  box(c, x - 3, b - 8, 1, 5, '#2f2c2a'); box(c, x + 2, b - 8, 1, 5, '#2f2c2a');
+  box(c, x - 5, b - 3, 3, 3, '#1a1918'); box(c, x + 2, b - 3, 3, 3, '#1a1918');
+  box(c, x - 4, b - 2, 1, 1, '#77736c'); box(c, x + 3, b - 2, 1, 1, '#77736c');
+  if (full) { box(c, x - 5, b - 9, 10, 1, '#121113'); box(c, x - 3, b - 10, 6, 1, '#121113'); box(c, x - 1, b - 11, 2, 1, '#121113'); box(c, x, b - 10, 1, 1, '#5a5f6a'); }
+}
+function drawMule(c, x, b, f, fr) {
+  x = Math.round(x);
+  const col = '#7a5a44', dk = '#4a3628', lo = [0, 1, 0, -1][fr % 4];
+  lamp(x + f * 8, b - 11, 16, 'warm', 0.7);
+  box(c, x - 5 + lo, b - 4, 1, 4, dk); box(c, x - 3 - lo, b - 4, 1, 4, dk); box(c, x + 3 + lo, b - 4, 1, 4, dk); box(c, x + 5 - lo, b - 4, 1, 4, dk);
+  box(c, x - 6, b - 8, 13, 4, col); box(c, x - 6, b - 8, 13, 1, shade(col, 1.25)); box(c, x - 6, b - 5, 13, 1, shade(col, 0.8));
+  const hx = f > 0 ? x + 6 : x - 9;
+  box(c, hx, b - 11, 4, 3, col); box(c, f > 0 ? hx + 3 : hx, b - 10, 1, 2, shade(col, 0.7));
+  box(c, f > 0 ? hx : hx + 3, b - 14, 1, 3, dk); box(c, f > 0 ? hx + 1 : hx + 2, b - 13, 1, 2, dk);
+  box(c, f > 0 ? x - 7 : x + 7, b - 8, 1, 4, dk);
+}
+function drawCutter(c, xFace, b, t, robot) {
+  const x = xFace - 32, col = robot ? '#4f6c84' : '#b8983a';
+  box(c, x, b - 11, 22, 7, col); box(c, x, b - 10, 22, 1, shade(col, 1.25)); box(c, x, b - 5, 22, 1, shade(col, 0.6));
+  box(c, x + 1, b - 4, 20, 3, '#232221');
+  for (let k = 0; k < 6; k++) box(c, x + 2 + ((k * 3 + Math.floor(t * 6)) % 18), b - 3, 1, 1, '#55524e');
+  if (robot) { box(c, x + 6, b - 13, 3, 2, '#2a2a2c'); box(c, x + 7, b - 14, 1, 1, Math.floor(t * 2) % 2 ? '#7cff7c' : '#2a5a2a'); }
+  else box(c, x + 4, b - 15, 6, 4, '#3a3a3c');
+  lamp(x + 12, b - 12, 26, 'cool', 0.9);
+  box(c, x + 22, b - 11, xFace - 7 - (x + 22), 4, shade(col, 0.85));
+  const cx = xFace - 4, cy = b - 9;
+  c.fillStyle = '#4a4a4c'; c.beginPath(); c.arc(cx, cy, 4, 0, 7); c.fill();
+  for (let k = 0; k < 8; k++) { const a = t * 9 + k * Math.PI / 4; box(c, cx + Math.cos(a) * 4, cy + Math.sin(a) * 4, 1, 1, '#c8c8c8'); }
+  if (Math.random() < 0.4) Rr.parts.push({ x: cx - 2, y: cy + rand(-3, 3), vx: -rand(0.2, 0.7), vy: -rand(0, 0.3), life: 30, max: 30, col: '30,30,32', s: 1, grav: true });
+}
+function drawLoco(c, x, b) {
+  x = Math.round(x);
+  box(c, x, b - 11, 18, 7, '#1d1d21'); box(c, x, b - 11, 18, 1, '#3a3a40'); box(c, x + 16, b - 12, 3, 8, '#151518');
+  box(c, x + 13, b - 16, 3, 5, '#151518'); box(c, x + 12, b - 17, 5, 1, '#2a2a2e');
+  box(c, x - 6, b - 15, 7, 11, '#2a1e1a'); box(c, x - 5, b - 13, 3, 3, '#d9a75a');
+  box(c, x - 6, b - 4, 26, 1, '#7a2a1c');
+  for (let k = 0; k < 3; k++) { c.fillStyle = '#7a2a1c'; c.beginPath(); c.arc(x + 3 + k * 5, b - 2, 2, 0, 7); c.fill(); box(c, x + 3 + k * 5, b - 2, 1, 1, '#d0c8b8'); }
+  box(c, x + 19, b - 9, 1, 2, '#ffd27a'); lamp(x + 22, b - 8, 10, 'warm', 0.8);
+  if (Math.random() < 0.45) puff(x + 14, b - 18, Math.random() < 0.4, 3);
+}
+
+/* --- per-frame drawing --- */
+function drawSurfaceDynamic(c, t, L, site, p) {
+  const Sy = L.Sy;
+  if (!L.drift) {
+    const cx = L.sx + 7, cy = Sy - 72;
+    c.fillStyle = '#88837a'; c.beginPath(); c.arc(cx, cy, 6, 0, 7); c.fill();
+    c.fillStyle = '#24201c'; c.beginPath(); c.arc(cx, cy, 5, 0, 7); c.fill();
+    for (let k = 0; k < 4; k++) { const a = t * 2.4 + k * Math.PI / 4; line(c, cx - Math.cos(a) * 5, cy - Math.sin(a) * 5, cx + Math.cos(a) * 5, cy + Math.sin(a) * 5, '#88837a'); }
+    box(c, cx, cy, 1, 1, '#b0a898');
+    for (const sx of p.boiler.stacks) if (Math.random() < 0.3) puff(sx + 2, Sy - 75, false, 4);
+    if (Math.random() < 0.05) puff(p.hoist.x + p.hoist.w - 4, Sy - 30, true, 3);
+    // a trip of cars waiting under the breaker pockets
+    const cars = Math.min(6, 2 + Math.floor(upg('haulage') / 5));
+    const bx = p.breaker ? p.breaker.x + 8 : (p.shed ? p.shed.x + 8 : L.sx + 90);
+    for (let k = 0; k < cars; k++) drawCar(c, bx + k * 13, Sy - 1, true, S.tier >= 3);
+  } else {
+    if (Math.random() < 0.06) puff(p.office.x + 4, Sy - 22, false, 3);
+    if (has('mineRail')) drawCar(c, L.adit + 16 + (Math.sin(t * 0.6) * 0.5 + 0.5) * 22, Sy - 1, true, false);
+    else { box(c, L.adit + 18, Sy - 4, 6, 2, '#5a4632'); box(c, L.adit + 17, Sy - 2, 2, 2, '#1a1918'); box(c, L.adit + 23, Sy - 6, 4, 1, '#5a4632'); }
+  }
+  if (p.fan) {
+    const fx = p.fan.x + 6, fy = p.fan.y - 9;
+    for (let k = 0; k < 3; k++) { const a = t * (3 + upg('vent')) + k * Math.PI / 3; line(c, fx - Math.cos(a) * 7, fy - Math.sin(a) * 7, fx + Math.cos(a) * 7, fy + Math.sin(a) * 7, '#7a6a58'); }
+  }
+  if (p.plant) for (let k = 0; k < p.plant.stacks; k++) if (Math.random() < 0.18) puff(p.plant.x + 6 + k * 10, Sy - 74, false, 5);
+  if (S.tier >= 3 && Math.random() < 0.04) puff(p.culm.x + p.culm.w * rand(0.3, 0.7), Sy - p.culm.h * 0.6, false, 3);   // culm fires
+  if (S.tier >= 3) {
+    const span = L.W + 140, x = ((t * 16) % span) - 110;
+    drawLoco(c, x + 90, Sy - 1);
+    for (let k = 0; k < 4 + Math.min(4, holding('rail')); k++) drawCar(c, x + 76 - k * 14, Sy - 1, true, true);
+  }
+  if (p.sea) {
+    const ships = Math.min(3, 1 + holding('carrier'));
+    for (let i = 0; i < ships; i++) {
+      const x = p.sea.x + 6 + ((t * 1.5 + i * 23) % (L.W - p.sea.x - 10));
+      box(c, x, Sy - 9, 22, 4, '#3a2420'); box(c, x, Sy - 6, 22, 1, '#7a2a1c'); box(c, x + 16, Sy - 14, 5, 5, '#e2ddd2'); box(c, x + 17, Sy - 17, 2, 3, '#2a2a2a');
+      for (let k = 0; k < 3; k++) box(c, x + 3 + k * 4, Sy - 10, 3, 1, '#1a1a1c');
+    }
+    for (let x = p.sea.x; x < L.W; x += 5) box(c, x + Math.floor(t * 4) % 5, Sy - 3, 2, 1, 'rgba(255,255,255,.18)');
+  }
+  if (site.haltUntil > S.time && site.haltKind === 'strike') {
+    for (let k = 0; k < 7; k++) {
+      const x = p.office.x - 10 + k * 6 + Math.round(Math.sin(t * 1.5 + k));
+      drawMiner(c, x, Sy, 'digger', { face: k % 2 ? 1 : -1, frame: Math.floor(t * 3 + k), act: 'walk' });
+      box(c, x - 2, Sy - 22, 6, 4, '#e8e0cc'); box(c, x, Sy - 18, 1, 4, '#6b4a2b');
+    }
+  }
+}
+function drawUnderDynamic(c, t, site, L) {
+  const n = site.levels.length, tool = toolTierNow();
+  if (!L.drift) {
+    const deep = L.y(n - 1), ph = 0.5 - 0.5 * Math.cos(t * 0.45);
+    const cy = Math.round(L.Sy - 2 + ph * (deep - L.Sy + 2));
+    box(c, L.sx + 4, L.Sy - 66, 1, cy - 9 - (L.Sy - 66), '#1e1c1a');
+    box(c, L.sx + 2, cy - 10, 5, 10, '#6a5a48'); box(c, L.sx + 2, cy - 10, 5, 1, '#8a7a64'); box(c, L.sx + 3, cy - 8, 3, 6, '#1a1512');
+    lamp(L.sx + 4, cy - 6, 14, 'warm', 0.8);
+  }
+  for (let i = 0; i < n; i++) drawLevelDyn(c, t, site, i, L, tool);
+}
+function drawLevelDyn(c, t, site, i, L, tool) {
+  const lv = site.levels[i], y = L.y(i), top = y - L.th, x1 = L.x1, T = S.tier;
+  const xs = L.drift ? Math.round(slopeX(L, y)) : L.x0;
+  const nl = 1 + Math.min(upg('lighting'), 10), elec = T >= 3, lr = upg('lighting') * 2.5;
+  for (let k = 0; k < nl; k++) {
+    const lx = Math.round(xs + 12 + (k + 0.5) * (x1 - xs - 30) / nl);
+    if (elec) { box(c, lx, top + 5, 2, 2, '#fff2c4'); lamp(lx + 1, top + 6, 28 + lr, 'cool', 0.85); }
+    else { box(c, lx, top + 2, 1, 2, '#9c7a3c'); box(c, lx, top + 4, 1, 1, hash(Math.floor(t * 8) + k + i) > 0.3 ? '#ffcf70' : '#ff9f40'); lamp(lx, top + 4, 20 + lr, 'warm', 0.75); }
+  }
+  if (!L.drift) lamp(xs + 3, top + 6, 16, 'warm', 0.7);
+  const crew = S.workers.filter(w => w.site === site.id && w.li === i);
+  const halted = lv.haltUntil > S.time || site.haltUntil > S.time;
+  const kind = lv.haltUntil > S.time ? lv.haltKind : site.haltKind;
+  const rich = lv.richUntil > S.time;
+  const active = crew.filter(w => w.injuredUntil <= S.time);
+  const diggers = active.filter(w => w.role === 'digger'), haulers = active.filter(w => w.role === 'hauler');
+  const support = active.filter(w => w.role !== 'digger' && w.role !== 'hauler');
+  for (const w of crew) if (w.injuredUntil > S.time) drawMiner(c, xs + 16 + (w.id * 13) % Math.max(10, x1 - xs - 50), y - 1, w.role, { hurt: true });
+  if (halted && kind !== 'strike') {
+    active.forEach((w, k) => drawMiner(c, xs + 8 + k * 6, y - 1, w.role, { face: -1, frame: 0, act: 'idle' }));
+  } else if (!halted) {
+    const machine = tool >= 3 && diggers.length;
+    if (machine) drawCutter(c, x1, y - 1, t, tool >= 4);
+    diggers.forEach((w, k) => {
+      const x = machine ? x1 - 40 - k * 8 : x1 - 9 - k * 8;
+      const fr = Math.floor(t * (tool ? 8 : 3) + w.id * 1.7);
+      drawMiner(c, x, y - 1, w.role, { face: 1, frame: fr, act: machine ? 'idle' : 'dig', tool });
+      if (!machine && fr % 4 === 2 && Math.random() < 0.15) Rr.parts.push({ x: x1 - 4, y: y - 6, vx: -rand(0.2, 0.6), vy: -rand(0.2, 0.6), life: 24, max: 24, col: '20,20,22', s: 1, grav: true });
+    });
+    const muleEra = T >= 2 && !has('conveyor');
+    haulers.forEach((w, k) => {
+      const fr = Math.floor(t * 6 + w.id);
+      if (has('conveyor')) {
+        const x = xs + 20 + (k + 0.5) * (x1 - xs - 70) / Math.max(1, haulers.length);
+        drawMiner(c, x, y - 1, w.role, { face: 1, frame: Math.floor(t * 2.5 + w.id), act: 'shovel' });
+        return;
+      }
+      const span = Math.max(20, (x1 - 24 - diggers.length * 8) - (xs + 20));
+      const ph = ((t * (muleEra ? 0.05 : 0.08) * (1 + upg('haulage') * 0.02) + k * 0.37 + w.id * 0.13) % 2 + 2) % 2;
+      const toFace = ph < 1, face = toFace ? 1 : -1;
+      const x = xs + 20 + (toFace ? ph : 2 - ph) * span;
+      if (muleEra) {
+        drawMule(c, x, y - 1, face, fr);
+        drawCar(c, x - face * 14, y - 1, !toFace, false); drawCar(c, x - face * 27, y - 1, !toFace, false);
+        drawMiner(c, x - face * 36, y - 1, w.role, { face, frame: fr, act: 'walk' });
+      } else {
+        drawCar(c, x + face * 8, y - 1, !toFace, false);
+        drawMiner(c, x, y - 1, w.role, { face, frame: fr, act: 'push' });
+      }
+    });
+    support.forEach((w, k) => {
+      const x = Math.round(xs + 26 + (k + 0.5) * Math.max(14, x1 - xs - 110) / support.length);
+      drawMiner(c, x, y - 1, w.role, { face: w.id % 2 ? 1 : -1, frame: Math.floor(t * 1.5 + w.id), act: 'idle' });
+    });
+    if (active.length && Math.random() < 0.08) Rr.parts.push({ x: rand(xs, x1), y: rand(top + 2, y - 2), vx: rand(-0.04, 0.04), vy: rand(-0.03, 0.02), life: 160, max: 160, col: '255,214,160', s: 1, a: 0.5 });
+  }
+  if (Math.random() < 0.01) Rr.parts.push({ x: rand(xs + 4, x1 - 4), y: top + 1, vx: 0, vy: 0.2, life: 30, max: 30, col: '120,160,190', s: 1, grav: true });
+  if (rich) {
+    for (let k = 0; k < L.th; k += 2) if (hash(k + i * 7 + Math.floor(t * 6)) < 0.5) box(c, x1 - 3 + (k % 3), top + k, 1, 1, '#ffd75a');
+    lamp(x1 - 3, top + L.th / 2, 18, 'warm', 0.9);
+    if (Math.random() < 0.25) Rr.parts.push({ x: x1 - 3, y: top + rand(1, L.th - 1), vx: -rand(0.1, 0.4), vy: -rand(0, 0.2), life: 30, max: 30, col: '255,215,90', s: 1 });
+  }
+  if (halted) {
+    if (kind === 'cavein') {
+      const mx = Math.round((xs + x1) / 2) + 10;
+      for (let k = -18; k < 18; k++) {
+        const h = Math.round((L.th + 2) * (1 - Math.abs(k) / 18) + (hash(k + i) - 0.5) * 3);
+        for (let j = 0; j < h; j++) box(c, mx + k, y - j, 1, 1, hash(k * 3.1 + j * 7.3) < 0.3 ? '#6a5f52' : hash(k + j) < 0.6 ? '#4a3d30' : '#3a3026');
+      }
+      line(c, mx - 12, y - 2, mx + 6, top + 2, PAL.timber); line(c, mx + 2, y - 1, mx + 15, top + 4, PAL.timberLo);
+    } else if (kind === 'flood') {
+      const lvl = Math.round(L.th * 0.7 + Math.sin(t * 2) * 0.6);
+      box(c, xs, y - lvl, x1 - xs, lvl, 'rgba(48,82,104,.88)');
+      for (let x = xs + Math.floor(t * 5) % 5; x < x1; x += 5) box(c, x, y - lvl, 2, 1, 'rgba(180,210,230,.35)');
+    } else if (kind === 'gas') {
+      c.fillStyle = `rgba(140,170,90,${0.2 + Math.sin(t * 3) * 0.06})`; c.fillRect(xs, top, x1 - xs, L.th);
+    }
+  }
+}
+function drawLighting(c, L, site) {
+  const lc = Rr.lctx, W = L.W, H = L.H, Sy = L.Sy;
+  lc.globalCompositeOperation = 'source-over';
+  lc.clearRect(0, 0, W, H);
+  // the rock face of the cutaway stays readable; the workings themselves are near-black
+  const g = lc.createLinearGradient(0, Sy, 0, H);
+  g.addColorStop(0, 'rgba(4,3,2,0.25)'); g.addColorStop(1, 'rgba(4,3,2,0.6)');
+  lc.fillStyle = g; lc.fillRect(0, Sy + 2, W, H - Sy - 2);
+  lc.fillStyle = 'rgba(4,3,2,0.8)';
+  for (let i = 0; i < site.levels.length; i++) {
+    const y = L.y(i), xs = L.drift ? Math.round(slopeX(L, y)) : L.x0;
+    lc.fillRect(xs, y - L.th - 2, L.x1 - xs, L.th + 3);
+  }
+  if (!L.drift) lc.fillRect(L.sx, Sy + 2, 12, L.y(site.levels.length - 1) + 8 - Sy);
+  lc.globalCompositeOperation = 'destination-out';
+  for (const l of Rr.lamps) { if (l.y < Sy) continue; lc.globalAlpha = l.a; lc.drawImage(Rr.spr.hole, l.x - l.r, l.y - l.r, l.r * 2, l.r * 2); }
+  lc.globalAlpha = 1;
+  c.drawImage(Rr.light, 0, 0);
+  c.globalCompositeOperation = 'lighter';
+  for (const l of Rr.lamps) { const r = l.r * 0.75; c.globalAlpha = 0.6 * l.a; c.drawImage(l.k === 'cool' ? Rr.spr.cool : Rr.spr.warm, l.x - r, l.y - r, r * 2, r * 2); }
+  c.globalAlpha = 1; c.globalCompositeOperation = 'source-over';
+}
+function drawParticles(c) {
+  const ps = Rr.parts;
+  for (let i = ps.length - 1; i >= 0; i--) {
+    const p = ps[i];
+    p.x += p.vx; p.y += p.vy; if (p.grav) p.vy += 0.05;
+    if (--p.life <= 0) { ps.splice(i, 1); continue; }
+    if (p.smoke || p.steam) {
+      p.s += p.grow; p.vx += 0.002;
+      c.globalAlpha = (p.life / p.max) * p.a;
+      c.drawImage(p.steam ? Rr.spr.steam : Rr.spr.smoke, p.x - p.s / 2, p.y - p.s / 2, p.s, p.s);
+      c.globalAlpha = 1;
+    } else {
+      const a = (p.a || 1) * Math.min(1, p.life / p.max * 2);
+      c.fillStyle = `rgba(${p.col},${a})`; c.fillRect(Math.round(p.x), Math.round(p.y), Math.round(p.s), Math.round(p.s));
+    }
+  }
+  if (ps.length > 500) ps.splice(0, ps.length - 500);
+}
+function drawScene(t) {
+  const c = Rr.ctx, site = viewSite(), L = layout(site), p = surfacePlan(L);
+  Rr.lamps = [];
+  buildStrata();
+  c.drawImage(underLayer(L, site), 0, 0);
+  c.drawImage(surfaceLayer(L, site, p), 0, 0);
+  drawSurfaceDynamic(c, t, L, site, p);
+  drawUnderDynamic(c, t, site, L);
+  drawParticles(c);
+  drawLighting(c, L, site);
+}
+
+/* =====================================================================
+   6. UI — top bar, tabs, cards, modals, toasts
+   ===================================================================== */
+const ui = { tab: 'workers', dirty: true, crewFilter: 'all', fireArm: 0, fireAt: 0 };
+const TABS = [['workers', 'Workers'], ['upgrades', 'Upgrades'], ['sites', 'Sites'], ['events', 'Events'], ['prestige', 'Prestige'], ['records', 'Records'], ['settings', '⚙']];
+
+function toast(msg, kind) {
+  if (RT.sim) return;
+  const el = document.createElement('div'); el.className = 'toast ' + (kind || ''); el.textContent = msg;
+  const box = $('#toasts'); box.appendChild(el);
+  while (box.children.length > (innerWidth < 820 ? 2 : 4)) box.firstChild.remove();
+  setTimeout(() => el.remove(), 4500);
+}
+function shake() {
+  if (RT.sim || !S.meta.settings.shake) return;
+  const v = $('#view'); v.classList.remove('shake'); void v.offsetWidth; v.classList.add('shake');
+}
+function showModal(html) { const m = $('#modal'); m.querySelector('.box').innerHTML = html; m.hidden = false; }
+function closeModal() { $('#modal').hidden = true; }
+function floatText(clientX, clientY, text, cls) {
+  const r = $('#view').getBoundingClientRect();
+  const el = document.createElement('div'); el.className = 'float ' + (cls || '');
+  el.textContent = text; el.style.left = (clientX - r.left) + 'px'; el.style.top = (clientY - r.top - 10) + 'px';
+  $('#floaters').appendChild(el); setTimeout(() => el.remove(), 1000);
+}
+
+function traitChip(k) {
+  const t = CONFIG.traits[k]; const cls = t.cost > 1.1 ? 'pos' : t.cost < 0.95 ? 'neg' : 'mix';
+  return `<span class="trait ${cls}" title="${esc(t.desc)}">${esc(t.name)}</span>`;
+}
+function traitList(keys) {
+  return `<div class="traits">${keys.map(k => `<div class="tr">${traitChip(k)}<span class="trdesc">${esc(CONFIG.traits[k].desc)}</span></div>`).join('')}</div>`;
+}
+function roleLabel(role) { const r = CONFIG.roles[role]; return `${r.icon} ${r.name}`; }
+function costBtn(act, cost, label, attrs, cls) {
+  return `<button class="${cls || ''}" data-act="${act}" data-cost="${cost}" ${attrs || ''}>${label} ${money(cost)}</button>`;
+}
+
+function renderTabs() {
+  $('#tabs').innerHTML = TABS.map(([k, n]) => `<button data-act="tab" data-tab="${k}" class="${ui.tab === k ? 'on' : ''}">${n}${k === 'events' && S.ev.cur ? '<span class="dot"></span>' : ''}${k === 'upgrades' && canTierUp() ? '<span class="dot"></span>' : ''}</button>`).join('');
+}
+function renderPanel() {
+  ui.dirty = false;
+  renderTabs();
+  const body = $('#tabBody'); const st = body.scrollTop;
+  body.innerHTML = ({ workers: tabWorkers, upgrades: tabUpgrades, sites: tabSites, events: tabEvents, prestige: tabPrestige, records: tabRecords, settings: tabSettings })[ui.tab]();
+  body.scrollTop = st;
+  renderSiteBar();
+  refreshUI();
+}
+
+function tabWorkers() {
+  const d = D;
+  let h = `<div class="card"><div class="row sp"><span>Crew <b>${d.workers}</b> / ${d.cap} slots</span><span>Wages <b class="bad">${money(d.wages)}/s</b></span></div>
+    ${d.workers >= d.cap ? '<div class="bad" style="margin-top:4px">All slots full. Open a new level in the Sites tab.</div>' : ''}
+    <div class="payrow"><span>Pay rate <b data-bind="payPct"></b> <span class="faint" data-bind="payMood"></span></span>
+      <input type="range" data-pay min="${CONFIG.pay.min}" max="${CONFIG.pay.max}" step="${CONFIG.pay.step}" value="${S.pay}" aria-label="Crew pay rate"></div>
+    <div class="wstat" data-bind="payInfo"></div></div>`;
+  h += `<h3>Hiring pool</h3><div class="row sp" style="margin-bottom:6px"><span class="dim">New faces in <span data-bind="poolRefresh"></span></span>
+    ${costBtn('reroll', rerollCost(), 'Reroll', '', 'small')}</div><div class="grid2">`;
+  S.pool.slots.forEach((sl, i) => {
+    if (!sl.c) { h += `<div class="wcard empty">Next applicant in <span data-bind="arrive" data-i="${i}"></span></div>`; return; }
+    const c = sl.c, r = CONFIG.roles[c.role];
+    const fakeW = { role: c.role, lvl: 1, wageMult: 1, traits: c.traits };
+    h += `<div class="wcard" style="--rc:${r.color}"><div><div class="wname">${esc(c.name)}</div><div class="wrole">${roleLabel(c.role)}</div></div>
+      ${traitList(c.traits)}
+      <div class="wstat" title="${esc(r.desc)}">${esc(r.desc)}<br>Wage ${money(wageOf(fakeW))}/s</div>
+      ${costBtn('hire', hireCost(c), 'Hire', `data-i="${i}"`, 'primary')}</div>`;
+  });
+  h += `</div><h3>Your crew</h3>`;
+  if (!S.workers.length) return h + '<p class="dim">Nobody yet. Click the mine to dig some coal, sell it, then hire a Digger.</p>';
+  const opts = [];
+  for (const s of S.sites) s.levels.forEach((_, li) => opts.push([s.id, li, `${s.name} L${li + 1}`]));
+  for (const s of S.sites) s.levels.forEach((lv, li) => {
+    const crew = S.workers.filter(w => w.site === s.id && w.li === li);
+    if (!crew.length) return;
+    const ld = D.sites[s.id].levels[li];
+    h += `<div class="lvlhead"><span>${esc(s.name)} · Level ${li + 1} (${(li + 1) * 120} ft)</span><span>${crew.length}/${levelCap(s)} · dig ${fmt(ld.dig)}/s</span></div><div class="grid2">`;
+    for (const w of crew) {
+      const r = CONFIG.roles[w.role];
+      const sel = `<select data-assign="${w.id}">${opts.map(([sid, l, n]) => `<option value="${sid}:${l}" ${sid === w.site && l === w.li ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select>`;
+      const maxed = w.lvl >= CONFIG.workerLevel.max;
+      h += `<div class="wcard" data-wcard="${w.id}" style="--rc:${r.color}"><div class="row sp"><div class="grow"><div class="wname">${esc(w.name)}</div><div class="wrole">${roleLabel(w.role)} · Lv ${w.lvl}</div></div></div>
+        ${traitList(w.traits)}
+        <div class="wstat" data-bind="wstat" data-w="${w.id}"></div>
+        <div class="wbtns">${maxed ? '<span class="dim">Max level</span>' : costBtn('promote', promoteCost(w), 'Promote', `data-w="${w.id}"`, 'small')}
+        <button class="small danger" data-act="fire" data-w="${w.id}">${ui.fireArm === w.id ? 'Sure?' : 'Fire'}</button></div>
+        <div>${sel}</div></div>`;
+    }
+    h += '</div>';
+  });
+  return h;
+}
+
+function tierCard() {
+  const nt = nextTier();
+  if (!nt) return `<div class="card"><b class="lampc">${esc(tierInfo(S.tier).name)}</b><div class="dim">The top of the heap. Sell the company to go again with a bigger multiplier.</div></div>`;
+  return `<div class="card"><div class="row sp"><b class="lampc">Next: ${esc(nt.name)}</b><span class="tag">Tier ${S.tier + 1}</span></div>
+    <div class="dim" style="margin:3px 0 6px">${esc(nt.desc)}</div>
+    <div class="row sp"><span>Coal mined this run</span><span data-bind="tierCoal"></span></div><div class="bar"><i data-prog="tierCoal"></i></div>
+    <div class="row sp"><span>Money</span><span data-bind="tierMoney"></span></div><div class="bar"><i data-prog="tierMoney"></i></div>
+    <button class="primary" data-act="tierUp" data-tier="1" style="width:100%;margin-top:4px">${esc(nt.buy)} — ${money(nt.req.money)}</button></div>`;
+}
+function tabUpgrades() {
+  let h = tierCard();
+  const cats = [...new Set(CONFIG.upgrades.map(u => u.cat))];
+  for (const cat of cats) {
+    h += `<h3>${esc(cat)}</h3><div class="card" style="padding:2px 10px">`;
+    for (const u of CONFIG.upgrades.filter(u => u.cat === cat && upgVisible(u))) {
+      const l = upg(u.id), locked = S.tier < u.tier, maxed = upgMaxed(u);
+      const lvlTxt = u.once ? '' : `<span class="tag">${l}/${u.max}</span>`;
+      const desc = u.once ? u.desc() : u.desc(l) + (maxed ? '' : ` <span class="faint">→ next: ${u.desc(l + 1).split(' · ')[0]}</span>`);
+      let btn;
+      if (maxed) btn = `<span class="good">${u.once ? 'Owned' : 'Max'}</span>`;
+      else if (locked) btn = `<span class="faint">Tier ${u.tier}</span>`;
+      else btn = costBtn('buyUp', upgCost(u), 'Buy', `data-id="${u.id}"`, 'small');
+      h += `<div class="up ${locked ? 'locked' : ''} ${maxed && u.once ? 'owned' : ''}"><div class="grow"><div class="nm">${esc(u.name)}${lvlTxt}</div><div class="ds">${desc}</div></div>${btn}</div>`;
+    }
+    h += '</div>';
+  }
+  return h;
+}
+
+function tabSites() {
+  let h = '';
+  for (const s of S.sites) {
+    const sd = D.sites[s.id];
+    const blk = levelBlock(s);
+    h += `<div class="card"><div class="row sp"><b>${esc(s.name)}</b><span class="dim">${s.kind === 'drift' ? 'Drift mine' : 'Colliery'}</span>
+      <span class="wbtns"><button class="small" data-act="renameSite" data-site="${s.id}" title="Rename this mine">✎ Rename</button>
+      <button class="small" data-act="viewSite" data-site="${s.id}" ${S.viewSite === s.id ? 'disabled' : ''}>${S.viewSite === s.id ? 'Viewing' : 'View'}</button></span></div>
+      <div class="row sp" style="margin:5px 0"><span>Dig <b>${fmt(sd.dig)}</b>/s</span><span>Haul <b>${fmt(sd.haul)}</b>/s</span><span>Out <b class="lampc">${fmt(sd.out)}</b>/s</span></div>
+      ${sd.out > 0 || sd.dig > 0 ? `<div class="${sd.limit === 'haul' ? 'bad' : 'dim'}" style="font-size:11.5px">${sd.limit === 'haul' ? '⚠ Haul-limited: diggers are waiting on carts. Hire Haulers or upgrade Haulage.' : 'Dig-limited: hauling has spare capacity.'}</div>` : ''}
+      <table class="st" style="margin-top:6px">`;
+    s.levels.forEach((lv, li) => {
+      const ld = sd.levels[li];
+      const risk = ld.risk < 0.6 ? '<span class="good">low</span>' : ld.risk < 1.2 ? '<span class="lampc">med</span>' : '<span class="bad">high</span>';
+      const status = ld.halted ? ' <span class="bad">· shut</span>' : ld.rich ? ' <span class="lampc">· rich seam</span>' : '';
+      h += `<tr><td>L${li + 1} · ${(li + 1) * 120} ft${lv.bonus > 1 ? ` <span class="tag">+${Math.round((lv.bonus - 1) * 100)}%</span>` : ''}${status}</td><td>${ld.crew}/${levelCap(s)} crew · ×${(1 + CONFIG.sites.depthYield * li).toFixed(1)} · risk ${risk}</td></tr>`;
+    });
+    h += '</table>';
+    h += blk ? `<div class="faint" style="margin-top:6px">${esc(blk)}</div>` : `<div style="margin-top:6px">${costBtn('buyLevel', levelCost(s), `Open Level ${s.levels.length + 1}`, `data-site="${s.id}"`, 'primary')}</div>`;
+    h += '</div>';
+  }
+  const x = nextExtraSite();
+  if (x) {
+    h += `<div class="card"><b>${esc(x.name)}</b><div class="dim">A new colliery with its own levels and crew. New mines make the superstitious nervous.</div>
+      <div style="margin-top:6px">${S.tier < x.tier ? `<span class="faint">Requires tier ${x.tier}: ${esc(CONFIG.tiers[x.tier].name)}</span>` : costBtn('buySite', x.cost, 'Buy site', '', 'primary')}</div></div>`;
+  }
+  h += '<h3>Holdings</h3>';
+  const vis = CONFIG.holdings.filter(hh => S.tier >= hh.tier - 1);
+  if (!vis.length) h += '<p class="dim">Holdings (leased mines, company houses, rail lines, divisions and fleets) unlock as a Regional company.</p>';
+  else {
+    h += '<div class="card" style="padding:2px 10px">';
+    for (const hh of vis) {
+      const n = holding(hh.id), locked = S.tier < hh.tier, maxed = hh.max && n >= hh.max;
+      const eff = hh.cps ? `${fmt(hh.cps * D.general)}/s each` : hh.price ? `+${Math.round(hh.price * 100)}% price each` : hh.workerOut ? `+${Math.round(hh.workerOut * 100)}% worker output each` : '';
+      h += `<div class="up ${locked ? 'locked' : ''}"><div class="grow"><div class="nm">${esc(hh.name)} <span class="tag">${n}${hh.max ? '/' + hh.max : ''}</span></div><div class="ds">${esc(hh.desc)} <span class="faint">${eff}</span></div></div>
+        ${maxed ? '<span class="good">Max</span>' : locked ? `<span class="faint">Tier ${hh.tier}</span>` : costBtn('buyHold', holdCost(hh), 'Buy', `data-id="${hh.id}"`, 'small')}</div>`;
+    }
+    h += '</div>';
+    if (D.holdCps) h += `<p class="dim">Holdings produce <b class="lampc">${fmt(D.holdCps)}</b> coal/s. They don't need haulers.</p>`;
+  }
+  return h;
+}
+
+function eventChoicesHTML(cur) {
+  const def = EVBYID[cur.id];
+  return `<div class="choices">${def.choices.map((ch, i) => {
+    const c = ch.cost ? ch.cost(cur) : 0;
+    return `<button data-act="evChoice" data-i="${i}" ${c ? `data-cost="${Math.ceil(c)}"` : ''}>${esc(ch.label)}${i === def.def ? ' <span class="faint">(default)</span>' : ''}<small>${esc(ch.desc(cur))}</small></button>`;
+  }).join('')}</div>`;
+}
+function tabEvents() {
+  let h = '<h3>Right now</h3>';
+  const cur = S.ev.cur;
+  if (cur) { const def = EVBYID[cur.id]; h += `<div class="card"><b class="lampc">${esc(def.title)}</b><p>${esc(def.text(cur))}</p>${eventChoicesHTML(cur)}</div>`; }
+  else h += `<div class="card dim">All quiet. Next trouble in roughly <span data-bind="nextEvent"></span>.</div>`;
+  h += '<h3>Active effects</h3>';
+  h += S.buffs.length ? `<div class="card">${S.buffs.map(b => `<div class="row sp"><span>${esc(b.label)} <span class="faint">${['out', 'price', 'acc', 'gas'].filter(k => b[k] != null).map(k => `${{ out: 'output', price: 'price', acc: 'accidents', gas: 'gas' }[k]} ${pct(b[k])}`).join(', ')}</span></span><span data-bind="buff" data-k="${b.key}"></span></div>`).join('')}</div>` : '<div class="card dim">None.</div>';
+  const perm = [];
+  if (S.perm.out !== 1) perm.push(`output ${pct(S.perm.out)}`); if (S.perm.price !== 1) perm.push(`price ${pct(S.perm.price)}`); if (S.perm.acc !== 1) perm.push(`accidents ${pct(S.perm.acc)}`);
+  if (perm.length) h += `<div class="card">Permanent this run: ${perm.join(', ')}</div>`;
+  h += `<h3>Risk</h3><div class="card"><table class="st">
+    <tr><td>Accident risk (crew average)</td><td>${D.riskIndex < 0.6 ? '<span class="good">low</span>' : D.riskIndex < 1.2 ? '<span class="lampc">medium</span>' : '<span class="bad">high</span>'} (${D.riskIndex.toFixed(2)}×)</td></tr>
+    <tr><td>Strike pressure</td><td>${D.strike.toFixed(1)}</td></tr>
+    <tr><td>Union organizers on payroll</td><td>${D.organizers}</td></tr></table>
+    <div class="dim" style="font-size:11.5px;margin-top:4px">Safety Officers, Veterans, Safety Drills, Lighting and Ventilation lower accident risk. Depth, Reckless and Clumsy workers raise it.</div></div>`;
+  h += '<h3>Log</h3><div class="log">' + (S.ev.log.length ? S.ev.log.map(l => `<div><span class="tm">${fmtTime(l.t)}</span> ${l.m}</div>`).join('') : '<div>Nothing yet.</div>') + '</div>';
+  return h;
+}
+
+function tabPrestige() {
+  const g = legacyGain(), m = S.meta;
+  let h = `<div class="card"><h3>Sell the company</h3>
+    <p>A conglomerate will buy you out. You lose everything in this run (money, workers, sites, upgrades) and keep Legacy, perks and achievements.</p>
+    <table class="st"><tr><td>Legacy if you sell now</td><td class="lampc"><b data-bind="legacyGain">${g}</b></td></tr>
+    <tr><td>Unspent Legacy</td><td>${m.legacy} (+${Math.round(m.legacy * CONFIG.prestige.perPoint * 100)}% output)</td></tr>
+    <tr><td>Times sold</td><td>${m.prestiges}</td></tr></table>
+    <p class="dim" style="font-size:11.5px">Legacy = √(coal mined this run ÷ ${fmt(CONFIG.prestige.div)}). Requires ${esc(CONFIG.tiers[CONFIG.prestige.minTier].name)}.</p>
+    <button class="primary" data-act="prestige" style="width:100%" ${g > 0 ? '' : 'disabled'}>${S.tier < CONFIG.prestige.minTier ? `Reach ${esc(CONFIG.tiers[CONFIG.prestige.minTier].name)} first` : `Sell for ${g} Legacy`}</button></div>`;
+  h += '<h3>Legacy perks</h3><div class="card" style="padding:2px 10px">';
+  for (const p of CONFIG.prestigeShop) {
+    const own = m.shop[p.id];
+    h += `<div class="up ${own ? 'owned' : ''}"><div class="grow"><div class="nm">${esc(p.name)}</div><div class="ds">${esc(p.desc)}</div></div>
+      ${own ? '<span class="good">Owned</span>' : `<button class="small" data-act="buyPerk" data-id="${p.id}" ${m.legacy >= p.cost ? '' : 'disabled'}>${p.cost} Legacy</button>`}</div>`;
+  }
+  h += '</div><p class="dim" style="font-size:11.5px">Spending Legacy removes its +10% output, so choose carefully. Start bonuses apply from your next run.</p>';
+  return h;
+}
+
+function tabRecords() {
+  const m = S.meta, got = ACHIEVEMENTS.filter(a => m.ach[a.id]).length;
+  let h = `<h3>Stats</h3><div class="card"><table class="st">
+    <tr><td>Coal mined this run</td><td>${fmt(S.run.coal)}</td></tr>
+    <tr><td>Money earned this run</td><td>${money(S.run.money)}</td></tr>
+    <tr><td>Run time</td><td>${fmtTime(S.time)}</td></tr>
+    <tr><td>Coal mined, all time</td><td>${fmt(m.lifetimeCoal)}</td></tr>
+    <tr><td>Hand digs, all time</td><td>${fmt(m.clicks)}</td></tr>
+    <tr><td>Total play time</td><td>${fmtTime(m.playSec)}</td></tr>
+    <tr><td>Legacy earned, all time</td><td>${m.legacyEarned}</td></tr>
+    <tr><td>Events this run</td><td>${S.run.events}</td></tr>
+    <tr><td>Output multipliers</td><td>Dig ×${D.digMult.toFixed(2)} · Haul ×${D.haulMult.toFixed(2)} · Workers ×${D.workerMult.toFixed(2)}</td></tr>
+  </table></div>`;
+  h += `<h3>Achievements ${got}/${ACHIEVEMENTS.length} · +${Math.round(got * CONFIG.achievementBonus * 100)}% output</h3><div class="ach">`;
+  for (const a of ACHIEVEMENTS) h += `<div class="${m.ach[a.id] ? 'got' : ''}"><b>${m.ach[a.id] ? '🏆 ' : ''}${esc(a.name)}</b>${esc(a.desc)}</div>`;
+  return h + '</div>';
+}
+
+function tabSettings() {
+  const auto = [['sell', 'salesAgent', 'Smart selling (Sales Agent)'], ['hire', 'hiringClerk', 'Auto-hire (Hiring Clerk)'], ['buy', 'purchasing', 'Auto-buy upgrades (Purchasing)'], ['promote', 'personnel', 'Auto-promote (Personnel)']];
+  let h = '<h3>Automation</h3><div class="card">';
+  for (const [k, u, n] of auto) h += `<label class="toggle ${has(u) ? '' : 'faint'}"><input type="checkbox" data-toggle="${k}" ${S.auto[k] ? 'checked' : ''} ${has(u) ? '' : 'disabled'}> ${esc(n)}${has(u) ? '' : ' — not bought'}</label>`;
+  h += '</div><h3>Display</h3><div class="card">';
+  h += `<label class="toggle"><input type="checkbox" data-toggle="shake" ${S.meta.settings.shake ? 'checked' : ''}> Screen shake on events</label></div>`;
+  h += `<h3>Names</h3><div class="card"><div class="row sp"><span>Company: <b>${esc(companyName())}</b></span><button class="small" data-act="renameCompany">✎ Rename</button></div>
+    <div class="row sp" style="margin-top:6px"><span>First mine: <b>${esc(S.sites[0].name)}</b></span><button class="small" data-act="renameSite" data-site="${S.sites[0].id}">✎ Rename</button></div>
+    <div class="dim" style="font-size:11.5px;margin-top:4px">Custom names stay the same through tier-ups and when you sell the company.</div></div>`;
+  h += `<h3>Save</h3><div class="card"><div class="dim" style="margin-bottom:6px">${Store.persistent ? `Autosaves every ${CONFIG.autosaveSec}s to this browser.`
+      : '<span class="bad">Browser storage is blocked here</span>, so progress only lasts while this tab stays open. Use Export to keep it, or open the file from a local web server.'}</div>
+    <div class="wbtns"><button data-act="saveNow">Save now</button><button data-act="exportSave">Export</button><button data-act="importSave">Import</button>
+    <button class="danger" data-act="hardReset">${ui.resetArm ? 'Really wipe everything?' : 'Hard reset'}</button></div></div>`;
+  h += `<h3>Debug</h3><div class="card"><div class="dim" style="margin-bottom:6px">For testing pacing. Speed: ×${RT.speed}</div>
+    <div class="wbtns">${CONFIG.debug.speeds.map(s => `<button class="small" data-act="dbgSpeed" data-s="${s}" ${RT.speed === s ? 'disabled' : ''}>×${s}</button>`).join('')}</div>
+    <div class="wbtns" style="margin-top:6px"><button class="small" data-act="dbgMoney">+ Money</button><button class="small" data-act="dbgCoal">+ Coal mined</button>
+    <button class="small" data-act="dbgEvent">Trigger event</button><button class="small" data-act="dbgTier">Meet next tier reqs</button><button class="small" data-act="dbgLegacy">+10 Legacy</button>
+    <button class="small danger" data-act="dbgReset">Reset run</button></div>
+    <div class="wbtns" style="margin-top:6px"><button class="small" data-act="dbgSim">Simulate 60 min (bot)</button></div>
+    <pre id="simOut" ${ui.simOut ? '' : 'hidden'}>${esc(ui.simOut || '')}</pre></div>`;
+  return h;
+}
+
+function renderSiteBar() {
+  const s = viewSite();
+  $('#siteBar').innerHTML = S.sites.length > 1
+    ? `<button data-act="siteStep" data-d="-1">◀</button><span>${esc(s.name)}</span><button data-act="siteStep" data-d="1">▶</button>`
+    : `<span>${esc(s.name)}</span>`;
+}
+function renderEventBanner() {
+  const b = $('#eventBanner'); const cur = S.ev.cur;
+  if (!cur) { b.hidden = true; b.innerHTML = ''; return; }
+  const def = EVBYID[cur.id];
+  b.innerHTML = `<div class="t">⚠ ${esc(def.title)}</div><div class="x">${esc(def.text(cur))}</div>${eventChoicesHTML(cur)}<div class="evtimer"><i></i></div>`;
+  b.hidden = false;
+  refreshUI();
+}
+
+const BINDS = {
+  payPct: () => Math.round(S.pay * 100) + '%',
+  payMood: () => S.pay < 0.75 ? 'starvation wages' : S.pay < 0.98 ? 'tight-fisted' : S.pay <= 1.02 ? 'standard rate' : S.pay <= 1.35 ? 'generous' : S.pay <= 1.7 ? 'well paid' : 'lavish',
+  payInfo: () => {
+    const P = CONFIG.pay, out = payOutput(), share = Math.max(0, S.pay - 1) * P.bonusShare;
+    const net = out * (1 - share);   // crew income relative to 100% pay, before wages
+    return `Output <b class="${out >= 1 ? 'good' : 'bad'}">${pct(out)}</b> · wages ×${S.pay.toFixed(2)}${share ? ` · bonus ${Math.round(share * 100)}% of their coal` : ''}`
+      + ` · strikes ×${Math.pow(1 / S.pay, P.strikePow).toFixed(1)}<br>Net from your crew ≈ <b class="${net >= 1 ? 'good' : 'bad'}">${pct(net)}</b>`;
+  },
+  poolRefresh: () => fmtTime(S.pool.refreshAt - S.time),
+  arrive: el => { const sl = S.pool.slots[+el.dataset.i]; return sl ? fmtTime(sl.at - S.time) : ''; },
+  nextEvent: () => fmtTime(S.ev.nextAt - S.time),
+  buff: el => { const b = S.buffs.find(x => x.key === el.dataset.k); return b ? fmtTime(b.until - S.time) : 'ended'; },
+  legacyGain: () => legacyGain(),
+  tierCoal: () => { const t = nextTier(); return t ? `${fmt(S.run.coal)} / ${fmt(t.req.coal)}` : ''; },
+  tierMoney: () => { const t = nextTier(); return t ? `${money(S.money)} / ${money(t.req.money)}` : ''; },
+  wstat: el => {
+    const w = S.workers.find(x => x.id === +el.dataset.w); if (!w) return '';
+    const hurt = w.injuredUntil > S.time;
+    const card = el.closest('.wcard'); if (card) card.classList.toggle('hurt', hurt);
+    const r = CONFIG.roles[w.role];
+    const out = w.role === 'digger' ? `digs ${fmt(w._out || 0)}/s` : w.role === 'hauler' ? `hauls ${fmt(w._out || 0)}/s` : esc(r.desc);
+    return `${hurt ? `<span class="bad">Injured ${fmtTime(w.injuredUntil - S.time)}</span> · ` : ''}${out}<br>Wage ${money(wageOf(w))}/s${w.wageMult > 1.01 ? ` <span class="faint">(${pct(w.wageMult)} creep)</span>` : ''}`;
+  },
+};
+const PROGS = {
+  tierCoal: () => { const t = nextTier(); return t ? S.run.coal / t.req.coal : 1; },
+  tierMoney: () => { const t = nextTier(); return t ? S.money / t.req.money : 1; },
+};
+
+function refreshUI() {
+  $('#tierName').textContent = `${companyName()} · ${tierInfo(S.tier).name}`;
+  $('#rCoal').textContent = fmt(S.coal);
+  $('#rMoney').textContent = money(S.money);
+  $('#rCps').textContent = fmt(D.cps);
+  const pm = S.market.mult;
+  $('#rPrice').innerHTML = `${money(D.price)} <span class="${pm >= 1 ? 'good' : 'bad'}" style="font-size:11px">${pm >= 1 ? '▲' : '▼'}${Math.round(Math.abs(pm - 1) * 100)}%</span>`;
+  const sellRateNow = D.cps * D.price * (1 - D.payCut);
+  const net = sellRateNow - D.wages;
+  const nEl = $('#rNet'); nEl.textContent = money(net); nEl.className = 'val ' + (net >= 0 ? 'money' : 'bad');
+  // buttons with costs
+  for (const el of document.querySelectorAll('[data-cost]')) {
+    let ok = S.money >= +el.dataset.cost;
+    if (el.dataset.tier) ok = canTierUp();
+    el.disabled = !ok;
+  }
+  for (const el of document.querySelectorAll('[data-bind]')) { const f = BINDS[el.dataset.bind]; if (f) { const v = String(f(el)); if (el._v !== v) { el.innerHTML = v; el._v = v; } } }
+  for (const el of document.querySelectorAll('[data-prog]')) { const f = PROGS[el.dataset.prog]; if (f) el.style.width = clamp(f() * 100, 0, 100) + '%'; }
+  // event timer
+  const cur = S.ev.cur; const bar = document.querySelector('#eventBanner .evtimer i');
+  if (cur && bar) bar.style.width = clamp((cur.expires - S.time) / CONFIG.events.decideSec * 100, 0, 100) + '%';
+  // warnings over the mine
+  const warns = [];
+  if (D.unpaid) warns.push(['Payroll missed! Output halved until you can pay wages.', '']);
+  const sd = D.sites[S.viewSite];
+  if (sd && sd.dig > sd.haul * 1.05 && sd.dig > 0.5) warns.push([`Haul-limited: ${fmt(sd.dig - sd.haul)}/s of coal stuck underground`, '']);
+  if (D.workers >= D.cap && D.cap > 0 && S.workers.length) warns.push(['All worker slots full', 'info']);
+  if (canTierUp()) warns.push([`Ready: ${nextTier().buy} (Upgrades tab)`, 'info']);
+  const wHtml = warns.map(([m, c]) => `<div class="${c}">${esc(m)}</div>`).join('');
+  const wEl = $('#warn'); if (wEl._v !== wHtml) { wEl.innerHTML = wHtml; wEl._v = wHtml; }
+}
+
+/* --- input handling --- */
+const ACTIONS = {
+  tab: el => { ui.tab = el.dataset.tab; ui.resetArm = false; $('#tabBody').scrollTop = 0; renderPanel(); },
+  hire: el => hire(+el.dataset.i),
+  reroll: () => rerollPool(),
+  promote: el => promote(+el.dataset.w),
+  fire: el => {
+    const id = +el.dataset.w;
+    if (ui.fireArm === id && performance.now() - ui.fireAt < 4000) { fire(id); ui.fireArm = 0; }
+    else { ui.fireArm = id; ui.fireAt = performance.now(); el.textContent = 'Sure?'; }
+  },
+  buyUp: el => buyUpgrade(el.dataset.id),
+  tierUp: () => tierUp(),
+  buyLevel: el => buyLevel(+el.dataset.site),
+  buySite: () => buySite(),
+  buyHold: el => buyHolding(el.dataset.id),
+  viewSite: el => { S.viewSite = +el.dataset.site; ui.dirty = true; },
+  siteStep: el => { const i = S.sites.indexOf(viewSite()); S.viewSite = S.sites[(i + +el.dataset.d + S.sites.length) % S.sites.length].id; ui.dirty = true; },
+  evChoice: el => resolveEvent(+el.dataset.i),
+  prestige: () => {
+    const g = legacyGain(); if (g <= 0) return;
+    showModal(`<h2>Sell the company?</h2><p>You'll receive <b class="lampc">${g} Legacy</b> (+${Math.round(g * CONFIG.prestige.perPoint * 100)}% output while unspent).</p>
+      <p>Everything in this run is reset: money, coal, workers, sites, upgrades and holdings${S.meta.shop.clerks ? ' (except Management, thanks to Loyal Clerks)' : ''}.</p>
+      <div class="wbtns"><button class="primary" data-act="confirmPrestige">Sell it</button><button data-act="closeModal">Not yet</button></div>`);
+  },
+  confirmPrestige: () => { closeModal(); doPrestige(); },
+  buyPerk: el => buyPerk(el.dataset.id),
+  closeModal: () => closeModal(),
+  renameSite: el => {
+    const s = siteById(+el.dataset.site); if (!s) return;
+    showModal(`<h2>Rename mine</h2><p class="dim">For example "Eagle Hill Colliery" or "Kehley Run Drift". Up to ${NAME_MAX} characters.</p>
+      <input id="nameBox" maxlength="${NAME_MAX}" value="${esc(s.name)}" style="width:100%;padding:6px">
+      <div class="wbtns" style="margin-top:10px"><button class="primary" data-act="doRenameSite" data-site="${s.id}">Save name</button><button data-act="closeModal">Cancel</button></div>`);
+    const b = $('#nameBox'); b.focus(); b.select();
+  },
+  doRenameSite: el => { if (renameSite(+el.dataset.site, $('#nameBox').value)) { closeModal(); toast('Mine renamed.', 'good'); } else toast('Give it a name first.', 'bad'); },
+  renameCompany: () => {
+    showModal(`<h2>Rename company</h2><p class="dim">Leave it empty to use the default name for your tier. Up to ${NAME_MAX} characters.</p>
+      <input id="nameBox" maxlength="${NAME_MAX}" value="${esc(S.meta.companyName || '')}" placeholder="${esc(CONFIG.tiers[S.tier].company)}" style="width:100%;padding:6px">
+      <div class="wbtns" style="margin-top:10px"><button class="primary" data-act="doRenameCompany">Save name</button><button data-act="closeModal">Cancel</button></div>`);
+    const b = $('#nameBox'); b.focus(); b.select();
+  },
+  doRenameCompany: () => { renameCompany($('#nameBox').value); closeModal(); toast('Company renamed.', 'good'); },
+  startGame: () => {
+    const m = cleanName($('#startMine').value), c = cleanName($('#startCompany').value);
+    if (m) renameSite(S.sites[0].id, m);
+    if (c) renameCompany(c);
+    closeModal(); save();
+  },
+  saveNow: () => { save(); toast('Saved.', 'good'); },
+  exportSave: () => {
+    showModal(`<h2>Export save</h2><p class="dim">Copy this text somewhere safe.</p><textarea readonly id="exportBox">${esc(encodeSave(serialize()))}</textarea>
+      <div class="wbtns" style="margin-top:8px"><button class="primary" data-act="copyExport">Copy</button><button data-act="closeModal">Close</button></div>`);
+    const t = $('#exportBox'); t.focus(); t.select();
+  },
+  copyExport: () => { const t = $('#exportBox'); t.select(); (navigator.clipboard ? navigator.clipboard.writeText(t.value) : Promise.reject()).then(() => toast('Copied.', 'good'), () => { document.execCommand('copy'); toast('Copied.', 'good'); }); },
+  importSave: () => showModal(`<h2>Import save</h2><p class="dim">Paste an exported save. This replaces your current game.</p><textarea id="importBox"></textarea>
+    <div class="wbtns" style="margin-top:8px"><button class="primary" data-act="doImport">Import</button><button data-act="closeModal">Cancel</button></div>`),
+  doImport: () => {
+    try { S = loadFrom(decodeSave($('#importBox').value)); recalc(); save(); closeModal(); renderEventBanner(); ui.dirty = true; toast('Save imported.', 'good'); }
+    catch (e) { toast('That doesn\'t look like a valid save: ' + e.message, 'bad'); }
+  },
+  hardReset: () => {
+    if (!ui.resetArm) { ui.resetArm = true; ui.dirty = true; return; }
+    ui.resetArm = false; Store.del(CONFIG.saveKey); startRun(defaultMeta()); renderEventBanner(); save(); ui.dirty = true; toast('Everything wiped. Fresh hillside.', 'bad');
+  },
+  dbgSpeed: el => { RT.speed = +el.dataset.s; ui.dirty = true; },
+  dbgMoney: () => { S.money += Math.max(1000, S.money * 9); },
+  dbgCoal: () => { addCoal(Math.max(1000, S.run.coal * 9)); },
+  dbgEvent: () => { S.ev.cur = null; spawnEvent(); if (!S.ev.cur) toast('No event could fire right now (need workers).'); },
+  dbgTier: () => { const t = nextTier(); if (!t) return; if (S.run.coal < t.req.coal) addCoal(t.req.coal - S.run.coal); S.money = Math.max(S.money, t.req.money); },
+  dbgLegacy: () => { S.meta.legacy += 10; ui.dirty = true; },
+  dbgReset: () => { startRun(S.meta); renderEventBanner(); ui.dirty = true; toast('Run reset (Legacy kept).'); },
+  dbgSim: el => {
+    el.disabled = true; el.textContent = 'Simulating…';
+    setTimeout(() => { const t0 = performance.now(); ui.simOut = simulatePacing(60, 4) + `\n(simulated in ${Math.round(performance.now() - t0)} ms; bot clicks 4/s for 5 min, then buys greedily)`; ui.dirty = true; }, 30);
+  },
+};
+
+function bindInput() {
+  document.addEventListener('click', e => {
+    const el = e.target.closest('[data-act]'); if (!el || el.disabled) return;
+    const f = ACTIONS[el.dataset.act]; if (f) { f(el, e); recalc(); refreshUI(); }
+  });
+  document.addEventListener('input', e => {
+    if (e.target.dataset.pay == null) return;
+    S.pay = clamp(+e.target.value, CONFIG.pay.min, CONFIG.pay.max);
+    recalc(); refreshUI();
+  });
+  document.addEventListener('change', e => {
+    const el = e.target;
+    if (el.dataset.assign) { const [sid, li] = el.value.split(':').map(Number); assign(+el.dataset.assign, sid, li); recalc(); }
+    if (el.dataset.toggle) {
+      const k = el.dataset.toggle;
+      if (k === 'shake') S.meta.settings.shake = el.checked; else S.auto[k] = el.checked;
+    }
+  });
+  // hold off panel re-renders while a button is mid-press (so the click lands), but never for long
+  document.addEventListener('pointerdown', e => {
+    if (e.target.matches('input[type=range]')) RT.pointerDown = Infinity;   // dragging a slider: hold until release
+    else if (e.target.closest('#panel, #eventBanner')) RT.pointerDown = performance.now();
+  }, true);
+  for (const ev of ['pointerup', 'pointercancel', 'blur']) window.addEventListener(ev, () => { RT.pointerDown = 0; }, true);
+  Rr.cv.addEventListener('pointerdown', e => {
+    e.preventDefault();
+    const v = mineClick();
+    floatText(e.clientX, e.clientY, '+' + fmt(v));
+    const r = Rr.cv.getBoundingClientRect();
+    const x = (e.clientX - r.left) / Rr.px, y = (e.clientY - r.top) / Rr.px;
+    for (let i = 0; i < 6; i++) Rr.parts.push({ x, y, vx: rand(-0.8, 0.8), vy: rand(-1.4, -0.3), life: 26, max: 26, col: i % 3 ? '18,18,20' : '255,200,110', s: 1, grav: true });
+    if (S.run.clicks === 1) $('#hint').textContent = 'coal is sold automatically';
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'Enter' && e.target.matches('#modal input')) { const b = $('#modal button.primary'); if (b) b.click(); }
+  });
+  window.addEventListener('resize', resizeCanvas);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) save(); else RT.lastFrame = performance.now(); });
+  window.addEventListener('beforeunload', save);
+}
+
+/* =====================================================================
+   7. MAIN LOOP & BOOT
+   ===================================================================== */
+const pressing = () => RT.pointerDown && performance.now() - RT.pointerDown < 600;
+let lastWall = Date.now();
+// The simulation follows the wall clock, so background tabs (where rAF stops) still progress.
+function pump() {
+  const wall = Date.now(); const dt = (wall - lastWall) / 1000; lastWall = wall;
+  if (dt <= 0) return;
+  if (dt > 60) { showOffline(runOffline(dt)); ui.dirty = true; return; }   // tab was asleep: offline rules
+  stepGame(dt * RT.speed);
+  RT.slowAt += dt * RT.speed;
+  while (RT.slowAt >= 1) { RT.slowAt -= 1; slowTick(); }
+  RT.saveAt += dt;
+  if (RT.saveAt >= CONFIG.autosaveSec) { RT.saveAt = 0; save(); }
+}
+setInterval(() => { if (performance.now() - RT.lastRaf > 1500) pump(); }, 1000);   // rAF stalled (hidden tab)
+function frame(now) {
+  const dt = clamp((now - RT.lastFrame) / 1000, 0, 1); RT.lastFrame = now; RT.lastRaf = performance.now();
+  pump();
+  if (ui.dirty && !pressing()) renderPanel();
+  RT.uiAt += dt;
+  if (RT.uiAt >= 0.25) { RT.uiAt = 0; refreshUI(); }
+  // periodic full re-render for the number-heavy tabs
+  RT.panelAt += dt;
+  if (RT.panelAt >= 1.5) { RT.panelAt = 0; if (['sites', 'events', 'records', 'prestige'].includes(ui.tab) && !pressing()) ui.dirty = true; }
+  if (S.ev.cur && $('#eventBanner').hidden) renderEventBanner();
+  if (!S.ev.cur && !$('#eventBanner').hidden) renderEventBanner();
+  Rr.t += dt;
+  drawScene(Rr.t);
+  requestAnimationFrame(frame);
+}
+
+function boot() {
+  Rr.cv = $('#mine'); Rr.ctx = Rr.cv.getContext('2d');
+  Rr.light = document.createElement('canvas'); Rr.lctx = Rr.light.getContext('2d');
+  let offline = null;
+  try {
+    const raw = Store.get(CONFIG.saveKey);
+    if (raw) { S = loadFrom(raw); recalc(); offline = runOffline((Date.now() - S.lastSeen) / 1000); }
+  } catch (e) { console.warn('Save could not be loaded, starting fresh.', e); S = null; }
+  if (!S) startRun(defaultMeta());
+  recalc();
+  bindInput();
+  resizeCanvas();
+  renderPanel();
+  renderEventBanner();
+  if (offline) showOffline(offline);
+  else if (!S.meta.clicks) showModal(`<h2>Coal Empire</h2>
+    <p>You own a hillside near Shenandoah, a pick, and a dream.</p>
+    <p><b>Click the mine</b> to dig coal. It sells automatically at the market price. Hire Diggers to cut coal and Haulers to bring it up, open deeper levels, and grow from a drift mine into a global empire.</p>
+    <p class="dim">Progress saves every ${CONFIG.autosaveSec}s and keeps going (up to ${CONFIG.offlineCapHours}h) while the tab is closed.</p>
+    <label class="dim" style="display:block;margin-top:8px">Name your mine</label>
+    <input id="startMine" maxlength="${NAME_MAX}" placeholder="${esc(S.sites[0].name)}" style="width:100%;padding:6px">
+    <label class="dim" style="display:block;margin-top:6px">Company name <span class="faint">(optional)</span></label>
+    <input id="startCompany" maxlength="${NAME_MAX}" placeholder="${esc(companyName())}" style="width:100%;padding:6px">
+    <button class="primary" data-act="startGame" style="margin-top:12px">Grab the pick</button>`);
+  if (!Store.persistent) setTimeout(() => toast('Browser storage is blocked here, so progress is kept for this tab only. Use Export in ⚙ to keep it.'), 1500);
+  RT.lastFrame = performance.now();
+  requestAnimationFrame(frame);
+}
+boot();
+
+// handy from the console: CoalEmpire.sim(60)
+window.CoalEmpire = { get state() { return S; }, get derived() { return D; }, CONFIG, sim: (m, c) => simulatePacing(m || 60, c == null ? 4 : c), save };
+</script>
+</body>
+</html>
