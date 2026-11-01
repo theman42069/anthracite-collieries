@@ -4407,6 +4407,1526 @@
                                                         ],
                                             "location_note":  "Pin is on the breaker drawn at the \"Yatesville Colliery\" label on the Second Geological Survey mine sheet BMSA_4614-001 (surveyed 1882 to the late 1880s), next to its No. 1 slope. Accuracy about 40–60 m; located on georeferenced maps from the PA Mine Map Atlas (minemaps.psu.edu), not field-verified."
                                         }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "east-bear-ridge-colliery",
+                                            "name":  "East Bear Ridge Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+                                                                "Girard Tunnel Colliery",
+                                                                "Bear Ridge Tunnel"
+                                                            ],
+                                            "operators":  [
+                                                              "W. H. Sheafer",
+                                                              "Tunnel Coal Company",
+                                                              "A. L. Mumper \u0026 Company",
+                                                              "Myers, McCreary \u0026 Company",
+                                                              "Philadelphia and Reading Coal and Iron Company",
+                                                              "East Bear Ridge Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "Mahanoy Plane (north side of Mahanoy Creek), West Mahanoy Township",
+                                            "operator":  "W. H. Sheafer (1863–1869); Tunnel Coal Co. and Sheafer, Hartz \u0026 Co. (1869–1872); A. L. Mumper \u0026 Co. (to 1879); Myers, McCreary \u0026 Co. (1880–1883); Philadelphia \u0026 Reading Coal \u0026 Iron Co. (1883–1913); East Bear Ridge Co. (1915–1941)",
+                                            "years_active":  "1863–1941 (tunnel first driven 1834; idle 1910–1915 after the breaker burned)",
+                                            "year_opened":  1863,
+                                            "year_closed":  1941,
+                                            "status":  "Breaker gone; site is woods beside the railroad east of Mahanoy Plane village",
+                                            "confidence":  "Fair. Reopening year (1863) and the 1910 breaker fire are from the Reading Anthracite Co. historian. The 1941 closing year comes from the title of his article; no exact closing date was found.",
+                                            "history":  "The East Bear Ridge Colliery worked the Girard Estate lands on the north side of Mahanoy Creek at Mahanoy Plane. Its water-level tunnel was first driven 1,050 feet in 1834 by the Pottsville \u0026 Danville Railroad for the Girard Estate, cutting through Bear Ridge into the Mammoth, Skidmore, Seven-Foot and Buck Mountain veins of the Ellangowan basin, but it was abandoned when the railroad stopped in 1837. W. H. Sheafer reopened it in 1863 and shipped 7,239 tons in 1864. The Tunnel Coal Company followed in 1869, then Sheafer, Hartz \u0026 Co., who carried the tunnel through to the south dip of the Mammoth. A. L. Mumper \u0026 Co. drove gangways 5,500 feet east and 3,700 feet west by 1879, connecting with the Colorado Colliery, and sank slopes on the Mammoth and its Top Split. Myers, McCreary \u0026 Co. took over in 1880, and the Philadelphia \u0026 Reading Coal \u0026 Iron Co. bought the colliery on November 1, 1883. No coal was shipped after the breaker burned on August 23, 1910, and the Reading lease ended in 1913. In 1914 the James brothers of Shenandoah and Pottsville took a new lease and in 1915 passed it to the East Bear Ridge Company, which reopened the gangways, drove a new 950-foot tunnel, built a new 1,500-ton-a-day breaker with a boiler plant, electric haulage and shops, and laid 7,500 feet of surface track to bring coal from the east end. By 1928 it had shipped 6,093,317 tons.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: East Bear Ridge (Girard Tunnel) Colliery (1860-1941)\", Pottsville Republican \u0026 Herald, September 1997 (reprinted by Lykens Valley History)",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-east-bear-ridge-girard-tunnel-colliery-1860-1941/"
+                                                            },
+                                                            {
+                                                                "title":  "USGS 1:24,000 topographic map, Shenandoah quadrangle, 1950 (breaker building with mine symbol)",
+                                                                "url":  "https://ngmdb.usgs.gov/topoview/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker: the large building marked with a mine symbol on the north side of the Reading tracks at Mahanoy Plane on the 1950 USGS Shenandoah topographic map, the only colliery there still working after 1914. Accuracy about 30–50 m; located on a georeferenced historical USGS map, not field-verified. Cross-check: PA Mine Map Atlas geologic map BMSA_4614-001 (about 1890) draws the \"Bear Ridge No. 2 Colliery\" breaker within about 70 m of this pin."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.23747,
+                                                              40.79595
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "gilberton-colliery",
+                                            "name":  "Gilberton Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+
+                                                            ],
+                                            "operators":  [
+                                                              "Kendrick \u0026 Tyson",
+                                                              "Gilberton Coal Company",
+                                                              "Philadelphia and Reading Coal and Iron Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+                                                            {
+                                                                "id":  "draper-colliery",
+                                                                "note":  "Connected underground by a tunnel to the Gilberton water shaft from 1898; Draper\u0027s tonnage counted with Gilberton from 1926"
+                                                            },
+                                                            {
+                                                                "id":  "furnace-colliery",
+                                                                "note":  "Furnace was consolidated with Gilberton\u0027s first level"
+                                                            }
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "Gilberton (north side of Mahanoy Creek)",
+                                            "operator":  "Kendrick \u0026 Tyson (1862–1864); Gilberton Coal Co. (H. K. Smith \u0026 Co., 1864–1879); Philadelphia \u0026 Reading Coal \u0026 Iron Co. (1879–1938)",
+                                            "years_active":  "1862–November 10, 1938",
+                                            "year_opened":  1862,
+                                            "year_closed":  1938,
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Fair. Dates are from the Reading Anthracite Co. historian. His article gives the closing as November 10, 1938, though a photo caption with it says 1939.",
+                                            "history":  "Kendrick and Tyson took a lease on June 28, 1862, drove a water-level tunnel 250 feet north to the Mammoth vein and sank a slope to the first level. They sold to the Gilberton Coal Company (H. K. Smith \u0026 Co.) in 1864 for $200,000. The company went into receivership after its gangways failed in 1867, reorganized in 1870, sank both slopes to a second level and spent $300,000 on improvements, but failed again in 1879, when the Philadelphia \u0026 Reading Coal \u0026 Iron Company bought the colliery at sheriff\u0027s sale. The Reading tunneled to the Buck Mountain vein, took in the old Furnace colliery, sank the Gilberton water shaft 1,070 feet in 1896 and linked it to the Draper workings in 1898. The old Laurel Ridge slopes became part of Gilberton in 1911, and a new breaker went into operation in 1913. Gilberton had shipped 8,243,296 tons by 1928.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: Gilberton Colliery\", Pottsville Republican \u0026 Herald, October 8, 1997 (reprinted by Lykens Valley History)",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-gilberton-colliery/"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Gilberton\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. This is the breaker of about 1890; the article says a new breaker went into operation in 1913, and the 1950 USGS Shenandoah topo shows colliery buildings about 200 m south-west, so the later breaker may have stood there. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.20742,
+                                                              40.80243
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "draper-colliery",
+                                            "name":  "Draper Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+                                                                "Mahanoy Valley Colliery"
+                                                            ],
+                                            "operators":  [
+                                                              "H. R. Smith",
+                                                              "Mahanoy \u0026 Boston Coal Company",
+                                                              "Mammoth Vein Consolidated Coal Company",
+                                                              "Hickory Coal Company",
+                                                              "Draper Coal Company",
+                                                              "Philadelphia and Reading Coal and Iron Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+                                                            {
+                                                                "id":  "gilberton-colliery",
+                                                                "note":  "Tonnage counted with Gilberton from 1926"
+                                                            }
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "Gilberton (south side of Mahanoy Creek)",
+                                            "operator":  "H. R. Smith (1860–1862); Mahanoy \u0026 Boston Coal Co. and Mammoth Vein Consolidated Coal Co. (1862–1871); Hickory Coal Co. and Smith, Almon \u0026 Co. (1871–1879); Draper Coal Co. (Milnes, Deston \u0026 Co., 1880–1893); Philadelphia \u0026 Reading Coal \u0026 Iron Co. (from 1893)",
+                                            "years_active":  "1860–1926 as a separate colliery (worked on with Gilberton afterward)",
+                                            "year_opened":  1860,
+                                            "year_closed":  1926,
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Fair. Dates are from the Reading Anthracite Co. historian. 1926 is when its shipments were merged into Gilberton\u0027s, not a recorded closing date.",
+                                            "history":  "Opened as the Mahanoy Valley Colliery by H. R. Smith in 1860 with a water-level tunnel 688 feet south to the Mammoth vein; Smith failed in 1862 after a first shipment of 8,420 tons. The Mammoth Vein Consolidated Coal Company sank coal and pump slopes in 1869–70 but failed in 1871, and the Hickory Coal Company and Smith, Almon \u0026 Co. renamed it the Draper Colliery. The Draper Coal Company (Milnes, Deston \u0026 Co.) took over in 1880 and sank to the fourth level. The Philadelphia \u0026 Reading Coal \u0026 Iron Company leased it in 1893, carried the slope to the bottom level and tunneled across the basin to Gilberton. A fire broke out in the Mammoth vein on September 5, 1901. After a cage left the track and wrecked the slope on July 26, 1910, a 603-foot shaft was sunk in 1911. Draper had shipped 8,450,109 tons by 1926, when its tonnage was folded into Gilberton\u0027s.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: Draper Colliery (1863-1928)\", Pottsville Republican \u0026 Herald, November 15, 1997 (reprinted by Lykens Valley History)",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-draper-colliery-1863-1928/"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Draper Colliery\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. The 1911 shaft may have stood elsewhere on the property. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.21432,
+                                                              40.79553
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "west-bear-ridge-colliery",
+                                            "name":  "West Bear Ridge Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+                                                                "Bear Ridge No. 1 Colliery",
+                                                                "Bear Ridge Colliery"
+                                                            ],
+                                            "operators":  [
+                                                              "Morris Robinson",
+                                                              "Robinson, Guiterman \u0026 Company",
+                                                              "Bear Ridge Coal Company",
+                                                              "Meyers, McCleary \u0026 Company",
+                                                              "Philadelphia and Reading Coal and Iron Company",
+                                                              "Brookwood Coal Company",
+                                                              "W. R. McTurke \u0026 Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+                                                            {
+                                                                "id":  "east-bear-ridge-colliery",
+                                                                "note":  "Neighboring colliery on the Bear Ridge, about 1 km east"
+                                                            }
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "Gilberton borough, near the foot of the Mahanoy Plane",
+                                            "operator":  "Morris Robinson (1863–1865); Robinson, Guiterman \u0026 Co. (1865–1870); Day, Huddle \u0026 Co. / Bear Ridge Coal Co. (1870–1879); Meyers, McCleary \u0026 Co. (1880–1883); Philadelphia \u0026 Reading Coal \u0026 Iron Co. (1883–1899); Brookwood Coal Co. (1904–1905); W. R. McTurke \u0026 Co. (1905–1913)",
+                                            "years_active":  "1863–1913 (idle 1885–1888 and 1899–1904)",
+                                            "year_opened":  1863,
+                                            "year_closed":  1913,
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Fair. Dates are from the Reading Anthracite Co. historian.",
+                                            "history":  "Morris Robinson opened the colliery in 1863 with a 300-foot slope on the Mammoth vein and shipped 214 tons in 1864. Day, Huddle \u0026 Co. renamed it the Bear Ridge Colliery in 1870 and sank a 720-foot slope to a second level. The breaker, which stood directly over the slope, burned on August 1, 1875, damaging the slope timbers 150 feet in; a new breaker was finished April 10, 1876. The Philadelphia \u0026 Reading Coal \u0026 Iron Company took the lease in November 1883, replaced 24 old boilers and swapped the slope\u0027s gunboats for mine cars, but idled the colliery from 1885 to 1888 so other Girard Estate collieries could run full. It remodeled the breaker in 1890 and gave up the lease on January 1, 1899. The Brookwood Coal Company reopened it in December 1904, followed by W. R. McTurke \u0026 Co., who worked it until 1913. It had shipped 3,121,690 tons.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: West Bear Colliery (1863-1913)\", Pottsville Republican \u0026 Herald, 1997 (reprinted by Lykens Valley History)",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-west-bear-colliery-1863-1913/"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Bear Ridge No. 1 Colliery\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.24869,
+                                                              40.79392
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "lawrence-colliery",
+                                            "name":  "Lawrence Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+
+                                                            ],
+                                            "operators":  [
+                                                              "Lawrence, Merkle \u0026 Company",
+                                                              "Lawrence, Brown \u0026 Company",
+                                                              "Moore \u0026 Burchell",
+                                                              "Gilbert Coal Company",
+                                                              "Lawrence Coal Company",
+                                                              "Harleigh-Brookwood Coal Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+                                                            {
+                                                                "id":  "stanton-colliery",
+                                                                "note":  "Stanton was worked as a section of Lawrence 1892-1904 and with it again until 1916"
+                                                            }
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "Mahanoy Plane (south side of Mahanoy Creek)",
+                                            "operator":  "Jacob S. Lawrence, Michael Merkle \u0026 Co. (1868–1881); Lawrence, Brown \u0026 Co. (1881–1892); Moore \u0026 Burchell (1892–1894); Gilbert Coal Co. (1894–1897); Lawrence Coal Co. (1897–1904); Harleigh-Brookwood Coal Co. (from 1914)",
+                                            "years_active":  "1868–1904; reopened 1914 (worked with Stanton from 1916)",
+                                            "year_opened":  1868,
+                                            "year_closed":  1904,
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Fair. Dates are from the Reading Anthracite Co. historian. The colliery was abandoned in 1904 and reopened in 1914; its final closing date was not found.",
+                                            "history":  "Jacob S. Lawrence, Michael Merkle \u0026 Co. opened the colliery in 1868 with a 285-foot slope on the Mammoth vein and shipped 29,848 tons in 1869. A second, parallel hoisting slope followed in 1873, and by 1875 the slope reached the third level. Lawrence, Brown \u0026 Co. took over in 1881 and in 1885 sank a 1,293-foot slope on the Skidmore vein. In 1889 the lease was extended to the coal left in the old Stanton colliery, but pumping out Stanton\u0027s water in a weak coal market broke the firm in 1892. Moore \u0026 Burchell, the landowners\u0027 Gilbert Coal Co. and the Lawrence Coal Co. followed until the colliery was abandoned in 1904. The Harleigh-Brookwood Coal Company reopened it in 1914 and from 1916 ran Lawrence and Stanton as one. Lawsuits by the Reading Railway and the landowners dogged it for years over the danger its mining posed to the Mahanoy Plane above. Shipments reached 7,284,705 tons by 1928.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: Lawrence Colliery (1869-1914)\", Pottsville Republican \u0026 Herald, 1997 (reprinted by Lykens Valley History)",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-lawrence-colliery-1869-1914/"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Lawrence Colliery\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. The breaker is the small building drawn at the head of its slope. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.23587,
+                                                              40.79263
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "girard-mammoth-colliery",
+                                            "name":  "Girard Mammoth Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+                                                                "Raven Run Colliery"
+                                                            ],
+                                            "operators":  [
+                                                              "John and Frank Donaldson",
+                                                              "Girard Mammoth Coal Company",
+                                                              "Philadelphia and Reading Coal and Iron Company",
+                                                              "James brothers",
+                                                              "Cockel, Christ \u0026 Company",
+                                                              "Raven Run Coal Company",
+                                                              "Hazle Brook Coal Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+                                                            {
+                                                                "id":  "cuyler-colliery",
+                                                                "note":  "The abandoned Cuyler workings were pumped out in 1895"
+                                                            }
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "Raven Run, north of Girardville",
+                                            "operator":  "John and Frank Donaldson (1856–1864); Girard Mammoth Coal Co. (1864–1879); Philadelphia \u0026 Reading Coal \u0026 Iron Co. (1879–1906); James brothers (1906–1908); Cockel, Christ \u0026 Co. (1908–1918); Raven Run Coal Co. (Wentz \u0026 Co., 1918–1923); Hazle Brook Coal Co. (from 1923)",
+                                            "years_active":  "1856–after 1928",
+                                            "year_opened":  1856,
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Fair. Dates are from the Reading Anthracite Co. historian, whose article ends with shipments to 1928; the closing year was not found.",
+                                            "history":  "John and Frank Donaldson opened a drift east on the Skidmore vein on Raven Run in 1856. In 1864 Donaldson, Shoener, Tyler and Amrod formed the Girard Mammoth Coal Company, which drove a 725-foot water-level tunnel north in 1865, shipped its first 4,057 tons in 1866 and sank a slope in 1871. The Philadelphia \u0026 Reading Coal \u0026 Iron Company bought it in 1879, sank a 480-foot slope on the Buck Mountain vein in 1882 and in 1895 pumped out the old Cuyler colliery workings next door. The James brothers took over in 1906 and Cockel, Christ \u0026 Co. in 1908, who built a large new breaker; it burned in 1912 and was rebuilt the same year. From 1918 to 1923 the Raven Run Coal Company (Wentz \u0026 Co.) ran it as the Raven Run Colliery, followed by the Hazle Brook Coal Company. It had shipped 5,951,349 tons by 1928.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: Girard Mammoth Colliery (1856-1928)\", Pottsville Republican \u0026 Herald, April 18, 1998 (reprinted by Lykens Valley History)",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-girard-mammoth-colliery-1856-1928/"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Girard Mammoth Colliery\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. The breaker built after 1908 (burned and rebuilt in 1912) may not have stood on exactly the same spot. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.26504,
+                                                              40.81425
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "girard-colliery",
+                                            "name":  "Girard Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+                                                                "Garretson\u0027s Colliery"
+                                                            ],
+                                            "operators":  [
+                                                              "Cornelius Garretson",
+                                                              "Garretson \u0026 Beaty",
+                                                              "Philadelphia and Reading Coal and Iron Company",
+                                                              "W. R. McTurke \u0026 Company",
+                                                              "Girardville Mining Company",
+                                                              "Hazle Brook Coal Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "Girardville (south side of Mahanoy Creek)",
+                                            "operator":  "Cornelius Garretson (1863–1867); Theodore Garretson \u0026 James Beaty (1867–1876); Philadelphia \u0026 Reading Coal \u0026 Iron Co. (1876–1895); W. R. McTurke \u0026 Co. (1899–1921); Girardville Mining Co. (1921–1923); Hazle Brook Coal Co. (from 1923)",
+                                            "years_active":  "1863–after 1928 (idle 1895–1899)",
+                                            "year_opened":  1863,
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Fair. Dates are from the Reading Anthracite Co. historian, whose article ends with shipments to 1928; the closing year was not found.",
+                                            "history":  "Cornelius Garretson opened the colliery in 1863 with a 480-foot water-level tunnel south to the Mammoth vein and shipped 13,717 tons in 1864. Theodore Garretson and James Beaty sank a shaft and slopes on the Holmes vein from 1867. The Philadelphia \u0026 Reading Coal \u0026 Iron Company leased it on October 31, 1876, carried the slope to the basin in 1886 and rebuilt the breaker during a two-year shutdown, reopening in 1888. It let the mine flood on November 25, 1895. W. R. McTurke \u0026 Co. reopened it on January 1, 1899, drained the lower levels by 1914 and worked it until the firm failed on September 26, 1921. The creditors\u0027 Girardville Mining Company, the Madeira Coal Co., the Wentz Coal Co. and, from February 1923, the Hazle Brook Coal Company followed. It had shipped 4,552,561 tons by 1928.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: Girard Colliery (1863-1928)\", Pottsville Republican \u0026 Herald, November 8, 1997 (reprinted by Lykens Valley History)",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-girard-colliery-1863-1928/"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Girard Colliery\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.27488,
+                                                              40.79013
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "hammond-colliery",
+                                            "name":  "Hammond Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+                                                                "Girardville Colliery",
+                                                                "Connor Colliery",
+                                                                "McMichael Colliery"
+                                                            ],
+                                            "operators":  [
+                                                              "Connor \u0026 Patterson",
+                                                              "Agard, Moodie \u0026 Company",
+                                                              "Philadelphia and Reading Coal and Iron Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "Butler Township, on Raven Run north-east of Girardville",
+                                            "operator":  "James J. Connor \u0026 Joseph D. Patterson (1861–1866); Connor \u0026 Son (1866–1869); Agard, Moodie \u0026 Co. (1869–1876); Philadelphia \u0026 Reading Coal \u0026 Iron Co. (1876–1939)",
+                                            "years_active":  "1861–November 10, 1939",
+                                            "year_opened":  1861,
+                                            "year_closed":  1939,
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Fair. Dates are from the Reading Anthracite Co. historian. His two articles disagree on some early dates (one has the old Girardville breaker abandoned in 1866, the other has a new breaker built there in 1872).",
+                                            "history":  "Hammond grew out of the Girardville (Connor) Colliery, opened in 1861 by James J. Connor and Joseph D. Patterson with drifts on the Buck Mountain vein from Raven Run. Its first car of coal, sent on May 30, 1862, was consigned to Philadelphia\u0027s mayor and passed to the committee feeding Union soldiers on their way to the front. Agard, Moodie \u0026 Co. bought it in 1869, sank a 438-foot Mammoth slope and built a large breaker, and in 1876 put up the Hammond breaker. On August 12, 1876 the Philadelphia \u0026 Reading Coal \u0026 Iron Company took over and combined the Girardville, McMichael and Hammond workings as the Hammond Colliery. The strike of 1902 stopped work for 18 months and the abandoned pumps let water rise 229 feet above the second level. The old breaker was replaced in 1901, and a 1,211-foot shaft sunk from 1909 went into full use on January 15, 1913. Hammond was abandoned on November 10, 1939, having shipped 11,741,549 tons by 1928.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: Hammond Colliery (1861-1939)\", Pottsville Republican \u0026 Herald, March 8, 1997 (reprinted by Lykens Valley History)",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-hammon-colliery-1861-1939/"
+                                                            },
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: Girardville Colliery (1861-1876)\", Pottsville Republican \u0026 Herald, April 11, 1998 (reprinted by Lykens Valley History)",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-girardville-colliery-1861-1876/"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4618-001 (Map of the Colorado and Shenandoah Collieries and adjoining leases of the Girard Estate)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Hammond Colliery\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. The same breaker is labeled \"Girardville Colliery\" on the earlier Colorado and Shenandoah collieries map BMSA_4618-001, about 12 m away, with the McMichael breaker drawn about 250 m north-east. The 1901 replacement breaker and the 1913 shaft may have stood elsewhere. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.26703,
+                                                              40.80482
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "preston-no-3-colliery",
+                                            "name":  "Preston No. 3 Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+                                                                "Folkton Colliery"
+                                                            ],
+                                            "operators":  [
+                                                              "Buckley, Moody \u0026 Company",
+                                                              "John Jones \u0026 Company",
+                                                              "William Kendrick \u0026 Company",
+                                                              "Philadelphia and Reading Coal and Iron Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+                                                            {
+                                                                "id":  "preston-no-1-colliery",
+                                                                "note":  "Neighboring Preston colliery"
+                                                            },
+                                                            {
+                                                                "id":  "preston-no-2-colliery",
+                                                                "note":  "Neighboring Preston colliery"
+                                                            }
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "Just west of Girardville, south of Mahanoy Creek",
+                                            "operator":  "Buckley, Moody \u0026 Co. (1857–1862, and for the Preston Coal \u0026 Improvement Co. after 1864); John Jones \u0026 Co. (1862–1864); William Kendrick \u0026 Co. (1871–1872); Philadelphia \u0026 Reading Coal \u0026 Iron Co. (1872–1902)",
+                                            "years_active":  "1857–1902",
+                                            "year_opened":  1857,
+                                            "year_closed":  1902,
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Fair. Dates are from the Reading Anthracite Co. historian.",
+                                            "history":  "Buckley, Moody \u0026 Co. opened a drift west on the Mammoth vein in 1857 beside what became the Reading main line just west of Girardville. The Preston Coal \u0026 Improvement Company was chartered on March 16, 1864, and its lessees drove a water-level tunnel to the Holmes vein. William Kendrick \u0026 Co. sank a slope in 1871. The Philadelphia \u0026 Reading Coal \u0026 Iron Company acquired the Preston lands in 1872, spent $200,000 on improvements, tunneled across the basin to the North Dip Mammoth and absorbed the neighboring Preston No. 4 (Hunter\u0027s Tunnel) in 1876. The slopes reached a second level in 1889. The Mammoth gangways reached their boundaries in 1897, and the exhausted colliery was abandoned in 1902. Preston No. 3 and No. 4 together shipped 1,367,046 tons.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: Preston No. 3 (Folkton) Colliery\", Pottsville Republican \u0026 Herald, 1997 (reprinted by Lykens Valley History)",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-preston-no-3-folkton-colliery/"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Preston Colliery No. 3\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.2938,
+                                                              40.78882
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "colorado-colliery",
+                                            "name":  "Colorado Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+                                                                "Packer No. 1 Colliery"
+                                                            ],
+                                            "operators":  [
+                                                              "Huntzinger \u0026 Seitzinger",
+                                                              "Philadelphia Coal Company",
+                                                              "Lehigh Valley Coal Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "East of Girardville, south side of Shenandoah Creek",
+                                            "operator":  "George Huntzinger \u0026 Jeremiah Seitzinger (1861–1867); Philadelphia Coal Co. (1867–1874, then with the Lehigh Valley Coal Co.); Lehigh Valley Coal Co. as Packer No. 1 (1881–about 1892)",
+                                            "years_active":  "1861–about 1892 (own breaker used to 1885)",
+                                            "year_opened":  1861,
+                                            "year_closed":  1892,
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Fair. Dates are from the Reading Anthracite Co. historian. The breaker location agrees within about 30 m on two separately georeferenced atlas maps.",
+                                            "history":  "George Huntzinger and Jeremiah Seitzinger opened the colliery in 1861 with a 360-foot water-level tunnel south to the Mammoth vein, 170 feet above the creek, and shipped 22,430 tons in 1865. The Philadelphia Coal Company improved the breaker from 1867 and sank a slope at the inside end of the tunnel in 1871, investing $150,000. The Lehigh Valley Coal Company bought an interest in 1874, put a 7-ton locomotive in the tunnel in place of mules, and from 1881 ran the mine as Packer No. 1. It abandoned the breaker in 1885 and sent the coal to the Packer No. 5 breaker. A fire in the No. 1 slope on July 28, 1891 brought down the head frame and took 46 hours to put out. About 1892 the colliery became a section of Packer No. 5. Colorado had shipped 1,538,254 tons by 1886.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: Colorado Colliery (Packer No. 1)\", Pottsville Republican \u0026 Herald, May 30, 1998 (reprinted by Lykens Valley History)",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-colorado-colliery-packer-no-1/"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4618-001 (Map of the Colorado and Shenandoah Collieries and adjoining leases of the Girard Estate)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Packer No. 1 Colorado Colliery\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. It is drawn in the same place, labeled \"Colorado Colliery\", on the Colorado and Shenandoah collieries map BMSA_4618-001. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.25436,
+                                                              40.80109
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "packer-no-2-colliery",
+                                            "name":  "Shenandoah Lost Creek Colliery (Packer No. 2)",
+                                            "type":  "colliery",
+                                            "other_names":  [
+                                                                "Packer No. 2 Colliery",
+                                                                "Shenandoah Colliery",
+                                                                "Girard Mutual Colliery"
+                                                            ],
+                                            "operators":  [
+                                                              "Kaercher \u0026 Huntzinger",
+                                                              "Girard Mutual Coal Company",
+                                                              "Philadelphia Coal Company",
+                                                              "Lehigh Valley Coal Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+                                                            {
+                                                                "id":  "packer-no-4-colliery",
+                                                                "note":  "Consolidated by the Lehigh Valley Coal Co.; connected underground in 1904"
+                                                            }
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "Lost Creek, about 2 miles west of Shenandoah",
+                                            "operator":  "Franklin B. Kaercher \u0026 George Huntzinger (1863–1865); Girard Mutual Coal Co. (1865–1868); Philadelphia Coal Co. (1868–1874); Lehigh Valley Coal Co. (from 1874; as Packer No. 2 from 1880)",
+                                            "years_active":  "1863–after 1928 (idle 1885–1888 after a mine fire)",
+                                            "year_opened":  1863,
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Good for location (the breaker is drawn on two atlas maps and on the 1891 Sanborn map). Dates are from the Reading Anthracite Co. historian, whose article runs to 1928; the closing year was not found.",
+                                            "history":  "Franklin B. Kaercher and George Huntzinger opened a drift west on the Mammoth vein in 1863 and shipped 1,523 tons in 1864. Col. Henry L. Cake\u0027s Girard Mutual Coal Company followed in 1865, and the Philadelphia Coal Company leased it in 1868 and sank a 390-foot slope worked with cages. The Lehigh Valley Coal Company bought control in 1874 and sank a second, 675-foot slope 150 yards east. The breaker burned on October 12, 1880; the company rebuilt it, renamed the colliery Packer No. 2 and absorbed the Shenandoah No. 2 and Packer No. 4 workings. A fire that started on the third level on August 24, 1885 forced the mine to be flooded, and it stood idle for two years and eight months. The 1891 Sanborn map shows the breaker on the Lehigh Valley main track below Lost Creek village, fed by a trestle from the slope. Its slopes reached a fifth level in 1904, and the Mammoth tender slope was electrified in 1923. Shipments totaled 6,163,964 tons by 1928.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: Shenandoah Lost Creek Colliery (Packer No. 2)\", Pottsville Republican \u0026 Herald, June 6, 1998 (reprinted by Lykens Valley History)",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-shenandoah-lost-creek-colliery-packer-no-2/"
+                                                            },
+                                                            {
+                                                                "title":  "Sanborn Fire Insurance Map, Shenandoah, July 1891, sheet 10 (\"Packer Colliery No. 2\" breaker building)",
+                                                                "url":  "https://www.loc.gov/item/sanborn07963_002/"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4618-001 (Map of the Colorado and Shenandoah Collieries and adjoining leases of the Girard Estate)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Packer Shenandoah Colliery\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. The building where the slope trestle meets the railroad under the \"Shenandoah Colliery\" label on the Colorado and Shenandoah collieries map BMSA_4618-001 falls in the same place, and it matches the 1891 Sanborn drawing of the breaker on the Lehigh Valley main track. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.24118,
+                                                              40.81035
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "weston-colliery",
+                                            "name":  "Weston Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+                                                                "Packer No. 3 Colliery (earlier breaker on the site)"
+                                                            ],
+                                            "operators":  [
+                                                              "Locust Mountain Coal Company",
+                                                              "Shenandoah Coal Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+                                                            {
+                                                                "id":  "packer-no-4-colliery",
+                                                                "note":  "Packer No. 4 was its neighbor to the south-west"
+                                                            }
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "Weston Place, north slope of the Shenandoah valley west of Shenandoah",
+                                            "operator":  "Locust Mountain Coal Co. (Bair Snyder Jr., 1913–1933); Shenandoah Coal Co. (one-year lease from July 1933)",
+                                            "years_active":  "1913–1933",
+                                            "year_opened":  1913,
+                                            "year_closed":  1933,
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Fair. Dates are from the Reading Anthracite Co. historian. The pin is the Packer No. 3 breaker of about 1890, on whose site the article says Weston\u0027s breaker was built.",
+                                            "history":  "Bair Snyder Jr. took a Girard Estate lease on January 1, 1913 and passed it to his Locust Mountain Coal Company, which began a water-level tunnel on March 18, 1913 and drove it 3,807 feet north to the Little Buck Mountain vein by March 1914. In April 1913 it built a large new breaker on the site of the old Packer No. 3 breaker, removed in 1906, and the first 5,615 tons shipped on April 11, 1914. Weston was a big stripping operation: three 70-ton steam shovels, eleven 20-ton locomotives and 74 dump cars from 1913, and from 1915 a 255-ton Bucyrus electric dragline with a 125-foot boom. It peaked at 655,129 tons in 1923 and had shipped 7,274,782 tons by 1928. The company stripped out its equipment and abandoned the exhausted colliery in 1933; the Shenandoah Coal Company leased the remaining coal for a year from July 1, 1933.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: Weston Colliery (1913-1933)\", Pottsville Republican \u0026 Herald, 1998 (reprinted by Lykens Valley History)",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-weston-colliery-1913-1933/"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Lehigh Colliery No. 3 Packer\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. That is the old Packer No. 3 breaker; the article says Weston\u0027s 1913 breaker was built on its site. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.22277,
+                                                              40.81837
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "west-shenandoah-colliery",
+                                            "name":  "West Shenandoah Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+
+                                                            ],
+                                            "operators":  [
+                                                              "Maize \u0026 Lewis",
+                                                              "Philadelphia and Reading Coal and Iron Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+                                                            {
+                                                                "id":  "kohinoor-colliery",
+                                                                "note":  "Kohinoor was consolidated with West Shenandoah in 1900"
+                                                            },
+                                                            {
+                                                                "id":  "turkey-run-colliery",
+                                                                "note":  "Turkey Run was consolidated with West Shenandoah in 1900"
+                                                            }
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "West end of Shenandoah",
+                                            "operator":  "Michael Maize \u0026 William Lewis (1869–1874); Philadelphia \u0026 Reading Coal \u0026 Iron Co. (1874–1928)",
+                                            "years_active":  "1869–November 10, 1928",
+                                            "year_opened":  1869,
+                                            "year_closed":  1928,
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Fair. Dates are from the Reading Anthracite Co. historian (title years 1869–1925; text gives the shutdown as November 10, 1928). Another source gives 1938.",
+                                            "history":  "Michael Maize and William Lewis opened the colliery in 1869 with a 285-foot slope to the Mammoth vein and shipped 11,486 tons in 1870. The Philadelphia \u0026 Reading Coal \u0026 Iron Company bought it in 1874 and added a new lift, a shaft and a Buck Mountain slope. In 1881 an 18-foot fan was put up to ventilate both West Shenandoah and Turkey Run, clearing locomotive smoke from the Turkey Run tunnel. In 1900 the Kohinoor and Turkey Run collieries were consolidated with West Shenandoah and a large new breaker was built to prepare the coal of all three. A 3,222-foot haulage tunnel to Turkey Run was finished in 1908, the breaker was lit by electricity in 1909 and an electric hoist went in on the sixth level in 1912. One of the Reading\u0027s largest producers, it had shipped 15,359,653 tons by 1925 and was shut down on November 10, 1928.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: West Shenandoah Colliery (1869-1925)\", Pottsville Republican \u0026 Herald, 1997 (reprinted by Lykens Valley History)",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-west-shenandoah-colliery-1869-1925/"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"West Shenandoah Colliery\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. The large breaker built in 1900 for West Shenandoah, Kohinoor and Turkey Run may have stood elsewhere. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.20948,
+                                                              40.81628
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "shenandoah-city-colliery",
+                                            "name":  "Shenandoah City Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+
+                                                            ],
+                                            "operators":  [
+                                                              "Miller, Son \u0026 Roads",
+                                                              "Philadelphia and Reading Coal and Iron Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+                                                            {
+                                                                "id":  "indian-ridge-colliery",
+                                                                "note":  "Indian Ridge coal was prepared at the Shenandoah City breaker from 1909"
+                                                            },
+                                                            {
+                                                                "id":  "plank-ridge-colliery",
+                                                                "note":  "Connected underground from 1873; ventilated together from 1884"
+                                                            }
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "East end of Shenandoah, on Shenandoah Creek",
+                                            "operator":  "Miller, Son \u0026 Roads (1862–1878; under trustee James Neal 1867–1872); Philadelphia \u0026 Reading Coal \u0026 Iron Co. (from 1878)",
+                                            "years_active":  "1862–October 28, 1932",
+                                            "year_opened":  1862,
+                                            "year_closed":  1932,
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Fair. Dates are from the Reading Anthracite Co. historian.",
+                                            "history":  "The first colliery in the Shenandoah basin. Miller, Son \u0026 Roads cleared the timber and built 47 company houses in 1862–63, opened a drift east on the Mammoth vein in 1863 and the same year finished a breaker built from 900,000 feet of lumber cut on the spot. The first coal went out in February 1864, when the railroad arrived, and 55,028 tons shipped that year. A 772-foot slope was sunk in 1867 on a Mammoth vein 80 feet thick, after which the firm was sold out by the sheriff and run by a trustee until 1872. Miller, Son \u0026 Roads then installed the region\u0027s first air compressor, running an inside hoisting engine on compressed air. The Philadelphia \u0026 Reading Coal \u0026 Iron Company took over when their lease ran out in 1878. From 1909 the Indian Ridge coal was prepared at the Shenandoah City breaker, and electric haulage and lighting arrived in 1914. A fire found on September 10, 1929 led to the colliery being sealed, and it officially closed on October 28, 1932, having shipped 10,974,296 tons by 1928.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: Shenandoah City Colliery (1862-1932)\", Pottsville Republican \u0026 Herald, 1997 (reprinted by Lykens Valley History)",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-shenandoah-city-colliery-1862-1932/"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Shenandoah City Colliery\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.19808,
+                                                              40.81612
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "indian-ridge-colliery",
+                                            "name":  "Indian Ridge Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+
+                                                            ],
+                                            "operators":  [
+                                                              "Kendrick, Dovey \u0026 Davis",
+                                                              "Philadelphia and Reading Coal and Iron Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+                                                            {
+                                                                "id":  "shenandoah-city-colliery",
+                                                                "note":  "Indian Ridge coal went to the Shenandoah City breaker from 1909"
+                                                            },
+                                                            {
+                                                                "id":  "plank-ridge-colliery",
+                                                                "note":  "Ventilated together from 1884"
+                                                            }
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "East end of Shenandoah, between Lloyd Street extended and Centre Street",
+                                            "operator":  "Kendrick, Dovey \u0026 Davis (1870–1872); Philadelphia \u0026 Reading Coal \u0026 Iron Co. (1872–1932)",
+                                            "years_active":  "1870–October 28, 1932 (own breaker used to 1905)",
+                                            "year_opened":  1870,
+                                            "year_closed":  1932,
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Good for location (the breaker is drawn on the 1891 Sanborn map and the atlas geologic map, which agree within about 55 m). Dates are from the Reading Anthracite Co. historian.",
+                                            "history":  "Kendrick, Dovey \u0026 Davis sank the shaft in 1870 and reached the Mammoth vein 310 feet down on January 18, 1871. Two breakers built on a new plan stood 100 feet from the shaft, and 80,560 tons shipped in 1872. The Philadelphia \u0026 Reading Coal \u0026 Iron Company took possession in 1872 and in 1873 drove into the Plank Ridge workings, the start of linking all the collieries east of Shenandoah underground. A fan put up in 1884 ventilated Indian Ridge, Plank Ridge and Shenandoah City together. The 1891 Sanborn map shows the iron-clad breaker beside a branch of Shenandoah Creek with its boiler house, engine houses and shaft mouth. On June 1, 1905 Indian Ridge was consolidated with Knickerbocker and its coal went to the Knickerbocker breaker; from December 1, 1909 it went to the Shenandoah City breaker, and the 1913 Sanborn map shows the plant without a breaker. All mining ended on October 28, 1932. Shipments reached 8,581,999 tons by 1927.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: Indian Ridge Colliery (1870-1932)\", Pottsville Republican \u0026 Herald, July 5, 1997 (reprinted by Lykens Valley History)",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-indian-ridge-colliery-1870-1932/"
+                                                            },
+                                                            {
+                                                                "title":  "Sanborn Fire Insurance Map, Shenandoah, July 1891, sheet 8 (Indian Ridge Colliery breaker)",
+                                                                "url":  "https://www.loc.gov/item/sanborn07963_002/"
+                                                            },
+                                                            {
+                                                                "title":  "Sanborn Fire Insurance Map, Shenandoah, November 1913, sheet 13 (Indian Ridge Colliery)",
+                                                                "url":  "https://www.loc.gov/item/sanborn07963_006/"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Indian Ridge Colliery\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. The 1891 and 1913 Sanborn maps place the colliery north of Centre Street, east of Shenandoah Creek, matching within about 55 m. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.19094,
+                                                              40.82218
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "william-penn-colliery",
+                                            "name":  "William Penn Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+
+                                                            ],
+                                            "operators":  [
+                                                              "Samuel E. Griscom \u0026 Company",
+                                                              "William Penn Coal Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "William Penn, West Mahanoy Township",
+                                            "operator":  "Samuel E. Griscom \u0026 Co. (from 1864); later William Penn Coal Co.",
+                                            "years_active":  "1864–closing year not found",
+                                            "year_opened":  1864,
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Low for dates: only the 1864 opening was found, from one secondary source. Location is good (labeled breaker on the atlas map).",
+                                            "history":  "Samuel E. Griscom \u0026 Co. opened the William Penn Colliery in 1864 to supply coal for iron making in Reading. Three other men had opened a drift on the Mammoth vein earlier that year, but Griscom gained control of the lease. The colliery gave its name to the patch towns of East and West William Penn and was later owned by the William Penn Coal Company. In 1913 the Sanborn map noted the village drew its water from the William Penn Colliery and had an alarm whistle at the colliery.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Coal Campus USA, \"Western Middle anthracite coalfield\" (William Penn Colliery entry)",
+                                                                "url":  "https://coalcampusa.com/eastern-pennsylvania-anthracite/western-middle-anthracite-coalfield/western-middle-anthracite-coalfield.htm"
+                                                            },
+                                                            {
+                                                                "title":  "Sanborn Fire Insurance Map, Shenandoah (including William Penn and Lost Creek), November 1913, sheet 15",
+                                                                "url":  "https://www.loc.gov/item/sanborn07963_006/"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"William Penn Colliery\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.22809,
+                                                              40.81008
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "kohinoor-colliery",
+                                            "name":  "Kohinoor Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+
+                                                            ],
+                                            "operators":  [
+                                                              "Philadelphia and Reading Coal and Iron Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+                                                            {
+                                                                "id":  "west-shenandoah-colliery",
+                                                                "note":  "Consolidated with West Shenandoah in 1900"
+                                                            }
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "West end of Shenandoah",
+                                            "operator":  "Philadelphia \u0026 Reading Coal \u0026 Iron Co. (by the 1880s)",
+                                            "years_active":  "By 1884–1900 as a separate colliery (then part of West Shenandoah)",
+                                            "year_closed":  1900,
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Low for dates: no opening year found. It was working by 1884 (Smithsonian photographs) and was merged into West Shenandoah in 1900. Location is good (labeled on the atlas map).",
+                                            "history":  "A Shenandoah colliery working the Mammoth vein from a shaft at the west end of town. Glass-plate photographs taken inside the Kohinoor mine in 1884 are held by the Smithsonian Institution Archives. In 1900 the Philadelphia \u0026 Reading Coal \u0026 Iron Company consolidated Kohinoor and Turkey Run with the West Shenandoah Colliery and built one large breaker for all three, and from 1902 Kohinoor\u0027s tonnage was counted with West Shenandoah\u0027s.",
+                                            "photo_url":  "photos/kohinoor-breaker-boys-1891.jpg",
+                                            "photo_caption":  "Breaker boys at the Kohinoor mine, Shenandoah City, 1891.",
+                                            "photo_credit":  "Frances Benjamin Johnston, 1891. Library of Congress, Frances Benjamin Johnston Collection (loc.gov/item/93500119). No known restrictions on publication.",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Smithsonian Institution Archives, \"Interior View of Kohinoor Mine, Shenandoah, Pennsylvania\" (1884)",
+                                                                "url":  "https://siarchives.si.edu/collections/siris_arc_387336"
+                                                            },
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: West Shenandoah Colliery (1869-1925)\" (Kohinoor consolidation)",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-west-shenandoah-colliery-1869-1925/"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            },
+                                                            {
+                                                                "title":  "Library of Congress, [Breaker boys in Kohinor mine, Shenandoah City, Pa.], Frances Benjamin Johnston, 1891",
+                                                                "url":  "https://www.loc.gov/item/93500119/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Kohinoor Colliery\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. The building drawn beside its shaft is taken as the breaker. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.21131,
+                                                              40.81945
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "stanton-colliery",
+                                            "name":  "Stanton Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+
+                                                            ],
+                                            "operators":  [
+                                                              "Miller, Hoch \u0026 Company",
+                                                              "Philadelphia and Reading Coal and Iron Company",
+                                                              "Lawrence \u0026 Brown",
+                                                              "Harleigh-Brookwood Coal Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+                                                            {
+                                                                "id":  "lawrence-colliery",
+                                                                "note":  "Worked as a section of Lawrence Colliery 1892-1904, and again with it 1902-1916"
+                                                            }
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "East of Mahanoy Plane, north side of Mahanoy Creek",
+                                            "operator":  "Miller, Hoch \u0026 Co.; later P\u0026R C\u0026I Co. and Harleigh-Brookwood Coal Co.",
+                                            "years_active":  "1870-1916",
+                                            "year_opened":  1870,
+                                            "year_closed":  1916,
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Good for dates (Frank Blase\u0027s colliery history). Location is good (breaker drawn and labeled on the atlas map).",
+                                            "history":  "Opened in 1870 by Miller, Hoch \u0026 Company with a 393-foot slope on the Mammoth Vein; the first coal, 2,000 tons, shipped in 1871. A deeper slope followed in 1876. The colliery was sold by the sheriff in 1880 but kept working until 1884, when the Philadelphia \u0026 Reading Coal \u0026 Iron Company leased it. The Reading abandoned it in 1889 and let it flood. Lawrence \u0026 Brown pumped it out in 1890, and after they failed in 1892 it was worked as part of the Lawrence Colliery until 1904. The Harleigh-Brookwood Coal Company reopened the workings from 1902, sinking new slopes on the Buck Mountain and smaller veins, and worked Stanton with Lawrence until the Stanton section was abandoned in 1916. Total shipments were 2,434,771 tons.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: Stanton Colliery\" (Pottsville Republican \u0026 Herald, 1997)",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-stanton-colliery/"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Stanton Colliery\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.23084,
+                                                              40.79785
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "turkey-run-colliery",
+                                            "name":  "Turkey Run Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+
+                                                            ],
+                                            "operators":  [
+                                                              "Philadelphia and Reading Coal and Iron Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+                                                            {
+                                                                "id":  "west-shenandoah-colliery",
+                                                                "note":  "Consolidated with West Shenandoah in 1900"
+                                                            }
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "Turkey Run, south-west of Shenandoah",
+                                            "operator":  "Philadelphia \u0026 Reading Coal \u0026 Iron Co.",
+                                            "years_active":  "By 1881-1900 as a separate colliery; the name stayed in use to 1917",
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Low for the opening date: none found; it was working by 1881. Location is good (breaker drawn and labeled on the atlas map).",
+                                            "history":  "A Philadelphia \u0026 Reading colliery at the village of Turkey Run, between Shenandoah and Gilberton. In 1881 the Reading built an 18-foot fan to ventilate both West Shenandoah and Turkey Run, and a mine locomotive ran in the Turkey Run Tunnel. In 1900 Turkey Run and Kohinoor were consolidated with West Shenandoah, and from 1902 its coal was counted with West Shenandoah\u0027s. A haulage tunnel joining the two was built in 1907-1908. State mine-accident registers keep listing accidents at \"Turkey Run\" every year from 1899 to 1917.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: West Shenandoah Colliery (1869-1925)\" (Turkey Run fan, consolidation and tunnel)",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-west-shenandoah-colliery-1869-1925/"
+                                                            },
+                                                            {
+                                                                "title":  "Pennsylvania State Archives, RG-45 mine accident registers, 1899–1972",
+                                                                "url":  "https://www.pa.gov/agencies/phmc/pa-state-archives"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Turkey Run Colliery\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.21,
+                                                              40.81258
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "packer-no-4-colliery",
+                                            "name":  "Packer No. 4 Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+
+                                                            ],
+                                            "operators":  [
+                                                              "Lehigh Valley Coal Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+                                                            {
+                                                                "id":  "packer-no-2-colliery",
+                                                                "note":  "Consolidated with Packer No. 2 by the Lehigh Valley Coal Co.; connected underground in 1904"
+                                                            },
+                                                            {
+                                                                "id":  "weston-colliery",
+                                                                "note":  "Packer No. 3, its neighbor to the north-east, became Weston"
+                                                            }
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "Lost Creek",
+                                            "operator":  "Lehigh Valley Coal Co.",
+                                            "years_active":  "By 1884-after 1917",
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Low for dates: no opening or closing year found. Engineer\u0027s records exist for 1884-1885 and accidents are recorded from 1899 to 1917. Location is good (the atlas map labels it \"Packer Colliery No. 4 Breaker\").",
+                                            "history":  "One of the Lehigh Valley Coal Company\u0027s Packer collieries around Lost Creek, named for the railroad\u0027s founder Asa Packer. The Historical Society of Pennsylvania holds the company\u0027s engineer\u0027s records for Packer Nos. 3 and 4 for 1884-1885. In the 1890s the Shenandoah Herald reported a cave-in under the Lehigh Valley Railroad here and several fatal accidents. The company consolidated it with Packer No. 2 (Shenandoah Lost Creek), and in 1904 a Packer No. 2 slope was extended to connect underground with Packer No. 4\u0027s workings. State accident registers list it every year from 1899 to 1917.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: Shenandoah Lost Creek Colliery (Packer No. 2)\"",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-shenandoah-lost-creek-colliery-packer-no-2/"
+                                                            },
+                                                            {
+                                                                "title":  "Historical Society of Pennsylvania, Lehigh Valley Coal Company engineer records (Packer Nos. 3 and 4, 1884-1885)",
+                                                                "url":  "https://discover.hsp.org/Record/ead-Am.0854"
+                                                            },
+                                                            {
+                                                                "title":  "Pennsylvania State Archives, RG-45 mine accident registers, 1899–1972",
+                                                                "url":  "https://www.pa.gov/agencies/phmc/pa-state-archives"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Packer Colliery No. 4 Breaker\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.229,
+                                                              40.81406
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "plank-ridge-colliery",
+                                            "name":  "Plank Ridge Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+
+                                                            ],
+                                            "operators":  [
+                                                              "Philadelphia and Reading Coal and Iron Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+                                                            {
+                                                                "id":  "shenandoah-city-colliery",
+                                                                "note":  "Connected underground from 1873; ventilated together from 1884"
+                                                            },
+                                                            {
+                                                                "id":  "indian-ridge-colliery",
+                                                                "note":  "Ventilated together from 1884"
+                                                            }
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "East side of Shenandoah",
+                                            "operator":  "Philadelphia \u0026 Reading Coal \u0026 Iron Co. (by 1884)",
+                                            "years_active":  "By 1873-1884 as a colliery; later a washery (recorded 1907-1917)",
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Low for dates: no opening or closing year found. Location is good (breaker drawn and labeled on the atlas map).",
+                                            "history":  "A colliery on the east side of Shenandoah. In 1873 the Shenandoah City Colliery\u0027s west workings were driven into Plank Ridge\u0027s North Dip workings, the start of joining all the collieries in the basin east of town. By 1884 Plank Ridge, Indian Ridge and Shenandoah City were connected and ventilated by one fan. The site later held the Plank Ridge washery, which reclaimed coal from the old culm banks; mining-school students visited it in the 1890s, and accident registers list it in 1907, 1910 and 1917.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: Shenandoah City Colliery (1862-1932)\"",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-shenandoah-city-colliery-1862-1932/"
+                                                            },
+                                                            {
+                                                                "title":  "Pennsylvania State Archives, RG-45 mine accident registers, 1899–1972",
+                                                                "url":  "https://www.pa.gov/agencies/phmc/pa-state-archives"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Plank Ridge Colliery\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.19596,
+                                                              40.82037
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "kehley-run-colliery",
+                                            "name":  "Kehley Run Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+                                                                "Kehley\u0027s Run",
+                                                                "Kehly Run"
+                                                            ],
+                                            "operators":  [
+                                                              "Thomas Coal Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "North side of Shenandoah",
+                                            "operator":  "Thomas Coal Co. (on Girard Estate land)",
+                                            "years_active":  "By 1882-after 1917",
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Low for dates: no opening or closing year found. It was working by 1882 and accidents are recorded from 1899 to 1917. Location is fair (atlas map plus the 1891 Sanborn map; about 80 m).",
+                                            "history":  "A Thomas Coal Company colliery on Girard Estate land just north of Shenandoah, named for the stream and for Peter Kehley, who farmed the site from 1835. Heber S. Thompson, engineer of the Girard Estate, reported on a fire at Kehley\u0027s Run Colliery in 1882. The 1891 Sanborn fire-insurance map shows two breakers, No. 1 beside the Lehigh Valley Railroad and an older No. 2 marked \"dilapidated\", with a slope house, engine houses and dirt planes running to the waste heaps. The colliery\u0027s UMWA band included Tom Dorsey Sr. and his sons Jimmy and Tommy Dorsey. Accidents are recorded there every few years from 1899 to 1917.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Sanborn Fire Insurance Map of Shenandoah, July 1891, sheet 11 (Library of Congress)",
+                                                                "url":  "https://www.loc.gov/item/sanborn07963_002/"
+                                                            },
+                                                            {
+                                                                "title":  "Historical Society of Pennsylvania, Heber S. Thompson, report on the fire at Kehley\u0027s Run Colliery (1882)",
+                                                                "url":  "https://discover.hsp.org/Record/marc-96863"
+                                                            },
+                                                            {
+                                                                "title":  "Pennsylvania State Archives, RG-45 mine accident registers, 1899–1972",
+                                                                "url":  "https://www.pa.gov/agencies/phmc/pa-state-archives"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Kehley\u0027s Run Colliery\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. The pin is on the building at the end of a short north-south siding, which matches the 1891 Sanborn map: Breaker No. 1 stood beside the railroad at the end of the line north of Line Street. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.19611,
+                                                              40.82423
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "furnace-colliery",
+                                            "name":  "Furnace Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+
+                                                            ],
+                                            "operators":  [
+                                                              "Philadelphia and Reading Coal and Iron Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+                                                            {
+                                                                "id":  "gilberton-colliery",
+                                                                "note":  "Consolidated with Gilberton\u0027s first level"
+                                                            }
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "North-east of Gilberton",
+                                            "operator":  "Philadelphia \u0026 Reading Coal \u0026 Iron Co.",
+                                            "years_active":  "By 1890-after 1911 (later part of Gilberton)",
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Low for dates: no opening or closing year found. Accidents are recorded 1903-1911. Location is fair (building beside the label on the atlas map).",
+                                            "history":  "A small colliery on the Buck Mountain Vein north-east of Gilberton. The Shenandoah Herald reported a fatal mine accident at the Furnace colliery near Gilberton in the 1890s. Its old slope was later used by the Gilberton Colliery, whose first level was consolidated with Furnace. Accident registers list it from 1903 to 1911.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: Gilberton Colliery\"",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-gilberton-colliery/"
+                                                            },
+                                                            {
+                                                                "title":  "Pennsylvania State Archives, RG-45 mine accident registers, 1899–1972",
+                                                                "url":  "https://www.pa.gov/agencies/phmc/pa-state-archives"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Furnace Colliery\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. The building with a rail siding just west of the label is taken as the breaker. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.20218,
+                                                              40.80446
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "cuyler-colliery",
+                                            "name":  "Cuyler Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+
+                                                            ],
+                                            "operators":  [
+
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+                                                            {
+                                                                "id":  "girard-mammoth-colliery",
+                                                                "note":  "Its flooded workings were pumped out from Girard Mammoth in 1895"
+                                                            }
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "Raven Run, north of Girardville",
+                                            "operator":  "Unknown",
+                                            "years_active":  "Abandoned before 1895",
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Low for dates: only that it was abandoned before 1895. Location is good (breaker drawn and labeled on the atlas map).",
+                                            "history":  "A colliery on Raven Run just south of the Girard Mammoth breaker, drawn with its breaker on the Girard Estate map of about 1890. By 1895 it was described as old and abandoned, and that year the water in the Cuyler workings was pumped out in connection with Girard Mammoth\u0027s slopes.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "Frank Blase, \"Coal Castles: Girard Mammoth Colliery (1856-1928)\"",
+                                                                "url":  "https://www.lykensvalley.org/coal-castles-girard-mammoth-colliery-1856-1928/"
+                                                            },
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Cuyler Colliery\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.26654,
+                                                              40.81327
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "preston-no-1-colliery",
+                                            "name":  "Preston No. 1 Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+
+                                                            ],
+                                            "operators":  [
+                                                              "Philadelphia and Reading Coal and Iron Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+                                                            {
+                                                                "id":  "preston-no-2-colliery",
+                                                                "note":  "Neighboring Preston colliery"
+                                                            },
+                                                            {
+                                                                "id":  "preston-no-3-colliery",
+                                                                "note":  "Neighboring Preston colliery"
+                                                            }
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "North-west of Girardville",
+                                            "operator":  "Philadelphia \u0026 Reading Coal \u0026 Iron Co. (Girard Estate)",
+                                            "years_active":  "Working about 1890; dates not found",
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Low for dates: none found. Location is good (breaker drawn and labeled on the atlas map).",
+                                            "history":  "One of the Girard Estate\u0027s numbered Preston collieries west of Girardville, named for the Preston tract. The Girard Estate map of about 1890 draws its breaker on the north side of Mahanoy Creek. No opening or closing date has been found.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Preston Colliery No. 1\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.29068,
+                                                              40.79708
+                                                          ]
+                                      }
+                     },
+                     {
+                         "type":  "Feature",
+                         "properties":  {
+                                            "id":  "preston-no-2-colliery",
+                                            "name":  "Preston No. 2 Colliery",
+                                            "type":  "colliery",
+                                            "other_names":  [
+
+                                                            ],
+                                            "operators":  [
+                                                              "Philadelphia and Reading Coal and Iron Company"
+                                                          ],
+                                            "status_tags":  [
+                                                                "demolished"
+                                                            ],
+                                            "related":  [
+                                                            {
+                                                                "id":  "preston-no-1-colliery",
+                                                                "note":  "Neighboring Preston colliery"
+                                                            },
+                                                            {
+                                                                "id":  "preston-no-3-colliery",
+                                                                "note":  "Neighboring Preston colliery"
+                                                            }
+                                                        ],
+                                            "field":  "Western Middle",
+                                            "county":  "Schuylkill County",
+                                            "nearest_town":  "North-west of Girardville",
+                                            "operator":  "Philadelphia \u0026 Reading Coal \u0026 Iron Co. (Girard Estate)",
+                                            "years_active":  "Working about 1890; dates not found",
+                                            "status":  "Breaker no longer standing",
+                                            "confidence":  "Low for dates: none found. Location is good (breaker drawn and labeled on the atlas map).",
+                                            "history":  "One of the Girard Estate\u0027s numbered Preston collieries west of Girardville. The Girard Estate map of about 1890 draws its breaker just north-east of Preston No. 1. No opening or closing date has been found.",
+                                            "photo_url":  "",
+                                            "photo_caption":  "",
+                                            "photo_credit":  "",
+                                            "sources":  [
+                                                            {
+                                                                "title":  "PA Mine Map Atlas, BMSA_4614-001 (Philadelphia \u0026 Reading / Girard Estate geologic map of the Western Middle field, with breakers drawn and collieries labeled)",
+                                                                "url":  "https://www.minemaps.psu.edu/"
+                                                            }
+                                                        ],
+                                            "location_note":  "Pin is on the breaker drawn beside the \"Preston Colliery No. 2\" label on PA Mine Map Atlas geologic map BMSA_4614-001, compiled about 1890 from Girard Estate, Philadelphia \u0026 Reading and Lehigh Valley surveys. Accuracy about 40-60 m; located on a georeferenced map, not field-verified."
+                                        },
+                         "geometry":  {
+                                          "type":  "Point",
+                                          "coordinates":  [
+                                                              -76.28787,
+                                                              40.79835
+                                                          ]
+                                      }
                      }
                  ]
 }
